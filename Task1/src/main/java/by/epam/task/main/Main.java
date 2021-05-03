@@ -1,4 +1,7 @@
 package by.epam.task.main;
+
+import by.epam.task.entity.*;
+
 /*
 Задание 1: создать консольное приложение “Учет книг в домашней библиотеке”.
 Общие требования к заданию:
@@ -13,7 +16,17 @@ package by.epam.task.main;
 • Данные аутентификации пользователей хранятся в текстовом файле. Пароль не хранится в открытом виде
  */
 public class Main {
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
-		System.out.println("Hello World!");
+			
+			Book[] books = new Book[] {
+					new Book("Anna Karenina", "Leo Tolstoy", 1878, BookType.PAPER_BOOK),
+					new Book("To Kill a Mockingbird", "Harper Lee", 1960, BookType.PAPER_BOOK),
+					new Book("The Great Gatsby", "F. Scott Fitzgerald", 1925, BookType.ELECTRONIC_BOOK),
+					new Book("One Hundred Years of Solitude", "Gabriel García Márquez", 1967, BookType.PAPER_BOOK)
+			};
+			
+			Library library = new Library("Minsk national library", books);
+			
 	}
 }
