@@ -35,8 +35,6 @@ public class Main {
 			library.getUsers().add(admin);
 			library.getUsers().add(user);
 			
-			System.out.println(library.getUsers().size());
-			
 			Menu menu = new Menu();
 			menu.autorization(library);
 	}

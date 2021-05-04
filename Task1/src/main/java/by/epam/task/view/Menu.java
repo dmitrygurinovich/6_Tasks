@@ -70,6 +70,7 @@ public class Menu {
 	public void autorization(Library library) {
 		String login;
 		String password;
+		boolean autorized = false;
 
 		System.out.println("Enter login: ");
 		while (!in.hasNextLine()) {
@@ -85,8 +86,23 @@ public class Menu {
 		}
 		password = in.nextLine();
 
-		for (User user : library.getUsers()) {
-			
+		for (int i = 0; i < library.getUsers().size(); i++) {
+			if (library.getUsers().get(i).getLogin().equals(login)) {
+				if (library.getUsers().get(i).getPassword().equals(password)) {
+					autorized = true;
+					if (library.getUsers().get(i).getRole().equals(UserRole.ADMINISTRATOR)) {
+						adminMenu();
+					} else {
+						userMenu();
+					}
+					break;
+				}
+			}
+		}
+
+		if (!autorized) {
+			System.err.println("Invalid username or password! Try again!");
+			autorization(library);
 		}
 	}
 
