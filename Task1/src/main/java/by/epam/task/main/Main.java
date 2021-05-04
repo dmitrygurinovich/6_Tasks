@@ -1,6 +1,8 @@
 package by.epam.task.main;
 
 import by.epam.task.entity.*;
+import by.epam.task.view.Menu;
+
 
 /*
 Задание 1: создать консольное приложение “Учет книг в домашней библиотеке”.
@@ -16,7 +18,6 @@ import by.epam.task.entity.*;
 • Данные аутентификации пользователей хранятся в текстовом файле. Пароль не хранится в открытом виде
  */
 public class Main {
-	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 			
 			Book[] books = new Book[] {
@@ -28,5 +29,15 @@ public class Main {
 			
 			Library library = new Library("Minsk national library", books);
 			
+			User admin = new User("Dmitry", "gurinovich", "4531689925qWe", UserRole.ADMINISTRATOR);
+			User user = new User("User", "user", "11223344", UserRole.USER);
+			
+			library.getUsers().add(admin);
+			library.getUsers().add(user);
+			
+			System.out.println(library.getUsers().size());
+			
+			Menu menu = new Menu();
+			menu.autorization(library);
 	}
 }

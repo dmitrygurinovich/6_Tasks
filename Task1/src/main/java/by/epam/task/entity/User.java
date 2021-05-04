@@ -6,7 +6,7 @@ public class User {
 	private String name;
 	private String login;
 	private String password;
-	private Role role;
+	private UserRole role;
 	
 	public User() {}
 	
@@ -16,7 +16,7 @@ public class User {
 	 * @param password
 	 * @param role
 	 */
-	public User(String name, String login, String password, Role role) {
+	public User(String name, String login, String password, UserRole role) {
 		this.id = defaultID++;
 		this.name = name;
 		this.login = login;
@@ -56,11 +56,11 @@ public class User {
 		this.password = password;
 	}
 
-	public Role getRole() {
+	public UserRole getRole() {
 		return role;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(UserRole role) {
 		this.role = role;
 	}
 

@@ -1,6 +1,6 @@
 package by.epam.task.entity;
 
-public enum Role {
+public enum UserRole {
 	ADMINISTRATOR,
 	USER;
 	
