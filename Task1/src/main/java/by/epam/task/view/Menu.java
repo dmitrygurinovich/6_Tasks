@@ -7,7 +7,7 @@ import by.epam.task.entity.User;
 import by.epam.task.entity.UserRole;
 
 public class Menu {
-	private Scanner in = new Scanner(System.in);
+	private final Scanner in = new Scanner(System.in);
 
 	public Menu() {
 	}
@@ -67,10 +67,10 @@ public class Menu {
 		System.out.println("User " + name + " added!");
 	}
 
-	public void autorization(Library library) {
+	public void authorisation(Library library) {
 		String login;
 		String password;
-		boolean autorized = false;
+		boolean authorized = false;
 
 		System.out.println("Enter login: ");
 		while (!in.hasNextLine()) {
@@ -89,7 +89,7 @@ public class Menu {
 		for (int i = 0; i < library.getUsers().size(); i++) {
 			if (library.getUsers().get(i).getLogin().equals(login)) {
 				if (library.getUsers().get(i).getPassword().equals(password)) {
-					autorized = true;
+					authorized = true;
 					if (library.getUsers().get(i).getRole().equals(UserRole.ADMINISTRATOR)) {
 						adminMenu();
 					} else {
@@ -100,9 +100,9 @@ public class Menu {
 			}
 		}
 
-		if (!autorized) {
+		if (!authorized) {
 			System.err.println("Invalid username or password! Try again!");
-			autorization(library);
+			authorisation(library);
 		}
 	}
 

@@ -1,8 +1,9 @@
 package by.epam.task.main;
 
-import by.epam.task.entity.*;
-import by.epam.task.view.Menu;
-
+import by.epam.task.entity.Book;
+import by.epam.task.entity.BookType;
+import by.epam.task.entity.Library;
+import by.epam.task.view.View;
 
 /*
 Задание 1: создать консольное приложение “Учет книг в домашней библиотеке”.
@@ -18,24 +19,16 @@ import by.epam.task.view.Menu;
 • Данные аутентификации пользователей хранятся в текстовом файле. Пароль не хранится в открытом виде
  */
 public class Main {
-	public static void main(String[] args) {
-			
-			Book[] books = new Book[] {
-					new Book("Anna Karenina", "Leo Tolstoy", 1878, BookType.PAPER_BOOK),
-					new Book("To Kill a Mockingbird", "Harper Lee", 1960, BookType.PAPER_BOOK),
-					new Book("The Great Gatsby", "F. Scott Fitzgerald", 1925, BookType.ELECTRONIC_BOOK),
-					new Book("One Hundred Years of Solitude", "Gabriel García Márquez", 1967, BookType.PAPER_BOOK)
-			};
-			
-			Library library = new Library("Minsk national library", books);
-			
-			User admin = new User("Dmitry", "gurinovich", "4531689925qWe", UserRole.ADMINISTRATOR);
-			User user = new User("User", "user", "11223344", UserRole.USER);
-			
-			library.getUsers().add(admin);
-			library.getUsers().add(user);
-			
-			Menu menu = new Menu();
-			menu.autorization(library);
-	}
+    public static void main(String[] args) {
+
+        Book[] books = new Book[57];
+        for (int i = 0; i < books.length; i++) {
+            books[i] = new Book("Book number " + i, i + "-th book's author", 1800 + i, BookType.PAPER_BOOK);
+        }
+
+        Library library = new Library("Minsk national library", books);
+
+        View view = new View();
+        view.showBooks(library);
+    }
 }
