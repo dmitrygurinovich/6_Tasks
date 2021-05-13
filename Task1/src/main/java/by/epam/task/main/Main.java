@@ -3,7 +3,11 @@ package by.epam.task.main;
 import by.epam.task.entity.Book;
 import by.epam.task.entity.BookType;
 import by.epam.task.entity.Library;
-import by.epam.task.view.View;
+import by.epam.task.logic.LibraryLogic;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /*
 Задание 1: создать консольное приложение “Учет книг в домашней библиотеке”.
@@ -21,14 +25,23 @@ import by.epam.task.view.View;
 public class Main {
     public static void main(String[] args) {
 
+
         Book[] books = new Book[57];
         for (int i = 0; i < books.length; i++) {
-            books[i] = new Book("Book number " + i, i + "-th book's author", 1800 + i, BookType.PAPER_BOOK);
+            books[i] = new Book(
+                    "Book number " + i,
+                    i + "-th book's author",
+                    1800 + i,
+                    BookType.PAPER_BOOK);
         }
 
         Library library = new Library("Minsk national library", books);
 
-        View view = new View();
-        view.showBooks(library);
+
+        LibraryLogic logic = new LibraryLogic();
+        logic.writeBooksToFile(library);
+        logic.readBooksFromFile();
+
+
     }
 }

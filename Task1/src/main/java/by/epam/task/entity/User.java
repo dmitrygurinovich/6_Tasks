@@ -7,6 +7,7 @@ public class User {
 	private String login;
 	private String password;
 	private UserRole role;
+	private String email;
 	
 	public User() {}
 	
@@ -15,13 +16,15 @@ public class User {
 	 * @param login
 	 * @param password
 	 * @param role
+	 * @param email
 	 */
-	public User(String name, String login, String password, UserRole role) {
+	public User(String name, String login, String password, UserRole role, String email) {
 		this.id = defaultID++;
 		this.name = name;
 		this.login = login;
 		this.password = password;
 		this.role = role;
+		this.email = email;
 	}
 
 	public int getId() {
@@ -64,13 +67,22 @@ public class User {
 		this.role = role;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	@Override
 	public String toString() {
 		return "User ID: " + id + "\n" 
 				+ (name != null ? "Name: " + name + "\n" : "")
 				+ (login != null ? "Login: " + login + "\n" : "")
 				+ (password != null ? "Password: " + password + "\n" : "") 
-				+ (role != null ? "Role: " + role + "\n" : "");
+				+ (role != null ? "Role: " + role + "\n" : "")
+				+ (email != null ? "E-mail: " + email + "\n" : "");
 	}
 	
 	
