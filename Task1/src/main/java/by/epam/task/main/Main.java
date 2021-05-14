@@ -1,6 +1,8 @@
 package by.epam.task.main;
 
 import by.epam.task.entity.Book;
+import by.epam.task.entity.BookType;
+import by.epam.task.entity.Library;
 import by.epam.task.logic.LibraryLogic;
 
 /*
@@ -18,7 +20,15 @@ import by.epam.task.logic.LibraryLogic;
  */
 public class Main {
     public static void main(String[] args) {
+        Library library = new Library();
         LibraryLogic logic = new LibraryLogic();
+
+        //logic.addBook(library, new Book("Name", "Author", 1987, BookType.PAPER_BOOK));
+
+        for (Book book : library.getBooks()) {
+            System.out.println(book);
+        }
+
 
     }
 }

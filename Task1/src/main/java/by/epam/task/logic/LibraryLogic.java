@@ -14,25 +14,36 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LibraryLogic {
-    private final File booksbase = new File("Task1/src/main/resources/booksbase.txt");
+    private final File booksBasePath = new File("Task1/src/main/resources/booksbase.txt");
 
     public LibraryLogic() {
     }
 
+    public void addBook (Library library,Book book) {
+        library.getBooks().add(book);
+        this.writeBookToFile(book);
+    }
+    // TODO: delete this method
     public void writeBooksToFile(Library library) {
-
-        try (FileWriter writer = new FileWriter(booksbase)) {
-
+        try (FileWriter writer = new FileWriter(booksBasePath)) {
             for (Book book : library.getBooks()) {
                 writer.write(book.toString());
                 writer.append("---");
             }
             writer.flush();
-
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
 
+    public void writeBookToFile(Book book) {
+        try (FileWriter writer = new FileWriter(booksBasePath, true)) {
+            writer.write(book.toString());
+            writer.append("---");
+            writer.flush();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public ArrayList<Book> readBooksFromFile() {
@@ -47,7 +58,7 @@ public class LibraryLogic {
         booksList = new StringBuilder();
         pattern = Pattern.compile("(?:№\\s*|Name:\\s*|Author:\\s*|Year:\\s|Type:\\s|Description:\\s)(.*)(?:\\n|$|)");
 
-        try (FileReader reader = new FileReader(booksbase)) {
+        try (FileReader reader = new FileReader(booksBasePath)) {
             scanner = new Scanner(reader);
 
             while (scanner.hasNextLine()) {
@@ -59,11 +70,9 @@ public class LibraryLogic {
 
             books = booksList.toString().split("---");
 
-            for (int i = 0; i < books.length; i++) {
+            for (String book : books) {
                 ArrayList<String> fieldsList;
-
-                matcher = pattern.matcher(books[i]);
-
+                matcher = pattern.matcher(book);
                 fieldsList = new ArrayList<>();
 
                 while (matcher.find()) {
@@ -76,7 +85,6 @@ public class LibraryLogic {
                         Integer.parseInt(fieldsList.get(3)),
                         (fieldsList.get(4).equals("Paper book") ? BookType.PAPER_BOOK : BookType.ELECTRONIC_BOOK)
                 ));
-
             }
 
         } catch (IOException e) {

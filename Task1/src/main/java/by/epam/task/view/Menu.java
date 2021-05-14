@@ -16,7 +16,8 @@ public class Menu {
 				"+++ ADMIN MENU +++\n" +
 				"1. Show catalog\n" +
 				"2. Search book\n" +
-				"3. Edit book\n" +
+				"3. Add book\n" +
+				"4. Edit book\n" +
 				"0. Exit");
 	}
 
