@@ -1,9 +1,14 @@
 package by.epam.task.logic;
 
 import by.epam.task.entity.Book;
+import by.epam.task.entity.BookType;
 import by.epam.task.entity.Library;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,27 +35,54 @@ public class LibraryLogic {
 
     }
 
-    public void readBooksFromFile() {
-        StringBuilder booksListFromFileToString = new StringBuilder();
-        Pattern pattern = Pattern.compile("(№\\s*|Name:\\s*|Author:\\s*|Year:\\s|Type:\\s|Description:\\s)(.*)(\\n|$)");
+    public ArrayList<Book> readBooksFromFile() {
+        ArrayList<Book> booksBase;
+        StringBuilder booksList;
+        String[] books;
+        Pattern pattern;
+        Matcher matcher;
+        Scanner scanner;
 
-        String[] booksToString;
+        booksBase = new ArrayList<>();
+        booksList = new StringBuilder();
+        pattern = Pattern.compile("(?:№\\s*|Name:\\s*|Author:\\s*|Year:\\s|Type:\\s|Description:\\s)(.*)(?:\\n|$|)");
 
-        try(FileReader reader = new FileReader(booksbase)) {
-            Scanner scanner = new Scanner(reader);
+        try (FileReader reader = new FileReader(booksbase)) {
+            scanner = new Scanner(reader);
 
             while (scanner.hasNextLine()) {
-                booksListFromFileToString.append(scanner.nextLine());
-                booksListFromFileToString.append("\n");
+                booksList.append(scanner.nextLine());
+                booksList.append("\n");
             }
 
-            booksToString = booksListFromFileToString.toString().split("---");
+            booksList.deleteCharAt(booksList.length() - 1);
 
-            String[] lines = booksToString[0].split("(№\\s*|Name:\\s*|Author:\\s*|Year:\\s|Type:\\s|Description:\\s)(.*)(\\n|$|)");
-            System.out.println(lines.length);
+            books = booksList.toString().split("---");
+
+            for (int i = 0; i < books.length; i++) {
+                ArrayList<String> fieldsList;
+
+                matcher = pattern.matcher(books[i]);
+
+                fieldsList = new ArrayList<>();
+
+                while (matcher.find()) {
+                    fieldsList.add(matcher.group(1));
+                }
+
+                booksBase.add(new Book(
+                        fieldsList.get(1),
+                        fieldsList.get(2),
+                        Integer.parseInt(fieldsList.get(3)),
+                        (fieldsList.get(4).equals("Paper book") ? BookType.PAPER_BOOK : BookType.ELECTRONIC_BOOK)
+                ));
+
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return booksBase;
     }
 }
