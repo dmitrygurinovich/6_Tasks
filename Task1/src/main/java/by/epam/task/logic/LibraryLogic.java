@@ -20,10 +20,25 @@ public class LibraryLogic {
 
     public void addBook (Library library,Book book) {
         library.getBooks().add(book);
-        this.writeBookToFile(book);
+        this.writeOneBookToFile(book);
     }
 
-    public void writeBookToFile(Book book) {
+    public void writeBooksToFile(ArrayList<Book> books) {
+        //TODO сделать так, чтобы после последней книги не дозаписывалось "---"
+        try (FileWriter writer = new FileWriter(booksBasePath)) {
+
+            for (Book book : books) {
+                writer.write(book.toString());
+                writer.append("---");
+            }
+            writer.flush();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void writeOneBookToFile(Book book) {
         try (FileWriter writer = new FileWriter(booksBasePath, true)) {
             writer.append("---\n");
             writer.write(book.toString());
@@ -57,14 +72,22 @@ public class LibraryLogic {
                     booksFieldsList.add(matcher.group(1));
                 }
 
-                books.add(
-                        new Book(
+                if (booksFieldsList.size() == 5) { // if Description == null
+                    books.add(new Book(
                             booksFieldsList.get(1),
                             booksFieldsList.get(2),
                             Integer.parseInt(booksFieldsList.get(3)),
                             (booksFieldsList.get(4).equals("Paper book") ? BookType.PAPER_BOOK : BookType.ELECTRONIC_BOOK)
-                        )
-                );
+                    ));
+                } else {
+                    books.add(new Book(
+                            booksFieldsList.get(1),
+                            booksFieldsList.get(2),
+                            Integer.parseInt(booksFieldsList.get(3)),
+                            (booksFieldsList.get(4).equals("Paper book") ? BookType.PAPER_BOOK : BookType.ELECTRONIC_BOOK),
+                            booksFieldsList.get(5)
+                    ));
+                }
             }
 
         } catch (IOException e) {

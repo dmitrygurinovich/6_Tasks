@@ -13,13 +13,7 @@ public class Book {
 	private final LibraryLogic logic = new LibraryLogic();
 	
 	public Book() {}
-	
-	/**
-	 * @param name
-	 * @param author
-	 * @param year
-	 * @param type
-	 */
+
 	public Book(String name, String author, int year, BookType type) {
 		this.id = defaultID++;
 		this.name = name;
@@ -28,13 +22,6 @@ public class Book {
 		this.type = type;
 	}
 
-	/**
-	 * @param name
-	 * @param author
-	 * @param year
-	 * @param type
-	 * @param description
-	 */
 	public Book(String name, String author, int year, BookType type, String description) {
 		this.id = defaultID++;
 		this.name = name;

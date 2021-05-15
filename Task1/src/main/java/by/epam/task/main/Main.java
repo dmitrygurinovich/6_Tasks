@@ -23,13 +23,5 @@ public class Main {
         Library library = new Library();
         LibraryLogic logic = new LibraryLogic();
 
-        logic.addBook(library, new Book("Name 2", "Author 2", 1998, BookType.PAPER_BOOK));
-        //logic.addBook(library, new Book("Name", "Author", 1987, BookType.PAPER_BOOK));
-
-        for (Book book : library.getBooks()) {
-            System.out.println(book);
-        }
-
-
     }
 }
