@@ -3,289 +3,345 @@ Name: Book number 1
 Author: 0-th book's author
 Year: 1800
 Type: Paper book
----№ 2
+---
+№ 2
 Name: Book number 2
 Author: 1-th book's author
 Year: 1801
 Type: Paper book
----№ 3
+---
+№ 3
 Name: Book number 3
 Author: 2-th book's author
 Year: 1802
 Type: Paper book
----№ 4
+---
+№ 4
 Name: Book number 4
 Author: 3-th book's author
 Year: 1803
 Type: Paper book
----№ 5
+---
+№ 5
 Name: Book number 5
 Author: 4-th book's author
 Year: 1804
 Type: Paper book
----№ 6
+---
+№ 6
 Name: Book number 6
 Author: 5-th book's author
 Year: 1805
 Type: Paper book
----№ 7
+---
+№ 7
 Name: Book number 7
 Author: 6-th book's author
 Year: 1806
 Type: Paper book
----№ 8
+---
+№ 8
 Name: Book number 8
 Author: 7-th book's author
 Year: 1807
 Type: Paper book
----№ 9
+---
+№ 9
 Name: Book number 9
 Author: 8-th book's author
 Year: 1808
 Type: Paper book
----№ 10
+---
+№ 10
 Name: Book number 10
 Author: 9-th book's author
 Year: 1809
 Type: Paper book
----№ 11
+---
+№ 11
 Name: Book number 11
 Author: 10-th book's author
 Year: 1810
 Type: Paper book
----№ 12
+---
+№ 12
 Name: Book number 12
 Author: 11-th book's author
 Year: 1811
 Type: Paper book
----№ 13
+---
+№ 13
 Name: Book number 13
 Author: 12-th book's author
 Year: 1812
 Type: Paper book
----№ 14
+---
+№ 14
 Name: Book number 14
 Author: 13-th book's author
 Year: 1813
 Type: Paper book
----№ 15
+---
+№ 15
 Name: Book number 15
 Author: 14-th book's author
 Year: 1814
 Type: Paper book
----№ 16
+---
+№ 16
 Name: Book number 16
 Author: 15-th book's author
 Year: 1815
 Type: Paper book
----№ 17
+---
+№ 17
 Name: Book number 17
 Author: 16-th book's author
 Year: 1816
 Type: Paper book
----№ 18
+---
+№ 18
 Name: Book number 18
 Author: 17-th book's author
 Year: 1817
 Type: Paper book
----№ 19
+---
+№ 19
 Name: Book number 19
 Author: 18-th book's author
 Year: 1818
 Type: Paper book
----№ 20
+---
+№ 20
 Name: Book number 20
 Author: 19-th book's author
 Year: 1819
 Type: Paper book
----№ 21
+---
+№ 21
 Name: Book number 21
 Author: 20-th book's author
 Year: 1820
 Type: Paper book
----№ 22
+---
+№ 22
 Name: Book number 22
 Author: 21-th book's author
 Year: 1821
 Type: Paper book
----№ 23
+---
+№ 23
 Name: Book number 23
 Author: 22-th book's author
 Year: 1822
 Type: Paper book
----№ 24
+---
+№ 24
 Name: Book number 24
 Author: 23-th book's author
 Year: 1823
 Type: Paper book
----№ 25
+---
+№ 25
 Name: Book number 25
 Author: 24-th book's author
 Year: 1824
 Type: Paper book
----№ 26
+---
+№ 26
 Name: Book number 26
 Author: 25-th book's author
 Year: 1825
 Type: Paper book
----№ 27
+---
+№ 27
 Name: Book number 27
 Author: 26-th book's author
 Year: 1826
 Type: Paper book
----№ 28
+---
+№ 28
 Name: Book number 28
 Author: 27-th book's author
 Year: 1827
 Type: Paper book
----№ 29
+---
+№ 29
 Name: Book number 29
 Author: 28-th book's author
 Year: 1828
 Type: Paper book
----№ 30
+---
+№ 30
 Name: Book number 30
 Author: 29-th book's author
 Year: 1829
 Type: Paper book
----№ 31
+---
+№ 31
 Name: Book number 31
 Author: 30-th book's author
 Year: 1830
 Type: Paper book
----№ 32
+---
+№ 32
 Name: Book number 32
 Author: 31-th book's author
 Year: 1831
 Type: Paper book
----№ 33
+---
+№ 33
 Name: Book number 33
 Author: 32-th book's author
 Year: 1832
 Type: Paper book
----№ 34
+---
+№ 34
 Name: Book number 34
 Author: 33-th book's author
 Year: 1833
 Type: Paper book
----№ 35
+---
+№ 35
 Name: Book number 35
 Author: 34-th book's author
 Year: 1834
 Type: Paper book
----№ 36
+---
+№ 36
 Name: Book number 36
 Author: 35-th book's author
 Year: 1835
 Type: Paper book
----№ 37
+---
+№ 37
 Name: Book number 37
 Author: 36-th book's author
 Year: 1836
 Type: Paper book
----№ 38
+---
+№ 38
 Name: Book number 38
 Author: 37-th book's author
 Year: 1837
 Type: Paper book
----№ 39
+---
+№ 39
 Name: Book number 39
 Author: 38-th book's author
 Year: 1838
 Type: Paper book
----№ 40
+---
+№ 40
 Name: Book number 40
 Author: 39-th book's author
 Year: 1839
 Type: Paper book
----№ 41
+---
+№ 41
 Name: Book number 41
 Author: 40-th book's author
 Year: 1840
 Type: Paper book
----№ 42
+---
+№ 42
 Name: Book number 42
 Author: 41-th book's author
 Year: 1841
 Type: Paper book
----№ 43
+---
+№ 43
 Name: Book number 43
 Author: 42-th book's author
 Year: 1842
 Type: Paper book
----№ 44
+---
+№ 44
 Name: Book number 44
 Author: 43-th book's author
 Year: 1843
 Type: Paper book
----№ 45
+---
+№ 45
 Name: Book number 45
 Author: 44-th book's author
 Year: 1844
 Type: Paper book
----№ 46
+---
+№ 46
 Name: Book number 46
 Author: 45-th book's author
 Year: 1845
 Type: Paper book
----№ 47
+---
+№ 47
 Name: Book number 47
 Author: 46-th book's author
 Year: 1846
 Type: Paper book
----№ 48
+---
+№ 48
 Name: Book number 48
 Author: 47-th book's author
 Year: 1847
 Type: Paper book
----№ 49
+---
+№ 49
 Name: Book number 49
 Author: 48-th book's author
 Year: 1848
 Type: Paper book
----№ 50
+---
+№ 50
 Name: Book number 50
 Author: 49-th book's author
 Year: 1849
 Type: Paper book
----№ 51
+---
+№ 51
 Name: Book number 51
 Author: 50-th book's author
 Year: 1850
 Type: Paper book
----№ 52
+---
+№ 52
 Name: Book number 52
 Author: 51-th book's author
 Year: 1851
 Type: Paper book
----№ 53
+---
+№ 53
 Name: Book number 53
 Author: 52-th book's author
 Year: 1852
 Type: Paper book
----№ 54
+---
+№ 54
 Name: Book number 54
 Author: 53-th book's author
 Year: 1853
 Type: Paper book
----№ 55
+---
+№ 55
 Name: Book number 55
 Author: 54-th book's author
 Year: 1854
 Type: Paper book
----№ 56
+---
+№ 56
 Name: Book number 56
 Author: 55-th book's author
 Year: 1855
 Type: Paper book
----№ 57
+---
+№ 57
 Name: Book number 57
 Author: 56-th book's author
 Year: 1856
 Type: Paper book
----№ 58
+---
+№ 58
 Name: Name
 Author: Author
 Year: 1987
 Type: Paper book
----

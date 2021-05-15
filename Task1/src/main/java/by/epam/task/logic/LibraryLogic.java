@@ -16,30 +16,17 @@ import java.util.regex.Pattern;
 public class LibraryLogic {
     private final File booksBasePath = new File("Task1/src/main/resources/booksbase.txt");
 
-    public LibraryLogic() {
-    }
+    public LibraryLogic() {}
 
     public void addBook (Library library,Book book) {
         library.getBooks().add(book);
         this.writeBookToFile(book);
     }
-    // TODO: delete this method
-    public void writeBooksToFile(Library library) {
-        try (FileWriter writer = new FileWriter(booksBasePath)) {
-            for (Book book : library.getBooks()) {
-                writer.write(book.toString());
-                writer.append("---");
-            }
-            writer.flush();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
 
     public void writeBookToFile(Book book) {
         try (FileWriter writer = new FileWriter(booksBasePath, true)) {
+            writer.append("---\n");
             writer.write(book.toString());
-            writer.append("---");
             writer.flush();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -47,50 +34,43 @@ public class LibraryLogic {
     }
 
     public ArrayList<Book> readBooksFromFile() {
-        ArrayList<Book> booksBase;
-        StringBuilder booksList;
-        String[] books;
-        Pattern pattern;
-        Matcher matcher;
-        Scanner scanner;
-
-        booksBase = new ArrayList<>();
-        booksList = new StringBuilder();
-        pattern = Pattern.compile("(?:№\\s*|Name:\\s*|Author:\\s*|Year:\\s|Type:\\s|Description:\\s)(.*)(?:\\n|$|)");
+        ArrayList<Book> books = new ArrayList<>();
+        StringBuilder booksListFromFile = new StringBuilder();
+        Pattern patternForParsingBooksFields = Pattern
+                .compile("(?:№\\s*|Name:\\s*|Author:\\s*|Year:\\s|Type:\\s|Description:\\s)(.*)(?:\\n|$|)");
 
         try (FileReader reader = new FileReader(booksBasePath)) {
-            scanner = new Scanner(reader);
+            Scanner scanner = new Scanner(reader);
 
             while (scanner.hasNextLine()) {
-                booksList.append(scanner.nextLine());
-                booksList.append("\n");
+                booksListFromFile.append(scanner.nextLine());
+                booksListFromFile.append("\n");
             }
 
-            booksList.deleteCharAt(booksList.length() - 1);
+            String[] booksListFromFileDividedByBook = booksListFromFile.toString().split("---\n");
 
-            books = booksList.toString().split("---");
-
-            for (String book : books) {
-                ArrayList<String> fieldsList;
-                matcher = pattern.matcher(book);
-                fieldsList = new ArrayList<>();
+            for (String book : booksListFromFileDividedByBook) {
+                ArrayList<String> booksFieldsList = new ArrayList<>();
+                Matcher matcher = patternForParsingBooksFields.matcher(book);
 
                 while (matcher.find()) {
-                    fieldsList.add(matcher.group(1));
+                    booksFieldsList.add(matcher.group(1));
                 }
 
-                booksBase.add(new Book(
-                        fieldsList.get(1),
-                        fieldsList.get(2),
-                        Integer.parseInt(fieldsList.get(3)),
-                        (fieldsList.get(4).equals("Paper book") ? BookType.PAPER_BOOK : BookType.ELECTRONIC_BOOK)
-                ));
+                books.add(
+                        new Book(
+                            booksFieldsList.get(1),
+                            booksFieldsList.get(2),
+                            Integer.parseInt(booksFieldsList.get(3)),
+                            (booksFieldsList.get(4).equals("Paper book") ? BookType.PAPER_BOOK : BookType.ELECTRONIC_BOOK)
+                        )
+                );
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return booksBase;
+        return books;
     }
 }
