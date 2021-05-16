@@ -6,6 +6,10 @@ import by.epam.task.entity.Library;
 
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
+import javax.mail.*;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -14,9 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -124,4 +126,6 @@ public class LibraryLogic {
 
         return password.toString();
     }
+
+
 }

@@ -1,12 +1,14 @@
 package by.epam.task.main;
 
 import by.epam.task.entity.Library;
+import by.epam.task.logic.EmailSender;
 import by.epam.task.logic.LibraryLogic;
 import by.epam.task.view.View;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.mail.MessagingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -24,12 +26,11 @@ import java.security.NoSuchAlgorithmException;
 • Данные аутентификации пользователей хранятся в текстовом файле. Пароль не хранится в открытом виде
  */
 public class Main {
-    public static void main(String[] args) throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+    public static void main(String[] args) throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, MessagingException {
         Library library = new Library();
         LibraryLogic logic = new LibraryLogic();
         View view = new View();
+        EmailSender sender = new EmailSender();
 
-
-        System.out.println(logic.decryptUserPassword(logic.encryptUserPassword("gurinovich4531689925qWe")));;
     }
 }
