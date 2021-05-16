@@ -1,9 +1,14 @@
 package by.epam.task.main;
 
-import by.epam.task.entity.Book;
-import by.epam.task.entity.BookType;
 import by.epam.task.entity.Library;
 import by.epam.task.logic.LibraryLogic;
+import by.epam.task.view.View;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 /*
 Задание 1: создать консольное приложение “Учет книг в домашней библиотеке”.
@@ -19,9 +24,12 @@ import by.epam.task.logic.LibraryLogic;
 • Данные аутентификации пользователей хранятся в текстовом файле. Пароль не хранится в открытом виде
  */
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         Library library = new Library();
         LibraryLogic logic = new LibraryLogic();
+        View view = new View();
 
+
+        System.out.println(logic.decryptUserPassword(logic.encryptUserPassword("gurinovich4531689925qWe")));;
     }
 }
