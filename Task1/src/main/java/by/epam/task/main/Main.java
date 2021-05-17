@@ -1,16 +1,9 @@
 package by.epam.task.main;
 
-import by.epam.task.entity.Library;
+import by.epam.task.entity.*;
 import by.epam.task.logic.EmailSender;
 import by.epam.task.logic.LibraryLogic;
 import by.epam.task.view.View;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.mail.MessagingException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 
 /*
 Задание 1: создать консольное приложение “Учет книг в домашней библиотеке”.
@@ -26,10 +19,12 @@ import java.security.NoSuchAlgorithmException;
 • Данные аутентификации пользователей хранятся в текстовом файле. Пароль не хранится в открытом виде
  */
 public class Main {
-    public static void main(String[] args) throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, MessagingException {
+    public static void main(String[] args) {
         Library library = new Library();
+        User user = new User("Dmitry", "gurinovich", "4531689925qWe", UserRole.USER, "dmitry.gurinovich@hotmail.com");
         LibraryLogic logic = new LibraryLogic();
         View view = new View();
+
         EmailSender sender = new EmailSender();
 
     }
