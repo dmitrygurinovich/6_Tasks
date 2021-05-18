@@ -3,16 +3,14 @@ package by.epam.task.logic;
 import by.epam.task.entity.Book;
 import by.epam.task.entity.BookType;
 import by.epam.task.entity.Library;
+import by.epam.task.view.View;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -23,7 +21,7 @@ import java.util.regex.Pattern;
 public class LibraryLogic {
     private final File booksBasePath = new File("Task1/src/main/resources/booksbase.txt");
     private final SecretKeySpec key = new SecretKeySpec("Hdy4rl1dh64MwPfn".getBytes(), "AES");
-    private final Scanner in = new Scanner(System.in);
+    private final Scanner in = new Scanner(System.in).useDelimiter("\\n");
 
     public LibraryLogic() {
     }
@@ -46,7 +44,7 @@ public class LibraryLogic {
         newBook.setAuthor(in.next());
 
         System.out.println("Enter book's year: ");
-        while (!in.hasNextInt() && ((1800 < in.nextInt()) && (in.nextInt() >= 2021))) {
+        while (!in.hasNextInt()) {
             System.out.println("Enter book's year: ");
             in.next();
         }
@@ -55,13 +53,14 @@ public class LibraryLogic {
         System.out.println("Choose book's type:\n" +
                 "1. Paper book\n" +
                 "2. E-book\n");
-        while (!in.hasNextInt() && (in.nextInt() == 1 || in.nextInt() == 2)) {
+        while (!in.hasNextInt() || !(in.nextInt() == 1)) {
             System.out.println("Choose book's type:\n" +
                     "1. Paper book\n" +
                     "2. E-book\n");
             in.next();
         }
-        switch (in.nextInt()) {
+
+        switch (Integer.parseInt(in.next())) {
             case (1):
                 newBook.setType(BookType.PAPER_BOOK);
                 break;
@@ -69,10 +68,12 @@ public class LibraryLogic {
                 newBook.setType(BookType.ELECTRONIC_BOOK);
                 break;
         }
+        newBook.setId(library.getBooks().size() + 1);
 
-
-        library.getBooks().add(newBook);
+        new View().print("New book " + newBook.getName() + " added.");
         this.writeOneBookToFile(newBook);
+        library.getBooks().add(newBook);
+
     }
 
     public void writeBooksToFile(ArrayList<Book> books) {
@@ -169,5 +170,21 @@ public class LibraryLogic {
         return password.toString();
     }
 
+    public int getNumFromConsole(String message) throws IOException {
+        InputStreamReader stream = new InputStreamReader(System.in);
+        BufferedReader reader = new BufferedReader(stream);
 
+        boolean isNumber = false;
+        int number = -1;
+
+        while (!isNumber) {
+            try{
+                System.out.println(message);
+                number = Integer.parseInt(reader.readLine());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return number;
+    }
 }

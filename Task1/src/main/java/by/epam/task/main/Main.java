@@ -5,6 +5,11 @@ import by.epam.task.logic.LibraryLogic;
 import by.epam.task.view.Menu;
 import by.epam.task.view.View;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.Buffer;
+
 /*
 Задание 1: создать консольное приложение “Учет книг в домашней библиотеке”.
 Общие требования к заданию:
@@ -19,7 +24,7 @@ import by.epam.task.view.View;
 • Данные аутентификации пользователей хранятся в текстовом файле. Пароль не хранится в открытом виде
  */
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Library library = new Library();
         LibraryLogic logic = new LibraryLogic();
         View view = new View();
@@ -27,9 +32,14 @@ public class Main {
         library.getUsers().add(admin);
 
 
-        logic.addBook(library);
+       //logic.addBook(library);
 
 /*        Menu menu = new Menu(library, view, logic);
         menu.authorisation(library);*/
+
+        int num;
+        System.out.println("Enter num");
+        num = logic.getNumFromConsole("Enter number: \n");
+        System.out.println("Num = " + num);
     }
 }
