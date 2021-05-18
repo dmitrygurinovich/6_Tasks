@@ -1,8 +1,8 @@
 package by.epam.task.main;
 
 import by.epam.task.entity.*;
-import by.epam.task.logic.EmailSender;
 import by.epam.task.logic.LibraryLogic;
+import by.epam.task.view.Menu;
 import by.epam.task.view.View;
 
 /*
@@ -21,11 +21,15 @@ import by.epam.task.view.View;
 public class Main {
     public static void main(String[] args) {
         Library library = new Library();
-        User user = new User("Dmitry", "gurinovich", "4531689925qWe", UserRole.USER, "dmitry.gurinovich@hotmail.com");
         LibraryLogic logic = new LibraryLogic();
         View view = new View();
+        User admin = new User("Dmitry", "gurinovich", "4531689925qWe", UserRole.ADMINISTRATOR, "dmitry.gurinovich@hotmail.com");
+        library.getUsers().add(admin);
 
-        EmailSender sender = new EmailSender();
 
+        logic.addBook(library);
+
+/*        Menu menu = new Menu(library, view, logic);
+        menu.authorisation(library);*/
     }
 }

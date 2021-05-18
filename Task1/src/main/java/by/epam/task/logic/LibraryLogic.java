@@ -4,7 +4,10 @@ import by.epam.task.entity.Book;
 import by.epam.task.entity.BookType;
 import by.epam.task.entity.Library;
 
-import javax.crypto.*;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.File;
 import java.io.FileReader;
@@ -12,19 +15,64 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LibraryLogic {
     private final File booksBasePath = new File("Task1/src/main/resources/booksbase.txt");
     private final SecretKeySpec key = new SecretKeySpec("Hdy4rl1dh64MwPfn".getBytes(), "AES");
+    private final Scanner in = new Scanner(System.in);
 
-    public LibraryLogic() {}
+    public LibraryLogic() {
+    }
 
-    public void addBook (Library library,Book book) {
-        library.getBooks().add(book);
-        this.writeOneBookToFile(book);
+    public void addBook(Library library) {
+        Book newBook = new Book();
+
+        System.out.println("Enter book's name: ");
+        while (!in.hasNextLine()) {
+            System.out.println("Enter book's name: ");
+            in.next();
+        }
+        newBook.setName(in.nextLine());
+
+        System.out.println("Enter book's author: ");
+        while (!in.hasNextLine()) {
+            System.out.println("Enter book's author: ");
+            in.nextLine();
+        }
+        newBook.setAuthor(in.next());
+
+        System.out.println("Enter book's year: ");
+        while (!in.hasNextInt() && ((1800 < in.nextInt()) && (in.nextInt() >= 2021))) {
+            System.out.println("Enter book's year: ");
+            in.next();
+        }
+        newBook.setYear(in.nextInt());
+
+        System.out.println("Choose book's type:\n" +
+                "1. Paper book\n" +
+                "2. E-book\n");
+        while (!in.hasNextInt() && (in.nextInt() == 1 || in.nextInt() == 2)) {
+            System.out.println("Choose book's type:\n" +
+                    "1. Paper book\n" +
+                    "2. E-book\n");
+            in.next();
+        }
+        switch (in.nextInt()) {
+            case (1):
+                newBook.setType(BookType.PAPER_BOOK);
+                break;
+            case(2):
+                newBook.setType(BookType.ELECTRONIC_BOOK);
+                break;
+        }
+
+
+        library.getBooks().add(newBook);
+        this.writeOneBookToFile(newBook);
     }
 
     public void writeBooksToFile(ArrayList<Book> books) {
@@ -114,7 +162,7 @@ public class LibraryLogic {
         byte[] chars = cipher.doFinal(bytes);
 
         StringBuilder password = new StringBuilder("");
-        for(byte b : chars) {
+        for (byte b : chars) {
             password.append((char) b);
         }
 

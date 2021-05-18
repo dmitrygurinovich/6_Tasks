@@ -4,11 +4,20 @@ import java.util.Scanner;
 
 import by.epam.task.entity.Library;
 import by.epam.task.entity.UserRole;
+import by.epam.task.logic.LibraryLogic;
 
 public class Menu {
 	private final Scanner in = new Scanner(System.in);
+	private View view;
+	private Library library;
+	private LibraryLogic logic;
 
-	public Menu() {
+	public Menu() {}
+
+	public Menu(Library library, View view, LibraryLogic logic) {
+		this.library = library;
+		this.logic = logic;
+		this.view = view;
 	}
 
 	public void adminMenu() {
@@ -19,6 +28,19 @@ public class Menu {
 				"3. Add book\n" +
 				"4. Edit book\n" +
 				"0. Exit");
+		if (getMenuItem() == 1) {
+			view.showBooks(library);
+		}
+		if(getMenuItem() == 2) {
+			// используя регулярки искать совпадения во всех полях обьекта класса Book и возвращать результат книгой
+		}
+		if(getMenuItem() == 3) {
+			//
+		}
+		if (getMenuItem() == 0) {
+			exit();
+		}
+
 	}
 
 	public void userMenu() {
@@ -66,6 +88,13 @@ public class Menu {
 			System.err.println("Invalid username or password! Try again!");
 			authorisation(library);
 		}
+	}
+
+	public int getMenuItem() {
+		while (!in.hasNextInt()) {
+			in.next();
+		}
+		return in.nextInt();
 	}
 
 	public void exit() {
