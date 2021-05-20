@@ -21,46 +21,22 @@ import java.util.regex.Pattern;
 public class LibraryLogic {
     private final File booksBasePath = new File("Task1/src/main/resources/booksbase.txt");
     private final SecretKeySpec key = new SecretKeySpec("Hdy4rl1dh64MwPfn".getBytes(), "AES");
-    private final Scanner in = new Scanner(System.in).useDelimiter("\\n");
+    private final Scanner in = new Scanner(System.in);
+    private final View view = new View();
 
-    public LibraryLogic() {
-    }
+    public LibraryLogic() {}
 
     public void addBook(Library library) {
         Book newBook = new Book();
 
-        System.out.println("Enter book's name: ");
-        while (!in.hasNextLine()) {
-            System.out.println("Enter book's name: ");
-            in.next();
-        }
-        newBook.setName(in.nextLine());
+        newBook.setName(getStringFromConsole("Enter book's name: "));
+        newBook.setAuthor(getStringFromConsole("Enter book's author: "));
+        newBook.setYear(getNumFromConsole("Enter book's year: ", 1800, 2021));
 
-        System.out.println("Enter book's author: ");
-        while (!in.hasNextLine()) {
-            System.out.println("Enter book's author: ");
-            in.nextLine();
-        }
-        newBook.setAuthor(in.next());
-
-        System.out.println("Enter book's year: ");
-        while (!in.hasNextInt()) {
-            System.out.println("Enter book's year: ");
-            in.next();
-        }
-        newBook.setYear(in.nextInt());
-
-        System.out.println("Choose book's type:\n" +
-                "1. Paper book\n" +
-                "2. E-book\n");
-        while (!in.hasNextInt() || !(in.nextInt() == 1)) {
-            System.out.println("Choose book's type:\n" +
-                    "1. Paper book\n" +
-                    "2. E-book\n");
-            in.next();
-        }
-
-        switch (Integer.parseInt(in.next())) {
+        switch (getNumFromConsole(
+                   "Choose book's type:\n" +
+                           "1. Paper book\n" +
+                           "2. E-book", 0, 2)) {
             case (1):
                 newBook.setType(BookType.PAPER_BOOK);
                 break;
@@ -68,12 +44,12 @@ public class LibraryLogic {
                 newBook.setType(BookType.ELECTRONIC_BOOK);
                 break;
         }
+
         newBook.setId(library.getBooks().size() + 1);
 
-        new View().print("New book " + newBook.getName() + " added.");
         this.writeOneBookToFile(newBook);
         library.getBooks().add(newBook);
-
+        view.print("New book " + newBook.getName() + " added.");
     }
 
     public void writeBooksToFile(ArrayList<Book> books) {
@@ -150,13 +126,15 @@ public class LibraryLogic {
         return books;
     }
 
-    public byte[] encryptUserPassword(String password) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+    public byte[] encryptUserPassword(String password) throws NoSuchPaddingException, NoSuchAlgorithmException,
+            InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         Cipher cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.ENCRYPT_MODE, key);
         return cipher.doFinal(password.getBytes());
     }
 
-    public String decryptUserPassword(byte[] bytes) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+    public String decryptUserPassword(byte[] bytes) throws NoSuchPaddingException, NoSuchAlgorithmException,
+            InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         Cipher cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.DECRYPT_MODE, key);
 
@@ -170,21 +148,31 @@ public class LibraryLogic {
         return password.toString();
     }
 
-    public int getNumFromConsole(String message) throws IOException {
-        InputStreamReader stream = new InputStreamReader(System.in);
-        BufferedReader reader = new BufferedReader(stream);
-
-        boolean isNumber = false;
-        int number = -1;
-
-        while (!isNumber) {
-            try{
-                System.out.println(message);
-                number = Integer.parseInt(reader.readLine());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+    public int getNumFromConsole(String message, int min, int max) {
+        int number;
+        view.print(message);
+        while(!in.hasNextInt()) {
+            view.print(message);
+            in.next();
         }
-        return number;
+        number = in.nextInt();
+
+        if (number > min && number <= max) {
+            return number;
+        } else {
+            return getNumFromConsole(message, min, max);
+        }
+    }
+
+    public  String getStringFromConsole(String message) {
+        String text;
+        view.print(message);
+
+        while (!in.hasNextLine()) {
+            view.print(message);
+            in.next();
+        }
+        text = in.nextLine();
+        return text;
     }
 }

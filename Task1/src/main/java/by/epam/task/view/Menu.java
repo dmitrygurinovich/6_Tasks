@@ -27,7 +27,7 @@ public class Menu {
 				"2. Search book\n" +
 				"3. Add book\n" +
 				"4. Edit book\n" +
-				"0. Exit");
+				"0. Main menu");
 		if (getMenuItem() == 1) {
 			view.showBooks(library);
 		}
@@ -48,7 +48,7 @@ public class Menu {
 				"+++ USER MENU +++\n" +
 				"1. Show catalog\n" +
 				"2. Search book\n" +
-				"0. Exit");
+				"0. Main menu");
 	}
 
 	public void authorisation(Library library) {
