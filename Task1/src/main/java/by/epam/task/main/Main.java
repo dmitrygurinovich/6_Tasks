@@ -1,13 +1,12 @@
 package by.epam.task.main;
 
-import by.epam.task.entity.Library;
-import by.epam.task.entity.User;
-import by.epam.task.entity.UserRole;
+import by.epam.task.entity.*;
 import by.epam.task.logic.LibraryLogic;
 import by.epam.task.view.Menu;
 import by.epam.task.view.View;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /*
 Задание 1: создать консольное приложение “Учет книг в домашней библиотеке”.
@@ -30,6 +29,6 @@ public class Main {
         User admin = new User("Dmitry", "gurinovich", "4531689925qWe", UserRole.ADMINISTRATOR, "dmitry.gurinovich@hotmail.com");
         library.getUsers().add(admin);
 
-        logic.addBook(library);
+
     }
 }

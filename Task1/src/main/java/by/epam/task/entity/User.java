@@ -12,11 +12,11 @@ public class User {
 	public User() {}
 	
 	/**
-	 * @param name
-	 * @param login
-	 * @param password
-	 * @param role
-	 * @param email
+	 * @param name User's name
+	 * @param login User's login
+	 * @param password User's password
+	 * @param role User's role: admin or user
+	 * @param email User's e-mail
 	 */
 	public User(String name, String login, String password, UserRole role, String email) {
 		this.id = defaultID++;

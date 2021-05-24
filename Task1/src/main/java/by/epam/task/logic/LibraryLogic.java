@@ -1,8 +1,6 @@
 package by.epam.task.logic;
 
-import by.epam.task.entity.Book;
-import by.epam.task.entity.BookType;
-import by.epam.task.entity.Library;
+import by.epam.task.entity.*;
 import by.epam.task.view.View;
 
 import javax.crypto.BadPaddingException;
@@ -20,51 +18,30 @@ import java.util.regex.Pattern;
 
 public class LibraryLogic {
     private final File booksBasePath = new File("Task1/src/main/resources/booksbase.txt");
+    private final File usersBasePath = new File("Task1/src/main/resources/usersbase.txt");
     private final SecretKeySpec key = new SecretKeySpec("Hdy4rl1dh64MwPfn".getBytes(), "AES");
     private final Scanner in = new Scanner(System.in);
     private final View view = new View();
 
     public LibraryLogic() {}
 
+    /**
+     *
+     * @param library - Library
+     */
     public void addBook(Library library) {
         Book newBook = new Book();
 
         newBook.setName(getStringFromConsole("Enter book's name: "));
         newBook.setAuthor(getStringFromConsole("Enter book's author: "));
         newBook.setYear(getNumFromConsole("Enter book's year: ", 1800, 2021));
-
-        switch (getNumFromConsole(
-                   "Choose book's type:\n" +
-                           "1. Paper book\n" +
-                           "2. E-book", 0, 2)) {
-            case (1):
-                newBook.setType(BookType.PAPER_BOOK);
-                break;
-            case(2):
-                newBook.setType(BookType.ELECTRONIC_BOOK);
-                break;
-        }
-
+        newBook.setType((getNumFromConsole("Choose book's type:\n" + "1. Paper book\n" + "2. E-book", 0, 2) == 1 ? BookType.PAPER_BOOK : BookType.ELECTRONIC_BOOK));
         newBook.setId(library.getBooks().size() + 1);
 
         this.writeOneBookToFile(newBook);
         library.getBooks().add(newBook);
+
         view.print("New book " + newBook.getName() + " added.");
-    }
-
-    public void writeBooksToFile(ArrayList<Book> books) {
-        //TODO сделать так, чтобы после последней книги не дозаписывалось "---"
-        try (FileWriter writer = new FileWriter(booksBasePath)) {
-
-            for (Book book : books) {
-                writer.write(book.toString());
-                writer.append("---");
-            }
-            writer.flush();
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
     }
 
     public void writeOneBookToFile(Book book) {
@@ -72,6 +49,24 @@ public class LibraryLogic {
             writer.append("---\n");
             writer.write(book.toString());
             writer.flush();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * @param books - ArrayList<Book>
+     */
+    public void writeBooksToFile(ArrayList<Book> books) {
+        try (FileWriter writer = new FileWriter(booksBasePath)) {
+
+            for (int i = 0; i < books.size() - 1; i++) {
+                writer.write(books.get(i).toString());
+                writer.append("---\n");
+            }
+            writer.write(books.get(books.size() - 1).toString());
+            writer.flush();
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -101,7 +96,7 @@ public class LibraryLogic {
                     booksFieldsList.add(matcher.group(1));
                 }
 
-                if (booksFieldsList.size() == 5) { // if Description is empty (== null)
+                if (booksFieldsList.size() == 5) {
                     books.add(new Book(
                             booksFieldsList.get(1),
                             booksFieldsList.get(2),
@@ -126,6 +121,31 @@ public class LibraryLogic {
         return books;
     }
 
+    public User addUser(Library library) {
+        User user = new User();
+
+        user.setName(this.getStringFromConsole("Enter user's name: "));
+        // TODO: добавить проверку на существование логина в базе
+        user.setLogin(this.getStringFromConsole("Enter user's login: "));
+        user.setPassword(this.getStringFromConsole("Enter password: "));
+        user.setRole((getNumFromConsole("Choose user's role:\n1. Administrator\n2. User", 0,2) == 1 ? UserRole.ADMINISTRATOR : UserRole.USER));
+        //TODO: проверить e-main через регулярку
+        user.setEmail(getStringFromConsole("Enter user's email: "));
+        view.print("User added!");
+
+        library.getUsers().add(user);
+        //this.writeUserToFile(user);
+        return user;
+    }
+
+    public void writeUserToFile(User user) {
+
+    }
+
+    public void readUsersFromFile() {
+
+    }
+
     public byte[] encryptUserPassword(String password) throws NoSuchPaddingException, NoSuchAlgorithmException,
             InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         Cipher cipher = Cipher.getInstance("AES");
@@ -140,7 +160,7 @@ public class LibraryLogic {
 
         byte[] chars = cipher.doFinal(bytes);
 
-        StringBuilder password = new StringBuilder("");
+        StringBuilder password = new StringBuilder();
         for (byte b : chars) {
             password.append((char) b);
         }
@@ -156,7 +176,7 @@ public class LibraryLogic {
             in.next();
         }
         number = in.nextInt();
-
+        in.nextLine();
         if (number > min && number <= max) {
             return number;
         } else {
