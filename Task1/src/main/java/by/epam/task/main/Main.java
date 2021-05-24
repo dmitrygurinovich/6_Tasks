@@ -2,11 +2,9 @@ package by.epam.task.main;
 
 import by.epam.task.entity.*;
 import by.epam.task.logic.LibraryLogic;
-import by.epam.task.view.Menu;
+import by.epam.task.logic.UsersBaseLogic;
 import by.epam.task.view.View;
 
-import java.io.IOException;
-import java.util.ArrayList;
 
 /*
 Задание 1: создать консольное приложение “Учет книг в домашней библиотеке”.
@@ -22,13 +20,13 @@ import java.util.ArrayList;
 • Данные аутентификации пользователей хранятся в текстовом файле. Пароль не хранится в открытом виде
  */
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
         Library library = new Library();
         LibraryLogic logic = new LibraryLogic();
+        UsersBaseLogic userLogic = new UsersBaseLogic();
         View view = new View();
-        User admin = new User("Dmitry", "gurinovich", "4531689925qWe", UserRole.ADMINISTRATOR, "dmitry.gurinovich@hotmail.com");
-        library.getUsers().add(admin);
+        User admin = new User("Ilya", "ilyadmitryevich", "56ewfefw32fe72sd3wO", UserRole.USER, "ilya.gurinovich@tut.by");
 
-
+        userLogic.writeUserToFile(admin);
     }
 }

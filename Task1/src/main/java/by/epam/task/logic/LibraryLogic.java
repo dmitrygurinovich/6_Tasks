@@ -12,23 +12,18 @@ import java.io.*;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LibraryLogic {
     private final File booksBasePath = new File("Task1/src/main/resources/booksbase.txt");
-    private final File usersBasePath = new File("Task1/src/main/resources/usersbase.txt");
-    private final SecretKeySpec key = new SecretKeySpec("Hdy4rl1dh64MwPfn".getBytes(), "AES");
     private final Scanner in = new Scanner(System.in);
     private final View view = new View();
 
     public LibraryLogic() {}
 
-    /**
-     *
-     * @param library - Library
-     */
     public void addBook(Library library) {
         Book newBook = new Book();
 
@@ -54,9 +49,6 @@ public class LibraryLogic {
         }
     }
 
-    /**
-     * @param books - ArrayList<Book>
-     */
     public void writeBooksToFile(ArrayList<Book> books) {
         try (FileWriter writer = new FileWriter(booksBasePath)) {
 
@@ -121,53 +113,6 @@ public class LibraryLogic {
         return books;
     }
 
-    public User addUser(Library library) {
-        User user = new User();
-
-        user.setName(this.getStringFromConsole("Enter user's name: "));
-        // TODO: добавить проверку на существование логина в базе
-        user.setLogin(this.getStringFromConsole("Enter user's login: "));
-        user.setPassword(this.getStringFromConsole("Enter password: "));
-        user.setRole((getNumFromConsole("Choose user's role:\n1. Administrator\n2. User", 0,2) == 1 ? UserRole.ADMINISTRATOR : UserRole.USER));
-        //TODO: проверить e-main через регулярку
-        user.setEmail(getStringFromConsole("Enter user's email: "));
-        view.print("User added!");
-
-        library.getUsers().add(user);
-        //this.writeUserToFile(user);
-        return user;
-    }
-
-    public void writeUserToFile(User user) {
-
-    }
-
-    public void readUsersFromFile() {
-
-    }
-
-    public byte[] encryptUserPassword(String password) throws NoSuchPaddingException, NoSuchAlgorithmException,
-            InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, key);
-        return cipher.doFinal(password.getBytes());
-    }
-
-    public String decryptUserPassword(byte[] bytes) throws NoSuchPaddingException, NoSuchAlgorithmException,
-            InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.DECRYPT_MODE, key);
-
-        byte[] chars = cipher.doFinal(bytes);
-
-        StringBuilder password = new StringBuilder();
-        for (byte b : chars) {
-            password.append((char) b);
-        }
-
-        return password.toString();
-    }
-
     public int getNumFromConsole(String message, int min, int max) {
         int number;
         view.print(message);
@@ -195,4 +140,5 @@ public class LibraryLogic {
         text = in.nextLine();
         return text;
     }
+
 }
