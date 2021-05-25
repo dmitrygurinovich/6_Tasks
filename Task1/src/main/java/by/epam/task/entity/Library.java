@@ -1,14 +1,15 @@
 package by.epam.task.entity;
 
 import by.epam.task.logic.LibraryLogic;
+import by.epam.task.logic.UsersBaseLogic;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Library {
 	private String name;
-	private final LibraryLogic logic = new LibraryLogic();
-	private ArrayList<Book> books = logic.readBooksFromFile();
+	private final LibraryLogic libraryLogic = new LibraryLogic();
+	private final UsersBaseLogic usersBaseLogic = new UsersBaseLogic();
+	private ArrayList<Book> books = libraryLogic.readBooksFromFile();
 	private ArrayList<User> users = new ArrayList<>();
 	
 	public Library() {}

@@ -34,7 +34,8 @@ public class Main {
         View view = new View();
         User admin = new User("Ilya", "ilyadmitryevich", "56ewfefw32fe72sd3wO", UserRole.USER, "ilya.gurinovich@tut.by");
 
-        System.out.println(userLogic.decryptUserPassword(userLogic
-                .getBytesArrayFromString("[-81, 78, -83, -63, 126, -128, 19, 113, 113, -86, -46, -35, -14, -83, -26, -76]")));
+        for (User user : userLogic.readUsersFromFile()){
+            System.out.println(user);
+        }
     }
 }

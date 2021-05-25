@@ -69,7 +69,7 @@ public class UsersBaseLogic {
         }
     }
 
-    public void readUsersFromFile() {
+    public ArrayList<User> readUsersFromFile() {
         ArrayList<User> users;
         StringBuilder usersListFromFile;
         Pattern patternForParsingUserField;
@@ -99,13 +99,19 @@ public class UsersBaseLogic {
                     userFieldsList.add(matcher.group(1));
                 }
 
-
+                users.add(new User(
+                        Integer.parseInt(userFieldsList.get(0)),
+                        userFieldsList.get(1),
+                        userFieldsList.get(2),
+                        decryptUserPassword(getBytesArrayFromString(userFieldsList.get(3))),
+                        (userFieldsList.get(4).equals("Administrator") ? UserRole.ADMINISTRATOR : UserRole.USER),
+                        userFieldsList.get(5))
+                );
             }
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return users;
     }
 
     public byte[] encryptUserPassword(String password) {

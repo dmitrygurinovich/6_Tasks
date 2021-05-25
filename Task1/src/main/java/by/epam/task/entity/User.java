@@ -10,6 +10,15 @@ public class User {
 	private String email;
 	
 	public User() {}
+
+	public User(int id, String name, String login, String password, UserRole role, String email) {
+		this.id = id;
+		this.name = name;
+		this.login = login;
+		this.password = password;
+		this.role = role;
+		this.email = email;
+	}
 	
 	/**
 	 * @param name User's name
