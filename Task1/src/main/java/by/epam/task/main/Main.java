@@ -5,6 +5,13 @@ import by.epam.task.logic.LibraryLogic;
 import by.epam.task.logic.UsersBaseLogic;
 import by.epam.task.view.View;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+
 
 /*
 Задание 1: создать консольное приложение “Учет книг в домашней библиотеке”.
@@ -20,13 +27,12 @@ import by.epam.task.view.View;
 • Данные аутентификации пользователей хранятся в текстовом файле. Пароль не хранится в открытом виде
  */
 public class Main {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Library library = new Library();
         LibraryLogic logic = new LibraryLogic();
         UsersBaseLogic userLogic = new UsersBaseLogic();
         View view = new View();
         User admin = new User("Ilya", "ilyadmitryevich", "56ewfefw32fe72sd3wO", UserRole.USER, "ilya.gurinovich@tut.by");
 
-        userLogic.writeUserToFile(admin);
     }
 }

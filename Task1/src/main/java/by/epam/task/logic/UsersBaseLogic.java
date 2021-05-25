@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 public class UsersBaseLogic {
     private final File usersBasePath = new File("Task1/src/main/resources/usersbase.txt");
@@ -61,8 +62,7 @@ public class UsersBaseLogic {
             writer.append("Role: ").append(user.getRole().toString()).append("\n");
             writer.append("E-mail: ").append(user.getEmail()).append("\n");
             writer.flush();
-        } catch (IOException | NoSuchPaddingException | IllegalBlockSizeException |
-                NoSuchAlgorithmException | BadPaddingException | InvalidKeyException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -71,25 +71,35 @@ public class UsersBaseLogic {
 
     }
 
-    public byte[] encryptUserPassword(String password) throws NoSuchPaddingException, NoSuchAlgorithmException,
-            InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, key);
-        return cipher.doFinal(password.getBytes());
+    public byte[] encryptUserPassword(String password) {
+        byte[] passwordsBytes = new byte[0];
+        try {
+            Cipher cipher = Cipher.getInstance("AES");
+            cipher.init(Cipher.ENCRYPT_MODE, key);
+            passwordsBytes = cipher.doFinal(password.getBytes());
+        } catch (NoSuchPaddingException | NoSuchAlgorithmException | IllegalStateException | InvalidKeyException |
+                IllegalBlockSizeException | BadPaddingException e) {
+            e.printStackTrace();
+        }
+        return passwordsBytes;
     }
 
-    public String decryptUserPassword(byte[] bytes) throws NoSuchPaddingException, NoSuchAlgorithmException,
-            InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.DECRYPT_MODE, key);
+    public String decryptUserPassword(byte[] bytes) {
+        StringBuilder password;
+        password = new StringBuilder();
+        try {
+            Cipher cipher = Cipher.getInstance("AES");
+            cipher.init(Cipher.DECRYPT_MODE, key);
+            byte[] chars = cipher.doFinal(bytes);
 
-        byte[] chars = cipher.doFinal(bytes);
+            for (byte b : chars) {
+                password.append((char) b);
+            }
 
-        StringBuilder password = new StringBuilder();
-        for (byte b : chars) {
-            password.append((char) b);
+        } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException | IllegalBlockSizeException|
+                BadPaddingException e) {
+            e.printStackTrace();
         }
-
         return password.toString();
     }
 
@@ -124,10 +134,18 @@ public class UsersBaseLogic {
     public boolean isEmail(String email) {
         Pattern emailPattern;
         Matcher matcher;
+        boolean isEmail;
 
-        emailPattern = Pattern.compile(".*@.*\\.\\w*\\S");
-        matcher = emailPattern.matcher(email);
+        isEmail = false;
 
-        return matcher.matches();
+        try {
+            emailPattern = Pattern.compile(".*@.*\\.\\w*\\S");
+            matcher = emailPattern.matcher(email);
+            isEmail = matcher.matches();
+        } catch (PatternSyntaxException e) {
+            e.printStackTrace();
+        }
+
+        return isEmail;
     }
 }
