@@ -6,24 +6,16 @@ import by.epam.task.logic.UsersBaseLogic;
 import java.util.ArrayList;
 
 public class Library {
-	private String name;
-	private final LibraryLogic libraryLogic = new LibraryLogic();
-	private final UsersBaseLogic usersBaseLogic = new UsersBaseLogic();
-	private ArrayList<Book> books = libraryLogic.readBooksFromFile();
-	private ArrayList<User> users = usersBaseLogic.readUsersFromFile();
+	private LibraryLogic libraryLogic;
+	private UsersBaseLogic usersBaseLogic;
+	private ArrayList<Book> books;
+	private ArrayList<User> users;
 	
-	public Library() {}
-
-	public Library(String name) {
-		this.name = name;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+	public Library() {
+		this.libraryLogic = new LibraryLogic();
+		this.usersBaseLogic = new UsersBaseLogic();
+		this.books = libraryLogic.readBooksFromFile();
+		this.users = usersBaseLogic.readUsersFromFile();
 	}
 
 	public ArrayList<Book> getBooks() {
@@ -41,6 +33,4 @@ public class Library {
 	public void setUsers(ArrayList<User> users) {
 		this.users = users;
 	}
-	
-	
 }

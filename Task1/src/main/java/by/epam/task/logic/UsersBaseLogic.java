@@ -46,8 +46,11 @@ public class UsersBaseLogic {
         user.setLogin(login);
 
         user.setPassword(getStringFromConsole("Enter password: "));
-        user.setRole((getNumFromConsole("Choose user's role:\n" +
-                "1. Administrator\n2. User", 0,2) == 1 ? UserRole.ADMINISTRATOR : UserRole.USER));
+        user.setRole((getNumFromConsole("" +
+                "Choose user's role:\n" +
+                "1. Administrator\n" +
+                "2. User",
+                0,2) == 1 ? UserRole.ADMINISTRATOR : UserRole.USER));
 
         email = getStringFromConsole("Enter user's email: ");
         while (!isEmail(email)) {

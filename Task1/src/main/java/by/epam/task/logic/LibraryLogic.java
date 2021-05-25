@@ -18,11 +18,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LibraryLogic {
-    private final File booksBasePath = new File("Task1/src/main/resources/booksbase.txt");
-    private final Scanner in = new Scanner(System.in);
-    private final View view = new View();
+    private final File booksBasePath;
+    private final Scanner in;
+    private final View view;
 
-    public LibraryLogic() {}
+    public LibraryLogic() {
+        this.booksBasePath = new File("Task1/src/main/resources/booksbase.txt");
+        this.in = new Scanner(System.in);
+        this.view = new View();
+    }
 
     public void addBook(Library library) {
         Book newBook;

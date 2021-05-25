@@ -32,3 +32,10 @@ Login: bezmen
 Password: [-118, 7, -85, 92, 47, -65, -127, 55, 102, -97, 63, 74, -119, 116, -119, -41]
 Role: Administrator
 E-mail: alex.bezmen@rambler.ru
+---
+Id: 6
+Name: gurinovich
+Login: inna
+Password: [-50, 43, 3, -42, 110, -80, -89, 52, -103, 42, -92, 74, 66, 5, 88, 68]
+Role: User
+E-mail: inna@tut.by

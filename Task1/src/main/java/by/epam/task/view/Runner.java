@@ -10,23 +10,33 @@ import by.epam.task.logic.UserLogic;
 import by.epam.task.logic.UsersBaseLogic;
 
 public class Runner {
-	private final Scanner in = new Scanner(System.in);
-	private final View view = new View();
-	private Library library = new Library();
-	private final LibraryLogic libraryLogic = new LibraryLogic();
-	private final UserLogic userLogic = new UserLogic();
-	private  UsersBaseLogic usersBaseLogic = new UsersBaseLogic();
+	private final Scanner in;
+	private final View view;
+	private final Library library;
+	private final LibraryLogic libraryLogic;
+	private final UserLogic userLogic;
+	private final UsersBaseLogic usersBaseLogic;
 	private User user;
 
 
-	public Runner() {}
+	public Runner() {
+		this.library = new Library();
+		this.in = new Scanner(System.in);
+		this.view = new View();
+		this.libraryLogic = new LibraryLogic();
+		this.userLogic = new UserLogic();
+		this.usersBaseLogic = new UsersBaseLogic();
+		this.user = new User();
+	}
 
 	public void adminMenu() {
 		int minMenuItem;
 		int maxMenuItem;
 
 		minMenuItem = 0;
-		maxMenuItem = 5;
+		maxMenuItem = 6;
+
+		int menuItem;
 
 		view.print("" +
 				"+++ ADMIN MENU +++\n" +
@@ -35,20 +45,28 @@ public class Runner {
 				"3. Add book\n" +
 				"4. Edit book\n" +
 				"5. Add user\n" +
-				"0. Main menu");
-		if (getMenuItem(minMenuItem, maxMenuItem) == 1){
+				"6. Add book's description\n" +
+				"0. Exit");
+
+		menuItem = getMenuItem(minMenuItem, maxMenuItem);
+		if (menuItem == 1){
 			view.showBooksByPages(library, 1);
-		} else if (getMenuItem(minMenuItem, maxMenuItem) == 2) {
+		}
+		if (menuItem == 2) {
 			// TODO реализовать поиск
-		} else if (getMenuItem(minMenuItem, maxMenuItem) == 3) {
+		}
+		if (menuItem == 3) {
 			libraryLogic.addBook(library);
 			adminMenu();
-		} else if (getMenuItem(minMenuItem, maxMenuItem) == 4) {
+		}
+		if (menuItem == 4) {
 			// TODO реализовать правку книги
-		} else if (getMenuItem(minMenuItem, maxMenuItem) == 5) {
+		}
+		if (menuItem == 5) {
 			usersBaseLogic.addUser(library);
 			adminMenu();
-		} else if (getMenuItem(minMenuItem, maxMenuItem) == 0) {
+		}
+		if (menuItem == 0) {
 			exit();
 		}
 	}
@@ -60,25 +78,29 @@ public class Runner {
 		minMenuItem = 0;
 		maxMenuItem = 4;
 
+		int item;
+
 		view.print("" +
 				"+++ USER MENU +++\n" +
 				"1. Show catalog\n" +
 				"2. Search book\n" +
-				"3. Suggest new book"+
-				"0. Main menu");
+				"3. Suggest new book\n"+
+				"0. Exit");
 
-		if (getMenuItem(minMenuItem, maxMenuItem) == 1) {
+		item = getMenuItem(minMenuItem, maxMenuItem);
+
+		if (item == 1) {
 			view.showBooksByPages(library, 1);
 			userMenu();
 		}
-		if (getMenuItem(minMenuItem, maxMenuItem) == 2) {
+		if (item == 2) {
 			// TODO реализовать поиск
 		}
-		if (getMenuItem(minMenuItem, maxMenuItem) == 3) {
+		if (item == 3) {
 			userLogic.suggestNewBook(user);
 			userMenu();
 		}
-		if (getMenuItem(minMenuItem, maxMenuItem) == 0) {
+		if (item == 0) {
 			exit();
 		}
 
@@ -125,6 +147,7 @@ public class Runner {
 	}
 
 	public int getMenuItem(int min, int max) {
+
 		int number;
 
 		while(!in.hasNextInt()) {
