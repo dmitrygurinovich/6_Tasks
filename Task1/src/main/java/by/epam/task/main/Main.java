@@ -1,17 +1,6 @@
 package by.epam.task.main;
 
-import by.epam.task.entity.*;
-import by.epam.task.logic.LibraryLogic;
-import by.epam.task.logic.UsersBaseLogic;
-import by.epam.task.view.View;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-
-
+import by.epam.task.view.Runner;
 
 /*
 Задание 1: создать консольное приложение “Учет книг в домашней библиотеке”.
@@ -28,14 +17,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class Main {
     public static void main(String[] args) {
-        Library library = new Library();
-        LibraryLogic logic = new LibraryLogic();
-        UsersBaseLogic userLogic = new UsersBaseLogic();
-        View view = new View();
-        User admin = new User("Ilya", "ilyadmitryevich", "56ewfefw32fe72sd3wO", UserRole.USER, "ilya.gurinovich@tut.by");
-
-        for (User user : userLogic.readUsersFromFile()){
-            System.out.println(user);
-        }
+        Runner runner = new Runner();
+        runner.authorisation();
     }
 }

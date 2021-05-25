@@ -25,7 +25,9 @@ public class LibraryLogic {
     public LibraryLogic() {}
 
     public void addBook(Library library) {
-        Book newBook = new Book();
+        Book newBook;
+
+        newBook = new Book();
 
         newBook.setName(getStringFromConsole("Enter book's name: "));
         newBook.setAuthor(getStringFromConsole("Enter book's author: "));

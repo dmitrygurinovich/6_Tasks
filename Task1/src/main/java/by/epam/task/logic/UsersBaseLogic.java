@@ -11,7 +11,6 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -32,12 +31,20 @@ public class UsersBaseLogic {
     public void addUser(Library library) {
         User user;
         String email;
+        String login;
 
         user = new User();
 
+        user.setId(library.getUsers().size() + 1);
         user.setName(getStringFromConsole("Enter user's name: "));
-        // TODO: добавить проверку на существование логина в базе
-        user.setLogin(getStringFromConsole("Enter user's login: "));
+
+        login = getStringFromConsole("Enter user's login: ");
+        while(isLoginExist(login, library)) {
+            view.print("Login is exist! Enter new login!");
+            login = getStringFromConsole("Enter user's login: ");
+        }
+        user.setLogin(login);
+
         user.setPassword(getStringFromConsole("Enter password: "));
         user.setRole((getNumFromConsole("Choose user's role:\n" +
                 "1. Administrator\n2. User", 0,2) == 1 ? UserRole.ADMINISTRATOR : UserRole.USER));
@@ -205,4 +212,21 @@ public class UsersBaseLogic {
 
         return isEmail;
     }
+
+    public boolean isLoginExist(String loginForCheck, Library library) {
+        boolean isExist;
+
+        isExist  = false;
+
+        for(User user : library.getUsers()) {
+            if (user.getLogin().equals(loginForCheck)) {
+                isExist = true;
+                break;
+            }
+        }
+
+        return isExist;
+    }
+
 }
+

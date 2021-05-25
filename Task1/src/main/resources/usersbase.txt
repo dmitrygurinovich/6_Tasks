@@ -18,3 +18,17 @@ Login: ilyadmitryevich
 Password: [15, 16, -56, 118, -69, 34, 73, 56, 68, 57, -126, -83, -6, 55, -119, 58, 19, 18, -16, -116, -58, -111, 14, -15, -66, -22, 27, 17, -48, -69, -45, -3]
 Role: User
 E-mail: ilya.gurinovich@tut.by
+---
+Id: 4
+Name: Oksana
+Login: oksana.gurinovich
+Password: [43, -83, 88, 71, -66, -62, -101, -46, 82, 14, 23, 15, -46, 121, 46, -15]
+Role: User
+E-mail: oksana.gurinovich@tut.by
+---
+Id: 5
+Name: Alex Bezmen
+Login: bezmen
+Password: [-118, 7, -85, 92, 47, -65, -127, 55, 102, -97, 63, 74, -119, 116, -119, -41]
+Role: Administrator
+E-mail: alex.bezmen@rambler.ru

@@ -10,7 +10,7 @@ public class Library {
 	private final LibraryLogic libraryLogic = new LibraryLogic();
 	private final UsersBaseLogic usersBaseLogic = new UsersBaseLogic();
 	private ArrayList<Book> books = libraryLogic.readBooksFromFile();
-	private ArrayList<User> users = new ArrayList<>();
+	private ArrayList<User> users = usersBaseLogic.readUsersFromFile();
 	
 	public Library() {}
 
