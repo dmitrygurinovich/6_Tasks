@@ -10,11 +10,11 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -53,9 +53,11 @@ public class UsersBaseLogic {
         library.getUsers().add(user);
         writeUserToFile(user);
     }
+
     public void writeUserToFile(User user) {
         try (FileWriter writer = new FileWriter(usersBasePath, true)) {
             writer.append("---\n");
+            writer.append("Id: ").append(String.valueOf(user.getId())).append("\n");
             writer.append("Name: ").append(user.getName()).append("\n");
             writer.append("Login: ").append(user.getLogin()).append("\n");
             writer.append("Password: ").append(Arrays.toString(encryptUserPassword(user.getPassword()))).append("\n");
@@ -68,7 +70,42 @@ public class UsersBaseLogic {
     }
 
     public void readUsersFromFile() {
+        ArrayList<User> users;
+        StringBuilder usersListFromFile;
+        Pattern patternForParsingUserField;
+        String[] usersListFromFileDividedBuUser;
+        ArrayList<String> userFieldsList;
+        Matcher matcher;
 
+        users = new ArrayList<>();
+        usersListFromFile = new StringBuilder();
+        patternForParsingUserField = Pattern.compile("(?:№\\s*|Id:\\s*|Name:\\s*|Login:\\s*|Password:\\s|Role:\\s|E-mail:\\s)(.*)(?:\\n|$|)");
+
+        try(FileReader reader = new FileReader(usersBasePath)) {
+            Scanner scanner = new Scanner(reader);
+
+            while (scanner.hasNextLine()) {
+                usersListFromFile.append(scanner.nextLine());
+                usersListFromFile.append("\n");
+            }
+
+            usersListFromFileDividedBuUser = usersListFromFile.toString().split("--\n");
+
+            for (String user : usersListFromFileDividedBuUser) {
+                userFieldsList = new ArrayList<>();
+                matcher = patternForParsingUserField.matcher(user);
+
+                while (matcher.find()) {
+                    userFieldsList.add(matcher.group(1));
+                }
+
+
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public byte[] encryptUserPassword(String password) {
@@ -101,6 +138,20 @@ public class UsersBaseLogic {
             e.printStackTrace();
         }
         return password.toString();
+    }
+
+    public byte[] getBytesArrayFromString(String password) {
+        String[] passwordParsedToStringsArray;
+        byte[] passwordParsedToBytesArray;
+
+        passwordParsedToStringsArray = password.substring(1, password.length() - 1).split(", ");
+        passwordParsedToBytesArray = new byte[passwordParsedToStringsArray.length];
+
+        for (int i = 0; i < passwordParsedToStringsArray.length; i++) {
+            passwordParsedToBytesArray[i] = Byte.parseByte(passwordParsedToStringsArray[i]);
+        }
+
+        return passwordParsedToBytesArray;
     }
 
     public int getNumFromConsole(String message, int min, int max) {
