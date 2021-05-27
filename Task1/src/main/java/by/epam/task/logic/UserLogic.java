@@ -8,11 +8,15 @@ import by.epam.task.view.View;
 import java.util.Scanner;
 
 public class UserLogic {
-    private final Scanner in = new Scanner(System.in);
-    private final View view = new View();
-    private final EmailSender sender = new EmailSender();
+    private final Scanner in;
+    private final View view;
+    private final EmailSender sender;
 
-    public UserLogic() {}
+    public UserLogic() {
+        this.in = new Scanner(System.in);
+        this.view = new View();
+        this.sender = new EmailSender();
+    }
 
     public void suggestNewBook(User user) {
         Book book;

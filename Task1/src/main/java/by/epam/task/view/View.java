@@ -6,9 +6,10 @@ import by.epam.task.entity.Library;
 import java.util.Scanner;
 
 public class View {
-    private final Scanner in = new Scanner(System.in);
+    private final Scanner in;
 
     public View() {
+        this.in = new Scanner(System.in);
     }
 
     public void showBooks(Library library) {

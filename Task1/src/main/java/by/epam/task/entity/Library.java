@@ -6,8 +6,8 @@ import by.epam.task.logic.UsersBaseLogic;
 import java.util.ArrayList;
 
 public class Library {
-	private LibraryLogic libraryLogic;
-	private UsersBaseLogic usersBaseLogic;
+	private final LibraryLogic libraryLogic;
+	private final UsersBaseLogic usersBaseLogic;
 	private ArrayList<Book> books;
 	private ArrayList<User> users;
 	

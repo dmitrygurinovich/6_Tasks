@@ -9,7 +9,7 @@ import by.epam.task.logic.LibraryLogic;
 import by.epam.task.logic.UserLogic;
 import by.epam.task.logic.UsersBaseLogic;
 
-public class Runner {
+public class UserInterface {
 	private final Scanner in;
 	private final View view;
 	private final Library library;
@@ -19,7 +19,7 @@ public class Runner {
 	private User user;
 
 
-	public Runner() {
+	public UserInterface() {
 		this.library = new Library();
 		this.in = new Scanner(System.in);
 		this.view = new View();

@@ -21,12 +21,17 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 public class UsersBaseLogic {
-    private final File usersBasePath = new File("Task1/src/main/resources/usersbase.txt");
-    private final SecretKeySpec key = new SecretKeySpec("Hdy4rl1dh64MwPfn".getBytes(), "AES");
-    private final Scanner in = new Scanner(System.in);
-    private final View view = new View();
+    private final File usersBasePath;
+    private final SecretKeySpec key;
+    private final Scanner in;
+    private final View view;
 
-    public UsersBaseLogic() {}
+    public UsersBaseLogic() {
+        this.usersBasePath = new File("Task1/src/main/resources/usersbase.txt");
+        this.key = new SecretKeySpec("Hdy4rl1dh64MwPfn".getBytes(), "AES");
+        this.in = new Scanner(System.in);
+        this.view = new View();
+    }
 
     public void addUser(Library library) {
         User user;

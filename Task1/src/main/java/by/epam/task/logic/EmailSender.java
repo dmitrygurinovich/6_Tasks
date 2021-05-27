@@ -10,7 +10,9 @@ import java.util.Date;
 import java.util.Properties;
 
 public class EmailSender {
-    public EmailSender() {}
+    public EmailSender() {
+
+    }
 
     /**
      * @param userEmail - user's e-mail
