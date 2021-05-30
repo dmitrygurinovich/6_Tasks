@@ -2,35 +2,41 @@ package by.epam.task.entity;
 
 import by.epam.task.logic.LibraryLogic;
 import by.epam.task.logic.UsersBaseLogic;
+import by.epam.task.view.View;
 
 import java.util.ArrayList;
 
 public class Library {
-	private final LibraryLogic libraryLogic;
-	private final UsersBaseLogic usersBaseLogic;
-	private ArrayList<Book> books;
-	private ArrayList<User> users;
-	
-	public Library() {
-		this.libraryLogic = new LibraryLogic();
-		this.usersBaseLogic = new UsersBaseLogic();
-		this.books = libraryLogic.readBooksFromFile();
-		this.users = usersBaseLogic.readUsersFromFile();
-	}
+    private ArrayList<Book> books;
+    private ArrayList<User> users;
+    private User authorizedUser;
 
-	public ArrayList<Book> getBooks() {
-		return books;
-	}
+    public Library() {
+        this.books = new LibraryLogic().readBooksFromFile();
+        this.users = new UsersBaseLogic().readUsersFromFile();
+    }
 
-	public void setBooks(ArrayList<Book> books) {
-		this.books = books;
-	}
+    public ArrayList<Book> getBooks() {
+        return books;
+    }
 
-	public ArrayList<User> getUsers() {
-		return users;
-	}
+    public void setBooks(ArrayList<Book> books) {
+        this.books = books;
+    }
 
-	public void setUsers(ArrayList<User> users) {
-		this.users = users;
-	}
+    public ArrayList<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(ArrayList<User> users) {
+        this.users = users;
+    }
+
+    public User getAuthorizedUser() {
+        return authorizedUser;
+    }
+
+    public void setAuthorizedUser(User authorizedUser) {
+        this.authorizedUser = authorizedUser;
+    }
 }

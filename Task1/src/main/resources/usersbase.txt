@@ -39,3 +39,10 @@ Login: inna
 Password: [-50, 43, 3, -42, 110, -80, -89, 52, -103, 42, -92, 74, 66, 5, 88, 68]
 Role: User
 E-mail: inna@tut.by
+---
+Id: 7
+Name: Inna
+Login: innagurinovich
+Password: [43, 116, 6, 36, -84, 59, 56, 109, -98, 46, 88, 86, -114, 108, 68, -1]
+Role: User
+E-mail: inna@tut.by

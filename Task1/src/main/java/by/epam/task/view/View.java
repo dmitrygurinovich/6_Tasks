@@ -2,6 +2,7 @@ package by.epam.task.view;
 
 import by.epam.task.entity.Book;
 import by.epam.task.entity.Library;
+import by.epam.task.entity.UserRole;
 
 import java.util.Scanner;
 
@@ -15,11 +16,11 @@ public class View {
     public void showBooks(Library library) {
         int defaultPageNumber = 1;
         if (library.getBooks().size() == 0) {
-            System.err.println("There aren't books!");
+            print("There aren't books!");
         } else if (library.getBooks().size() > 0 && library.getBooks().size() <= 10) {
-            System.out.println("+++ BOOKS +++\n +++ Page 1 +++");
+            print("+++ BOOKS +++\n +++ Page 1 +++");
             for (Book book : library.getBooks()) {
-                System.out.println(book);
+                print(book);
             }
         } else {
             showBooksByPages(library, defaultPageNumber);
@@ -36,35 +37,40 @@ public class View {
         }
 
         if (pageNumber < pagesCount) {
-            System.out.println("---- Page " + pageNumber + " of " + pagesCount +" ----" );
+            print("---- Page " + pageNumber + " of " + pagesCount +" ----" );
             for (int i = 10 * (pageNumber - 1); i < 10 * pageNumber; i++) {
-                System.out.println(library.getBooks().get(i));
+                print(library.getBooks().get(i));
             }
         } else if (pageNumber == pagesCount) {
             for (int i = 10 * (pageNumber - 1); i < library.getBooks().size(); i++) {
-                System.out.println(library.getBooks().get(i));
+                print(library.getBooks().get(i));
             }
         }
-        System.out.println("There are " + pagesCount + " pages!");
-        System.out.println("Enter page's number (1 - " + pagesCount + "):" +
+        print("There are " + pagesCount + " pages!");
+        print("Enter page's number (1 - " + pagesCount + "):" +
                 "\nEnter 0 for exit");
         while (!in.hasNextInt()) {
             in.next();
-            System.out.println("Enter page's number:");
+            print("Enter page's number:");
         }
         pageNumber = in.nextInt();
 
         if (pageNumber == 0) {
-            // выход из просмотра каталога
-            // переход в меню, в зависимости от роли пользователя
-            System.out.println("выход из меню");
+            if(library.getAuthorizedUser().getRole().equals(UserRole.USER) ) {
+                new UserInterface().userMenu();
+            } else {
+                new UserInterface().adminMenu();
+            }
         } else {
             showBooksByPages(library, pageNumber);
         }
-
     }
 
     public void print(String str) {
         System.out.println(str);
+    }
+
+    public void print(Book book) {
+        System.out.println(book);
     }
 }

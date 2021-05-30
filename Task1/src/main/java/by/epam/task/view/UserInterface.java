@@ -3,7 +3,6 @@ package by.epam.task.view;
 import java.util.Scanner;
 
 import by.epam.task.entity.Library;
-import by.epam.task.entity.User;
 import by.epam.task.entity.UserRole;
 import by.epam.task.logic.LibraryLogic;
 import by.epam.task.logic.UserLogic;
@@ -11,30 +10,24 @@ import by.epam.task.logic.UsersBaseLogic;
 
 public class UserInterface {
 	private final Scanner in;
-	private final View view;
 	private final Library library;
-	private final LibraryLogic libraryLogic;
-	private final UserLogic userLogic;
-	private final UsersBaseLogic usersBaseLogic;
-	private User user;
-
 
 	public UserInterface() {
 		this.library = new Library();
 		this.in = new Scanner(System.in);
-		this.view = new View();
-		this.libraryLogic = new LibraryLogic();
-		this.userLogic = new UserLogic();
-		this.usersBaseLogic = new UsersBaseLogic();
-		this.user = new User();
 	}
 
 	public void adminMenu() {
+		LibraryLogic libraryLogic;
+		UsersBaseLogic usersBaseLogic;
+		View view;
+
 		int minMenuItem;
 		int maxMenuItem;
 
 		minMenuItem = 0;
 		maxMenuItem = 6;
+		view = new View();
 
 		int menuItem;
 
@@ -50,12 +43,13 @@ public class UserInterface {
 
 		menuItem = getMenuItem(minMenuItem, maxMenuItem);
 		if (menuItem == 1){
-			view.showBooksByPages(library, 1);
+			view.showBooks(library);
 		}
 		if (menuItem == 2) {
 			// TODO реализовать поиск
 		}
 		if (menuItem == 3) {
+			libraryLogic = new LibraryLogic();
 			libraryLogic.addBook(library);
 			adminMenu();
 		}
@@ -63,6 +57,7 @@ public class UserInterface {
 			// TODO реализовать правку книги
 		}
 		if (menuItem == 5) {
+			usersBaseLogic = new UsersBaseLogic();
 			usersBaseLogic.addUser(library);
 			adminMenu();
 		}
@@ -72,13 +67,15 @@ public class UserInterface {
 	}
 
 	public void userMenu() {
+		UserLogic userLogic;
+		View view;
 		int minMenuItem;
 		int maxMenuItem;
+		int item;
 
 		minMenuItem = 0;
 		maxMenuItem = 4;
-
-		int item;
+		view = new View();
 
 		view.print("" +
 				"+++ USER MENU +++\n" +
@@ -90,14 +87,15 @@ public class UserInterface {
 		item = getMenuItem(minMenuItem, maxMenuItem);
 
 		if (item == 1) {
-			view.showBooksByPages(library, 1);
+			view.showBooks(library);
 			userMenu();
 		}
 		if (item == 2) {
 			// TODO реализовать поиск
 		}
 		if (item == 3) {
-			userLogic.suggestNewBook(user);
+			userLogic = new UserLogic();
+			userLogic.suggestNewBook(library.getAuthorizedUser());
 			userMenu();
 		}
 		if (item == 0) {
@@ -107,9 +105,13 @@ public class UserInterface {
 	}
 
 	public void authorisation() {
+		View view;
 		String login;
 		String password;
-		boolean authorized = false;
+		boolean authorized;
+
+		view = new View();
+		authorized = false;
 
 		view.print("Enter login: ");
 		while (!in.hasNextLine()) {
@@ -129,8 +131,8 @@ public class UserInterface {
 			if (library.getUsers().get(i).getLogin().equals(login)) {
 				if (library.getUsers().get(i).getPassword().equals(password)) {
 					authorized = true;
-					user = library.getUsers().get(i);
-					if (library.getUsers().get(i).getRole().equals(UserRole.ADMINISTRATOR)) {
+					library.setAuthorizedUser(library.getUsers().get(i));
+					if (library.getAuthorizedUser().getRole().equals(UserRole.ADMINISTRATOR)) {
 						adminMenu();
 					} else {
 						userMenu();

@@ -1,5 +1,10 @@
 package by.epam.task.main;
 
+import by.epam.task.entity.Book;
+import by.epam.task.entity.Library;
+import by.epam.task.logic.LibraryLogic;
+import by.epam.task.logic.UserLogic;
+import by.epam.task.logic.UsersBaseLogic;
 import by.epam.task.view.UserInterface;
 
 /*
@@ -19,5 +24,6 @@ public class Main {
     public static void main(String[] args) {
         UserInterface runner = new UserInterface();
         runner.authorisation();
+
     }
 }
