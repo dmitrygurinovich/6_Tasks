@@ -7,10 +7,9 @@ import by.epam.task.entity.UserRole;
 import java.util.Scanner;
 
 public class View {
-    private final Scanner in;
 
     public View() {
-        this.in = new Scanner(System.in);
+
     }
 
     public void showBooks(Library library) {
@@ -29,7 +28,10 @@ public class View {
 
     public void showBooksByPages(Library library, int defaultPageNumber) {
         int pagesCount;
+        Scanner in;
+
         int pageNumber = defaultPageNumber;
+
 
         pagesCount = (library.getBooks().size() - (library.getBooks().size() % 10)) / 10;
         if (library.getBooks().size() % 10 != 0) {
@@ -48,7 +50,9 @@ public class View {
         }
         print("There are " + pagesCount + " pages!");
         print("Enter page's number (1 - " + pagesCount + "):" +
-                "\nEnter 0 for exit");
+                "\nEnter \"0\" for enter to the main menu.");
+
+        in = new Scanner(System.in);
         while (!in.hasNextInt()) {
             in.next();
             print("Enter page's number:");

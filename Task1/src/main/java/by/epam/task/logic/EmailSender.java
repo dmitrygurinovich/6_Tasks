@@ -62,7 +62,7 @@ public class EmailSender {
      * @param user - user, who is suggesting to add new book
      * @param book - book
      */
-    public void suggestingToAddABookToTheLibrary(User user, Book book) {
+    public void suggestToAddABookToTheLibrary(User user, Book book) {
         final String username = "dmitry.gurinovich1989@gmail.com";
         final String password = "qWe4531689925";
 
