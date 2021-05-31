@@ -1,18 +1,16 @@
 package by.epam.task.logic;
 
-import by.epam.task.entity.*;
+import by.epam.task.entity.Book;
+import by.epam.task.entity.BookType;
+import by.epam.task.entity.Library;
+import by.epam.task.view.UserInterface;
 import by.epam.task.view.View;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.SecretKeySpec;
-import java.io.*;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,6 +41,26 @@ public class LibraryLogic {
         library.getBooks().add(newBook);
 
         view.print("New book " + newBook.getName() + " added.");
+    }
+
+    public void editBook(Library library) {
+        int bookNumber;
+        UserInterface userInterface;
+        Book bookForEdit;
+
+        bookForEdit = new Book();
+
+        bookNumber = getNumFromConsole("" +
+                "Enter book's number which you want to edit (\"0\" for exit to the main menu): ", -1, library.getBooks().size());
+
+        for (Book book : library.getBooks()) {
+            if (book.getId() == bookNumber) {
+                bookForEdit = book;
+                break;
+            }
+        }
+
+        System.out.println(bookForEdit);
     }
 
     public void writeOneBookToFile(Book book) {
@@ -122,12 +140,13 @@ public class LibraryLogic {
     public int getNumFromConsole(String message, int min, int max) {
         int number;
         view.print(message);
-        while(!in.hasNextInt()) {
+        while (!in.hasNextInt()) {
             view.print(message);
             in.next();
         }
         number = in.nextInt();
         in.nextLine();
+
         if (number > min && number <= max) {
             return number;
         } else {
@@ -135,7 +154,7 @@ public class LibraryLogic {
         }
     }
 
-    public  String getStringFromConsole(String message) {
+    public String getStringFromConsole(String message) {
         String text;
         view.print(message);
 

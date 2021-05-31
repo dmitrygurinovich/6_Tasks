@@ -46,3 +46,10 @@ Login: innagurinovich
 Password: [43, 116, 6, 36, -84, 59, 56, 109, -98, 46, 88, 86, -114, 108, 68, -1]
 Role: User
 E-mail: inna@tut.by
+---
+Id: 8
+Name: admin
+Login: 1111
+Password: [74, 93, -117, -71, 75, 125, -54, 18, -61, 45, -3, 110, -125, 74, 100, -41]
+Role: Administrator
+E-mail: 111@tut.by

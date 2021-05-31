@@ -29,6 +29,7 @@ public class View {
     public void showBooksByPages(Library library, int defaultPageNumber) {
         int pagesCount;
         Scanner in;
+        UserInterface userInterface;
 
         int pageNumber = defaultPageNumber;
 
@@ -60,10 +61,11 @@ public class View {
         pageNumber = in.nextInt();
 
         if (pageNumber == 0) {
+            userInterface = new UserInterface();
             if(library.getAuthorizedUser().getRole().equals(UserRole.USER) ) {
-                new UserInterface().userMenu();
+                userInterface.userMenu();
             } else {
-                new UserInterface().adminMenu();
+                userInterface.adminMenu();
             }
         } else {
             showBooksByPages(library, pageNumber);

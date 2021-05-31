@@ -26,7 +26,7 @@ public class UserInterface {
 
         view = new View();
         minMenuItem = 0;
-        maxMenuItem = 6;
+        maxMenuItem = 5;
 
         menuItem = getMenuItem(minMenuItem, maxMenuItem, "" +
 				"+++ ADMIN MENU +++\n" +
@@ -35,8 +35,8 @@ public class UserInterface {
 				"3. Add book\n" +
 				"4. Edit book\n" +
 				"5. Add user\n" +
-				"6. Add book's description\n" +
 				"0. Exit");
+
         if (menuItem == 1) {
             view.showBooks(library);
         } else if (menuItem == 2) {
@@ -46,7 +46,8 @@ public class UserInterface {
             libraryLogic.addBook(library);
             adminMenu();
         } else if (menuItem == 4) {
-            // TODO реализовать правку книги
+            libraryLogic = new LibraryLogic();
+            libraryLogic.editBook(library);
         } else if (menuItem == 5) {
             usersBaseLogic = new UsersBaseLogic();
             usersBaseLogic.addUser(library);
