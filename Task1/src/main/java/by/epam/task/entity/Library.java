@@ -2,7 +2,6 @@ package by.epam.task.entity;
 
 import by.epam.task.logic.LibraryLogic;
 import by.epam.task.logic.UsersBaseLogic;
-import by.epam.task.view.View;
 
 import java.util.ArrayList;
 

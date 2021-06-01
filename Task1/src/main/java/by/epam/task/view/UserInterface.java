@@ -10,21 +10,22 @@ import java.util.Scanner;
 
 public class UserInterface {
     private final Library library;
+    private final LibraryLogic libraryLogic;
+    private static final Scanner in = new Scanner(System.in);
+    private static final View view = new View();
 
     public UserInterface() {
         this.library = new Library();
+        this.libraryLogic = new LibraryLogic();
     }
 
     public void adminMenu() {
-        LibraryLogic libraryLogic;
         UsersBaseLogic usersBaseLogic;
-        View view;
 
         int minMenuItem;
         int maxMenuItem;
         int menuItem;
 
-        view = new View();
         minMenuItem = 0;
         maxMenuItem = 5;
 
@@ -42,12 +43,10 @@ public class UserInterface {
         } else if (menuItem == 2) {
             // TODO реализовать поиск
         } else if (menuItem == 3) {
-            libraryLogic = new LibraryLogic();
             libraryLogic.addBook(library);
             adminMenu();
         } else if (menuItem == 4) {
-            libraryLogic = new LibraryLogic();
-            libraryLogic.editBook(library);
+            libraryLogic.editBook(library, this);
         } else if (menuItem == 5) {
             usersBaseLogic = new UsersBaseLogic();
             usersBaseLogic.addUser(library);
@@ -59,14 +58,12 @@ public class UserInterface {
 
     public void userMenu() {
         UserLogic userLogic;
-        View view;
         int minMenuItem;
         int maxMenuItem;
         int item;
 
         minMenuItem = 0;
         maxMenuItem = 4;
-
 
         item = getMenuItem(minMenuItem, maxMenuItem, "" +
 				"+++ USER MENU +++\n" +
@@ -76,7 +73,6 @@ public class UserInterface {
 				"0. Exit");
 
         if (item == 1) {
-			view = new View();
             view.showBooks(library);
             userMenu();
         }
@@ -95,17 +91,13 @@ public class UserInterface {
     }
 
     public void authorisation() {
-        View view;
         String login;
         String password;
         boolean authorized;
-        Scanner in;
 
-        view = new View();
         authorized = false;
 
         view.print("Enter login: ");
-        in = new Scanner(System.in);
         while (!in.hasNextLine()) {
             in.next();
             view.print("Enter login: ");
@@ -141,15 +133,10 @@ public class UserInterface {
     }
 
     public int getMenuItem(int min, int max, String message) {
-		View view;
         int number;
-        Scanner in;
-
-        view = new View();
 
         view.print(message);
 
-        in = new Scanner(System.in);
         while (!in.hasNextInt()) {
         	view.print(message);
             in.next();
@@ -164,10 +151,6 @@ public class UserInterface {
     }
 
     public void exit() {
-        Scanner in;
-
-        in = new Scanner(System.in);
-
         in.close();
         System.exit(0);
     }

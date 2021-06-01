@@ -2,6 +2,7 @@ package by.epam.task.main;
 
 import by.epam.task.entity.Library;
 import by.epam.task.logic.LibraryLogic;
+import by.epam.task.view.UserInterface;
 
 /*
 Задание 1: создать консольное приложение “Учет книг в домашней библиотеке”.
@@ -19,7 +20,8 @@ import by.epam.task.logic.LibraryLogic;
 public class Main {
     public static void main(String[] args) {
 
-        new LibraryLogic().editBook(new Library());
+        UserInterface runner = new UserInterface();
+        runner.authorisation();
 
     }
 }

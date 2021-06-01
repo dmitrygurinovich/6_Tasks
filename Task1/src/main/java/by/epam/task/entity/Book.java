@@ -1,7 +1,5 @@
 package by.epam.task.entity;
 
-import by.epam.task.logic.LibraryLogic;
-
 public class Book {
 	private static int defaultID = 1;
 	private int id;
@@ -10,8 +8,7 @@ public class Book {
 	private int year;
 	private BookType type;
 	private String description;
-	private final LibraryLogic logic = new LibraryLogic();
-	
+
 	public Book() {}
 
 	public Book(String name, String author, int year, BookType type) {
@@ -77,6 +74,14 @@ public class Book {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public static void setDefaultID(int defaultID) {
+		Book.defaultID = defaultID;
+	}
+
+	public static int getDefaultID() {
+		return defaultID;
 	}
 
 	@Override

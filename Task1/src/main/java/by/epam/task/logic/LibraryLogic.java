@@ -43,24 +43,25 @@ public class LibraryLogic {
         view.print("New book " + newBook.getName() + " added.");
     }
 
-    public void editBook(Library library) {
+    public void editBook(Library library, UserInterface userInterface) {
         int bookNumber;
-        UserInterface userInterface;
-        Book bookForEdit;
-
-        bookForEdit = new Book();
+        Book book;
 
         bookNumber = getNumFromConsole("" +
                 "Enter book's number which you want to edit (\"0\" for exit to the main menu): ", -1, library.getBooks().size());
 
-        for (Book book : library.getBooks()) {
-            if (book.getId() == bookNumber) {
-                bookForEdit = book;
-                break;
-            }
+        view.print("Enter \"0\" for enter to the main menu.");
+        if (bookNumber == 0) {
+            userInterface.adminMenu();
+        } else {
+            book = library.getBooks().get(bookNumber - 1);
+
+            // TODO: меню редактирования выбранной книги
+
+            userInterface.adminMenu();
         }
 
-        System.out.println(bookForEdit);
+
     }
 
     public void writeOneBookToFile(Book book) {
