@@ -12,7 +12,7 @@ public class View {
 
     }
 
-    public void showBooks(Library library) {
+    public void showBooks(Library library, UserInterface userInterface) {
         int defaultPageNumber = 1;
         if (library.getBooks().size() == 0) {
             print("There aren't books!");
@@ -22,14 +22,13 @@ public class View {
                 print(book);
             }
         } else {
-            showBooksByPages(library, defaultPageNumber);
+            showBooksByPages(library, defaultPageNumber, userInterface);
         }
     }
 
-    public void showBooksByPages(Library library, int defaultPageNumber) {
+    public void showBooksByPages(Library library, int defaultPageNumber, UserInterface userInterface) {
         int pagesCount;
         Scanner in;
-        UserInterface userInterface;
 
         int pageNumber = defaultPageNumber;
 
@@ -61,14 +60,13 @@ public class View {
         pageNumber = in.nextInt();
 
         if (pageNumber == 0) {
-            userInterface = new UserInterface();
             if(library.getAuthorizedUser().getRole().equals(UserRole.USER) ) {
                 userInterface.userMenu();
             } else {
                 userInterface.adminMenu();
             }
         } else {
-            showBooksByPages(library, pageNumber);
+            showBooksByPages(library, pageNumber, userInterface);
         }
     }
 

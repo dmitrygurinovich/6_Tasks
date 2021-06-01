@@ -11,8 +11,8 @@ public class Library {
     private User authorizedUser;
 
     public Library() {
-        this.books = new LibraryLogic().readBooksFromFile();
-        this.users = new UsersBaseLogic().readUsersFromFile();
+        this.books = new LibraryLogic().readBooksFromFile();    // FIXME
+        this.users = new UsersBaseLogic().readUsersFromFile();  // FIXME
     }
 
     public ArrayList<Book> getBooks() {

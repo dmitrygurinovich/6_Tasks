@@ -39,7 +39,7 @@ public class UserInterface {
 				"0. Exit");
 
         if (menuItem == 1) {
-            view.showBooks(library);
+            view.showBooks(library, this);
         } else if (menuItem == 2) {
             // TODO реализовать поиск
         } else if (menuItem == 3) {
@@ -73,7 +73,7 @@ public class UserInterface {
 				"0. Exit");
 
         if (item == 1) {
-            view.showBooks(library);
+            view.showBooks(library, this);
             userMenu();
         }
         if (item == 2) {

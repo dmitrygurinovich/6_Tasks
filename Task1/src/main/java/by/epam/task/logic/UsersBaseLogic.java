@@ -23,14 +23,12 @@ import java.util.regex.PatternSyntaxException;
 public class UsersBaseLogic {
     private final File usersBasePath;
     private final SecretKeySpec key;
-    private final Scanner in;
-    private final View view;
+    private static final Scanner in = new Scanner(System.in);
+    private static final View view = new View();
 
     public UsersBaseLogic() {
         this.usersBasePath = new File("Task1/src/main/resources/usersbase.txt");
         this.key = new SecretKeySpec("Hdy4rl1dh64MwPfn".getBytes(), "AES");
-        this.in = new Scanner(System.in);
-        this.view = new View();
     }
 
     public void addUser(Library library) {
@@ -97,7 +95,9 @@ public class UsersBaseLogic {
         patternForParsingUserField = Pattern.compile("(?:№\\s*|Id:\\s*|Name:\\s*|Login:\\s*|Password:\\s|Role:\\s|E-mail:\\s)(.*)(?:\\n|$|)");
 
         try(FileReader reader = new FileReader(usersBasePath)) {
-            Scanner scanner = new Scanner(reader);
+            Scanner scanner;
+
+            scanner = new Scanner(reader);
 
             while (scanner.hasNextLine()) {
                 usersListFromFile.append(scanner.nextLine());
@@ -130,7 +130,10 @@ public class UsersBaseLogic {
     }
 
     public byte[] encryptUserPassword(String password) {
-        byte[] passwordsBytes = new byte[0];
+        byte[] passwordsBytes;
+
+        passwordsBytes = new byte[0];
+
         try {
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.ENCRYPT_MODE, key);
@@ -144,7 +147,9 @@ public class UsersBaseLogic {
 
     public String decryptUserPassword(byte[] bytes) {
         StringBuilder password;
+
         password = new StringBuilder();
+
         try {
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.DECRYPT_MODE, key);

@@ -17,12 +17,11 @@ import java.util.regex.Pattern;
 
 public class LibraryLogic {
     private final File booksBasePath;
-    private final Scanner in;
+    private static final Scanner in = new Scanner(System.in);
     private final View view;
 
     public LibraryLogic() {
         this.booksBasePath = new File("Task1/src/main/resources/booksbase.txt");
-        this.in = new Scanner(System.in);
         this.view = new View();
     }
 
@@ -34,7 +33,7 @@ public class LibraryLogic {
         newBook.setName(getStringFromConsole("Enter book's name: "));
         newBook.setAuthor(getStringFromConsole("Enter book's author: "));
         newBook.setYear(getNumFromConsole("Enter book's year: ", 1800, 2021));
-        newBook.setType((getNumFromConsole("Choose book's type:\n" + "1. Paper book\n" + "2. E-book", 0, 2) == 1 ? BookType.PAPER_BOOK : BookType.ELECTRONIC_BOOK));
+        newBook.setType((getNumFromConsole("Choose book's type:\n" + "1. Paper book\n" + "2. E-book", 1, 2) == 1 ? BookType.PAPER_BOOK : BookType.ELECTRONIC_BOOK));
         newBook.setId(library.getBooks().size() + 1);
 
         this.writeOneBookToFile(newBook);
@@ -43,24 +42,58 @@ public class LibraryLogic {
         view.print("New book " + newBook.getName() + " added.");
     }
 
+    public void showBookEditingMenu(Book book, UserInterface userInterface){
+        int menuItem;
+        view.print("" +
+                "You're editing book:\n" +
+                "####################\n" +
+                book +
+                "####################");
+        menuItem = getNumFromConsole("" +
+                "1. Edit book's name\n" +
+                "2. Edit book's author\n" +
+                "3. Edit year\n" +
+                "4. Edit type\n" +
+                "5. Edit description\n" +
+                "0. To the main menu", 0, 5);
+
+        switch (menuItem){
+            case 0:
+                userInterface.adminMenu();
+                // TODO: записать все книги в файл
+            case 1:
+                book.setName(getStringFromConsole("Enter name: "));
+                showBookEditingMenu(book, userInterface);
+            case 2:
+                book.setAuthor(getStringFromConsole("Enter author: "));
+                showBookEditingMenu(book, userInterface);
+            case 3:
+                book.setYear(getNumFromConsole("Enter year", 1800, 2021));
+                showBookEditingMenu(book, userInterface);
+            case 4:
+                book.setType((getNumFromConsole("1. Paper book\n2. Electronic book",1,2) == 1) ? BookType.PAPER_BOOK : BookType.ELECTRONIC_BOOK);
+                showBookEditingMenu(book, userInterface);
+            case 5:
+                book.setDescription(getStringFromConsole("Enter description: "));
+                showBookEditingMenu(book, userInterface);
+        }
+    }
+
     public void editBook(Library library, UserInterface userInterface) {
         int bookNumber;
+
         Book book;
 
         bookNumber = getNumFromConsole("" +
-                "Enter book's number which you want to edit (\"0\" for exit to the main menu): ", -1, library.getBooks().size());
+                "Enter book's number or \"0\" for exit to the main menu: ", 0, library.getBooks().size());
 
-        view.print("Enter \"0\" for enter to the main menu.");
         if (bookNumber == 0) {
             userInterface.adminMenu();
         } else {
             book = library.getBooks().get(bookNumber - 1);
 
-            // TODO: меню редактирования выбранной книги
-
-            userInterface.adminMenu();
+            showBookEditingMenu(book, userInterface);
         }
-
 
     }
 
@@ -148,7 +181,7 @@ public class LibraryLogic {
         number = in.nextInt();
         in.nextLine();
 
-        if (number > min && number <= max) {
+        if (number >= min && number <= max) {
             return number;
         } else {
             return getNumFromConsole(message, min, max);

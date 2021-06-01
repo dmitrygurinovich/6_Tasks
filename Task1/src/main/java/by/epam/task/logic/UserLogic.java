@@ -8,6 +8,8 @@ import by.epam.task.view.View;
 import java.util.Scanner;
 
 public class UserLogic {
+    private static final Scanner in = new Scanner(System.in);
+    private static final View view = new View();
 
     public UserLogic() {
 
@@ -30,11 +32,6 @@ public class UserLogic {
 
     public int getNumFromConsole(String message, int min, int max) {
         int number;
-        View view;
-        Scanner in;
-
-        view = new View();
-        in = new Scanner(System.in);
 
         view.print(message);
         while (!in.hasNextInt()) {
@@ -52,11 +49,6 @@ public class UserLogic {
 
     public String getStringFromConsole(String message) {
         String text;
-        View view;
-        Scanner in;
-
-        view = new View();
-        in = new Scanner(System.in);
 
         view.print(message);
 
