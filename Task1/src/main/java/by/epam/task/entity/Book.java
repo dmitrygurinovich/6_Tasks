@@ -1,5 +1,7 @@
 package by.epam.task.entity;
 
+import java.util.Objects;
+
 public class Book {
 	private static int defaultID = 1;
 	private int id;
@@ -9,7 +11,9 @@ public class Book {
 	private BookType type;
 	private String description;
 
-	public Book() {}
+	public Book() {
+
+	}
 
 	public Book(String name, String author, int year, BookType type) {
 		this.id = defaultID++;
@@ -82,6 +86,24 @@ public class Book {
 
 	public static int getDefaultID() {
 		return defaultID;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Book book = (Book) o;
+		return id == book.id &&
+				year == book.year &&
+				name.equals(book.name) &&
+				author.equals(book.author) &&
+				type == book.type &&
+				description.equals(book.description);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name, author, year, type, description);
 	}
 
 	@Override

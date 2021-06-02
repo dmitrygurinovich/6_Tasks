@@ -1,5 +1,7 @@
 package by.epam.task.entity;
 
+import java.util.Objects;
+
 public class User {
 	private static int defaultID = 1;
 	private int id;
@@ -19,14 +21,7 @@ public class User {
 		this.role = role;
 		this.email = email;
 	}
-	
-	/**
-	 * @param name User's name
-	 * @param login User's login
-	 * @param password User's password
-	 * @param role User's role: admin or user
-	 * @param email User's e-mail
-	 */
+
 	public User(String name, String login, String password, UserRole role, String email) {
 		this.id = defaultID++;
 		this.name = name;
@@ -85,6 +80,24 @@ public class User {
 	}
 
 	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		User user = (User) o;
+		return id == user.id &&
+				name.equals(user.name) &&
+				login.equals(user.login) &&
+				password.equals(user.password) &&
+				role == user.role &&
+				email.equals(user.email);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name, login, password, role, email);
+	}
+
+	@Override
 	public String toString() {
 		return "User ID: " + id + "\n" 
 				+ (name != null ? "Name: " + name + "\n" : "")
@@ -93,7 +106,5 @@ public class User {
 				+ (role != null ? "Role: " + role + "\n" : "")
 				+ (email != null ? "E-mail: " + email + "\n" : "");
 	}
-	
-	
-	
+
 }
