@@ -38,54 +38,54 @@ public class UserInterface {
 				"5. Add user\n" +
 				"0. Exit");
 
-        if (menuItem == 1) {
-            view.showBooks(library, this);
-        } else if (menuItem == 2) {
-            // TODO реализовать поиск
-        } else if (menuItem == 3) {
-            libraryLogic.addBook(library);
-            adminMenu();
-        } else if (menuItem == 4) {
-            libraryLogic.editBook(library, this);
-        } else if (menuItem == 5) {
-            usersBaseLogic = new UsersBaseLogic();
-            usersBaseLogic.addUser(library);
-            adminMenu();
-        } else if (menuItem == 0) {
-            exit();
+        switch (menuItem) {
+            case 1:
+                view.showBooks(library, this);
+            case 2:
+                // TODO: search
+            case 3:
+                libraryLogic.addBook(library);
+                adminMenu();
+            case 4:
+                libraryLogic.editBook(library, this);
+            case 5:
+                usersBaseLogic = new UsersBaseLogic();
+                usersBaseLogic.addUser(library);
+                adminMenu();
+            case 0:
+                exit();
         }
+
     }
 
     public void userMenu() {
         UserLogic userLogic;
         int minMenuItem;
         int maxMenuItem;
-        int item;
+        int menuItem;
 
         minMenuItem = 0;
         maxMenuItem = 4;
 
-        item = getMenuItem(minMenuItem, maxMenuItem, "" +
+        menuItem = getMenuItem(minMenuItem, maxMenuItem, "" +
 				"+++ USER MENU +++\n" +
 				"1. Show catalog\n" +
 				"2. Search book\n" +
 				"3. Suggest new book\n" +
 				"0. Exit");
 
-        if (item == 1) {
-            view.showBooks(library, this);
-            userMenu();
-        }
-        if (item == 2) {
-            // TODO реализовать поиск
-        }
-        if (item == 3) {
-            userLogic = new UserLogic();
-            userLogic.suggestNewBook(library.getAuthorizedUser());
-            userMenu();
-        }
-        if (item == 0) {
-            exit();
+        switch (menuItem) {
+            case 1:
+                view.showBooks(library, this);
+                userMenu();
+            case 2:
+                // TODO: search
+            case 3:
+                userLogic = new UserLogic();
+                userLogic.suggestNewBook(library.getAuthorizedUser());
+                userMenu();
+            case 0:
+                exit();
         }
 
     }

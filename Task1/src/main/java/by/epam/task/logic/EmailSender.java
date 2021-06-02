@@ -17,10 +17,12 @@ public class EmailSender {
     public EmailSender() {
     }
 
-
+    /**
+     * @param library - library
+     * @param subject - Mail subject
+     * @param book - book
+     */
     public void notifyUsersAboutAddingBooksDescription(Library library, String subject, Book book) {
-
-
         final String username = "dmitry.gurinovich1989@gmail.com";
         final String password = "qWe4531689925";
 
@@ -112,6 +114,11 @@ public class EmailSender {
         }
     }
 
+    /**
+     * @param role - User role (Administrator or User)
+     * @param library - library
+     * @return Address[] addresses
+     */
     public Address[] getUsersEmail(UserRole role, Library library) {
         ArrayList<String> emails;
         Address[] addresses;

@@ -18,12 +18,11 @@ import java.util.regex.Pattern;
 public class LibraryLogic {
     private final File booksBasePath;
     private static final Scanner in = new Scanner(System.in);
+    private static final EmailSender sender = new EmailSender();
     private final View view;
-    private final EmailSender sender;
 
     public LibraryLogic() {
         this.booksBasePath = new File("Task1/src/main/resources/booksbase.txt");
-        sender = new EmailSender();
         this.view = new View();
     }
 
@@ -42,6 +41,23 @@ public class LibraryLogic {
         library.getBooks().add(newBook);
 
         view.print("New book " + newBook.getName() + " added.");
+    }
+
+    public void editBook(Library library, UserInterface userInterface) {
+        int bookNumber;
+
+        Book book;
+
+        bookNumber = getNumFromConsole("" +
+                "Enter book's number or \"0\" for exit to the main menu: ", 0, library.getBooks().size());
+
+        if (bookNumber == 0) {
+            userInterface.adminMenu();
+        } else {
+            book = library.getBooks().get(bookNumber - 1);
+            showBookEditingMenu(library, book, userInterface);
+        }
+
     }
 
     public void showBookEditingMenu(Library library, Book book, UserInterface userInterface){
@@ -86,23 +102,6 @@ public class LibraryLogic {
                 }
                 showBookEditingMenu(library, book, userInterface);
         }
-    }
-
-    public void editBook(Library library, UserInterface userInterface) {
-        int bookNumber;
-
-        Book book;
-
-        bookNumber = getNumFromConsole("" +
-                "Enter book's number or \"0\" for exit to the main menu: ", 0, library.getBooks().size());
-
-        if (bookNumber == 0) {
-            userInterface.adminMenu();
-        } else {
-            book = library.getBooks().get(bookNumber - 1);
-            showBookEditingMenu(library, book, userInterface);
-        }
-
     }
 
     public void writeOneBookToFile(Book book) {
