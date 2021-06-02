@@ -6,48 +6,20 @@ Role: Administrator
 E-mail: dmitry.gurinovich@hotmail.com
 ---
 Id: 2
-Name: Inna
-Login: inno
-Password: [95, 69, 79, 78, 2, -64, 49, -91, -46, -100, 37, 13, 71, -116, -103, 33]
-Role: User
-E-mail: mariflo@mail.ru
----
-Id: 3
 Name: Ilya
 Login: ilyadmitryevich
 Password: [15, 16, -56, 118, -69, 34, 73, 56, 68, 57, -126, -83, -6, 55, -119, 58, 19, 18, -16, -116, -58, -111, 14, -15, -66, -22, 27, 17, -48, -69, -45, -3]
 Role: User
-E-mail: ilya.gurinovich@tut.by
+E-mail: 1622322@etlgr.com
 ---
-Id: 4
-Name: Oksana
-Login: oksana.gurinovich
-Password: [43, -83, 88, 71, -66, -62, -101, -46, 82, 14, 23, 15, -46, 121, 46, -15]
+Id: 3
+Name: symon
+Login: ilyadmitry
+Password: [15, 16, -56, 118, -69, 34, 73, 56, 68, 57, -126, -83, -6, 55, -119, 58, 19, 18, -16, -116, -58, -111, 14, -15, -66, -22, 27, 17, -48, -69, -45, -3]
 Role: User
-E-mail: oksana.gurinovich@tut.by
+E-mail: dmitry@alfasale.by
 ---
 Id: 5
-Name: Alex Bezmen
-Login: bezmen
-Password: [-118, 7, -85, 92, 47, -65, -127, 55, 102, -97, 63, 74, -119, 116, -119, -41]
-Role: Administrator
-E-mail: alex.bezmen@rambler.ru
----
-Id: 6
-Name: gurinovich
-Login: inna
-Password: [-50, 43, 3, -42, 110, -80, -89, 52, -103, 42, -92, 74, 66, 5, 88, 68]
-Role: User
-E-mail: inna@tut.by
----
-Id: 7
-Name: Inna
-Login: innagurinovich
-Password: [43, 116, 6, 36, -84, 59, 56, 109, -98, 46, 88, 86, -114, 108, 68, -1]
-Role: User
-E-mail: inna@tut.by
----
-Id: 8
 Name: admin
 Login: 1111
 Password: [74, 93, -117, -71, 75, 125, -54, 18, -61, 45, -3, 110, -125, 74, 100, -41]

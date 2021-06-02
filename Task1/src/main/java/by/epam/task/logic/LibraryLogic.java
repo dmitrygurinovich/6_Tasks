@@ -19,9 +19,11 @@ public class LibraryLogic {
     private final File booksBasePath;
     private static final Scanner in = new Scanner(System.in);
     private final View view;
+    private final EmailSender sender;
 
     public LibraryLogic() {
         this.booksBasePath = new File("Task1/src/main/resources/booksbase.txt");
+        sender = new EmailSender();
         this.view = new View();
     }
 
@@ -42,8 +44,10 @@ public class LibraryLogic {
         view.print("New book " + newBook.getName() + " added.");
     }
 
-    public void showBookEditingMenu(Book book, UserInterface userInterface){
+    public void showBookEditingMenu(Library library, Book book, UserInterface userInterface){
         int menuItem;
+        String descriptionUntilEditing;
+
         view.print("" +
                 "You're editing book:\n" +
                 "####################\n" +
@@ -59,23 +63,28 @@ public class LibraryLogic {
 
         switch (menuItem){
             case 0:
+                writeBooksToFile(library.getBooks());
                 userInterface.adminMenu();
-                // TODO: записать все книги в файл
             case 1:
                 book.setName(getStringFromConsole("Enter name: "));
-                showBookEditingMenu(book, userInterface);
+                showBookEditingMenu(library, book, userInterface);
             case 2:
                 book.setAuthor(getStringFromConsole("Enter author: "));
-                showBookEditingMenu(book, userInterface);
+                showBookEditingMenu(library, book, userInterface);
             case 3:
                 book.setYear(getNumFromConsole("Enter year", 1800, 2021));
-                showBookEditingMenu(book, userInterface);
+                showBookEditingMenu(library, book, userInterface);
             case 4:
                 book.setType((getNumFromConsole("1. Paper book\n2. Electronic book",1,2) == 1) ? BookType.PAPER_BOOK : BookType.ELECTRONIC_BOOK);
-                showBookEditingMenu(book, userInterface);
+                showBookEditingMenu(library, book, userInterface);
             case 5:
+                descriptionUntilEditing = book.getDescription();
+
                 book.setDescription(getStringFromConsole("Enter description: "));
-                showBookEditingMenu(book, userInterface);
+                if (!book.getDescription().equals("") && !book.getDescription().equals(descriptionUntilEditing)) {
+                    sender.notifyUsersAboutAddingBooksDescription(library, "Description has been added for book!", book);
+                }
+                showBookEditingMenu(library, book, userInterface);
         }
     }
 
@@ -91,8 +100,7 @@ public class LibraryLogic {
             userInterface.adminMenu();
         } else {
             book = library.getBooks().get(bookNumber - 1);
-
-            showBookEditingMenu(book, userInterface);
+            showBookEditingMenu(library, book, userInterface);
         }
 
     }
