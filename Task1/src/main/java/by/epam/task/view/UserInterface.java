@@ -42,12 +42,13 @@ public class UserInterface {
             case 1:
                 view.showBooks(library, this);
             case 2:
-                // TODO: search
+                libraryLogic.searchByKeyword(library);
             case 3:
                 libraryLogic.addBook(library);
                 adminMenu();
             case 4:
                 libraryLogic.editBook(library, this);
+                adminMenu();
             case 5:
                 usersBaseLogic = new UsersBaseLogic();
                 usersBaseLogic.addUser(library);
@@ -79,7 +80,8 @@ public class UserInterface {
                 view.showBooks(library, this);
                 userMenu();
             case 2:
-                // TODO: search
+                libraryLogic.searchByKeyword(library);
+                userMenu();
             case 3:
                 userLogic = new UserLogic();
                 userLogic.suggestNewBook(library.getAuthorizedUser());

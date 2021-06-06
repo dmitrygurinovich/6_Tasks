@@ -26,6 +26,30 @@ public class LibraryLogic {
         this.view = new View();
     }
 
+    public void searchByKeyword(Library library) {
+        String keyword;
+        StringBuilder[] concatenateBooksFields;
+        StringBuilder concatenateBookFields;
+        Pattern pattern;
+        Matcher matcher;
+
+        keyword = getStringFromConsole("Enter keyword for search: ");
+        concatenateBooksFields = new StringBuilder[library.getBooks().size()];
+        pattern = Pattern.compile("\\." + keyword + "\\.");
+
+        for (int i = 0; i < library.getBooks().size(); i++) {
+            concatenateBookFields = new StringBuilder();
+            concatenateBookFields
+                    .append(library.getBooks().get(i).getName())
+                    .append(library.getBooks().get(i).getAuthor())
+                    .append(library.getBooks().get(i).getYear())
+                    .append(library.getBooks().get(i).getDescription())
+                    .append((library.getBooks().get(i).getDescription() != null ? library.getBooks().get(i).getDescription() : ""));
+
+            concatenateBooksFields[i] = concatenateBookFields;
+        }
+    }
+
     public void addBook(Library library) {
         Book newBook;
 
