@@ -43,6 +43,7 @@ public class UserInterface {
                 view.showBooks(library, this);
             case 2:
                 libraryLogic.searchByKeyword(library);
+                adminMenu();
             case 3:
                 libraryLogic.addBook(library);
                 adminMenu();
