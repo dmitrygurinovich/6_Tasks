@@ -1,6 +1,6 @@
 package by.epam.task.main;
 
-import by.epam.task.view.UserInterface;
+import by.epam.task.logic.Runner;
 
 /*
 Задание 1: создать консольное приложение “Учет книг в домашней библиотеке”.
@@ -17,9 +17,7 @@ import by.epam.task.view.UserInterface;
  */
 public class Main {
     public static void main(String[] args) {
-
-        UserInterface runner = new UserInterface();
-        runner.authorisation();
-
+        Runner runner = new Runner();
+        runner.run();
     }
 }

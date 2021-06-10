@@ -25,3 +25,10 @@ Login: 1111
 Password: [74, 93, -117, -71, 75, 125, -54, 18, -61, 45, -3, 110, -125, 74, 100, -41]
 Role: Administrator
 E-mail: 111@tut.by
+---
+Id: 5
+Name: user
+Login: user
+Password: [-44, -34, 14, 90, 102, -40, -34, -104, 95, -4, -14, 43, 116, 15, -111, 94]
+Role: User
+E-mail: user@tut.by

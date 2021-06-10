@@ -14,8 +14,8 @@ public class UserInterface {
     private static final Scanner in = new Scanner(System.in);
     private static final View view = new View();
 
-    public UserInterface() {
-        this.library = new Library();
+    public UserInterface(Library library) {
+        this.library = library;
         this.libraryLogic = new LibraryLogic();
     }
 
@@ -42,7 +42,7 @@ public class UserInterface {
             case 1:
                 view.showBooks(library, this);
             case 2:
-                libraryLogic.searchByKeyword(library);
+                libraryLogic.searchBooksByKeyword(library);
                 adminMenu();
             case 3:
                 libraryLogic.addBook(library);
@@ -81,7 +81,7 @@ public class UserInterface {
                 view.showBooks(library, this);
                 userMenu();
             case 2:
-                libraryLogic.searchByKeyword(library);
+                libraryLogic.searchBooksByKeyword(library);
                 userMenu();
             case 3:
                 userLogic = new UserLogic();

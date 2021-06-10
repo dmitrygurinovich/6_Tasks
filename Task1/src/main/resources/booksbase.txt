@@ -187,8 +187,9 @@ Type: Paper book
 № 32
 Name: Book 32
 Author: Author 32-th book
-Year: 1832
+Year: 1992
 Type: Electronic book
+Description: new description
 ---
 № 33
 Name: Book 33

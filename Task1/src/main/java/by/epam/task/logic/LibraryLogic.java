@@ -10,7 +10,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.CharsetEncoder;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,7 +28,7 @@ public class LibraryLogic {
         this.view = new View();
     }
 
-    public void searchByKeyword(Library library) {
+    public void searchBooksByKeyword(Library library) {
         String keyword;
         StringBuilder concatenateBookFields;
         Pattern pattern;
@@ -34,7 +36,7 @@ public class LibraryLogic {
         ArrayList<Book> books;
 
         keyword = getStringFromConsole("Enter keyword for search: ");
-        pattern = Pattern.compile(keyword);
+        pattern = Pattern.compile(keyword.toLowerCase(Locale.ROOT));
         books = new ArrayList<>();
 
         for (int i = 0; i < library.getBooks().size(); i++) {
@@ -48,7 +50,9 @@ public class LibraryLogic {
                 concatenateBookFields.append(library.getBooks().get(i).getDescription());
             }
 
-            matcher = pattern.matcher(concatenateBookFields.toString());
+
+
+            matcher = pattern.matcher(concatenateBookFields.toString().toLowerCase(Locale.ROOT));
 
             if(matcher.find()) {
                 books.add(library.getBooks().get(i));
