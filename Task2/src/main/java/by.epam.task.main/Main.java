@@ -1,5 +1,10 @@
 package by.epam.task.main;
 
+import by.epam.task.entity.Note;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 /*
  Задание 2. Блокнот. Разработать консольное приложение, работающее с Заметками в Блокноте. Каждая Заметка это:
  Заметка (тема, дата создания, e-mail, сообщение).
@@ -15,6 +20,7 @@ package by.epam.task.main;
  */
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        Note note = new Note("Test", "dmitry.gurinovich@hotmail.com", "Note's text", new GregorianCalendar(2020, Calendar.APRIL, 13));
+        System.out.println(note);
     }
 }
