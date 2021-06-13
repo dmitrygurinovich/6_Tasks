@@ -20,7 +20,7 @@ import java.util.GregorianCalendar;
  */
 public class Main {
     public static void main(String[] args) {
-        Note note = new Note("Test", "dmitry.gurinovich@hotmail.com", "Note's text", new GregorianCalendar(2020, Calendar.APRIL, 13));
+        Note note = new Note(1,"Test", "dmitry@hotmail.com", "Note's text", new GregorianCalendar(2020, Calendar.APRIL, 13));
         System.out.println(note);
     }
 }
