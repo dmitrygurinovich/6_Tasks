@@ -71,7 +71,6 @@ public class EmailSender {
      * @param book - book
      */
     public void suggestToAddABookToTheLibrary(User user, Book book) {
-
         final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
         Properties props = System.getProperties();
         props.setProperty("mail.smtp.host", "smtp.gmail.com");
