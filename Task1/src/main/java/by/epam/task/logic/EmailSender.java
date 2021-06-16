@@ -14,6 +14,9 @@ import java.util.Date;
 import java.util.Properties;
 
 public class EmailSender {
+    final String username = "gurinovich.notify@gmail.com";
+    final String password = "4531689925qWe";
+
     public EmailSender() {
     }
 
@@ -23,9 +26,6 @@ public class EmailSender {
      * @param book - book
      */
     public void notifyUsersAboutAddingBooksDescription(Library library, String subject, Book book) {
-        final String username = "dmitry.gurinovich1989@gmail.com";
-        final String password = "qWe4531689925";
-
         final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
         Properties props = System.getProperties();
         props.setProperty("mail.smtp.host", "smtp.gmail.com");
@@ -48,7 +48,7 @@ public class EmailSender {
 
             Message msg = new MimeMessage(session);
 
-            msg.setFrom(new InternetAddress("dmitry.gurinovic1989@gmail.com")); // field "from"
+            msg.setFrom(new InternetAddress("gurinovich.notify@gmail.com")); // field "from"
             msg.setRecipients(
                     Message.RecipientType.TO, getUsersEmail(UserRole.USER, library));
             msg.setSubject(subject);
@@ -71,8 +71,6 @@ public class EmailSender {
      * @param book - book
      */
     public void suggestToAddABookToTheLibrary(User user, Book book) {
-        final String username = "dmitry.gurinovich1989@gmail.com";
-        final String password = "qWe4531689925";
 
         final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
         Properties props = System.getProperties();
