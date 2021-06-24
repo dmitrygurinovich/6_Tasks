@@ -1,13 +1,17 @@
 package by.epam.task.view;
 
+import by.epam.task.entity.NotesBase;
+
 import java.util.Scanner;
 
 public class UserInterface {
     private static final Scanner in = new Scanner(System.in);
     private final View view;
+    private NotesBase notesBase;
 
-    public UserInterface() {
+    public UserInterface(NotesBase notesBase) {
         view = new View();
+        this.notesBase = notesBase;
     }
 
     public void menu() {
@@ -53,17 +57,5 @@ public class UserInterface {
         } else {
             return getNumFromConsole(message, min, max);
         }
-    }
-
-    public String getStringFromConsole(String message) {
-        String text;
-        view.print(message);
-
-        while (!in.hasNextLine()) {
-            view.print(message);
-            in.next();
-        }
-        text = in.nextLine();
-        return text;
     }
 }

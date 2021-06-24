@@ -1,6 +1,5 @@
 package by.epam.task.entity;
 
-
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
