@@ -31,12 +31,52 @@ public class Note {
         this.date = date;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public GregorianCalendar getDate() {
+        return date;
+    }
+
+    public void setDate(GregorianCalendar date) {
+        this.date = date;
+    }
+
     @Override
     public String toString() {
         return  "№: " + id + "\n" +
                 "Theme: " + theme + "\n" +
                 "Date: " + dateFormat.format(date.getTime()) + "\n" +
                 "E-mail: " + email + "\n" +
-                "Message: " + message;
+                "Message: \n" + message + "\n";
     }
 }

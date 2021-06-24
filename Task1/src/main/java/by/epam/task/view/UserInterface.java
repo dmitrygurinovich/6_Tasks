@@ -93,7 +93,7 @@ public class UserInterface {
 
     }
 
-    public void authorisation() {
+    public void authorization() {
         String login;
         String password;
         boolean authorized;
@@ -131,7 +131,7 @@ public class UserInterface {
 
         if (!authorized) {
             view.print("Invalid username or password! Try again!");
-            authorisation();
+            authorization();
         }
     }
 

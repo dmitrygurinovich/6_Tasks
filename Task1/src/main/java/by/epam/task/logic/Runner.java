@@ -11,6 +11,6 @@ public class Runner {
     public void run() {
         Library library = new Library();
         UserInterface userInterface = new UserInterface(library);
-        userInterface.authorisation();
+        userInterface.authorization();
     }
 }
