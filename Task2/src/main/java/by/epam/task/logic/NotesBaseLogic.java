@@ -2,6 +2,7 @@ package by.epam.task.logic;
 
 import by.epam.task.entity.Note;
 import by.epam.task.entity.NotesBase;
+import by.epam.task.view.UserInterface;
 import by.epam.task.view.View;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -24,6 +25,25 @@ public class NotesBaseLogic {
     public NotesBaseLogic() {
         this.noteBasePath = new File("Task2/src/main/resources/notesbase.json");
         this.view = new View();
+    }
+
+    public void showAllNotes(NotesBase notesBase, UserInterface userInterface) {
+        int menuItem;
+
+        showNotesThemes(notesBase, userInterface);
+
+        menuItem = getNumFromConsole("Enter note's number or \"0\" for entering to the main menu" , 0, notesBase.getNotes().size());
+        if (menuItem == 0) {
+            userInterface.menu();
+        }
+        view.print(notesBase.getNotes().get(menuItem - 1));
+        userInterface.menu();
+    }
+
+    public void showNotesThemes(NotesBase notesBase, UserInterface userInterface) {
+        for (Note note : notesBase.getNotes()) {
+            view.print(note.getId() + ". " + note.getTheme());
+        }
     }
 
     public void writeNotesToFile(ArrayList<Note> notes) {
@@ -88,6 +108,23 @@ public class NotesBaseLogic {
         }
         text = in.nextLine();
         return text;
+    }
+
+    public int getNumFromConsole(String message, int min, int max) {
+        int number;
+        view.print(message);
+        while (!in.hasNextInt()) {
+            view.print(message);
+            in.next();
+        }
+        number = in.nextInt();
+        in.nextLine();
+
+        if (number >= min && number <= max) {
+            return number;
+        } else {
+            return getNumFromConsole(message, min, max);
+        }
     }
 
     public boolean isEmail(String email) {

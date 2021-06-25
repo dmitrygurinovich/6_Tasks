@@ -35,7 +35,8 @@ public class UserInterface {
                 in.close();
                 System.exit(0);
             case 1:
-                // show notes
+                logic.showAllNotes(notesBase, this);
+                menu();
             case 2:
                 logic.addNote(notesBase);
                 menu();
