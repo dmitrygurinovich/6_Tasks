@@ -1,6 +1,7 @@
 package by.epam.task.logic;
 
 import by.epam.task.entity.Note;
+import by.epam.task.entity.NotesBase;
 import by.epam.task.view.View;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -9,7 +10,11 @@ import com.google.gson.reflect.TypeToken;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 public class NotesBaseLogic {
     private final File noteBasePath;
@@ -46,9 +51,23 @@ public class NotesBaseLogic {
         return notes;
     }
 
-    public void addNote() {
+    public void addNote(NotesBase notesBase) {
+        Note note = new Note();
+        String email;
 
+        note.setId(notesBase.getNotes().size() + 1);
+        note.setTheme(getStringFromConsole("Enter note's theme:"));
 
+        email = getStringFromConsole("Enter your e-mail:");
+        while (!isEmail(email)) {
+            email = getStringFromConsole("Wrong e-mail format!\nEnter user's email:");
+        }
+        note.setEmail(email);
+        note.setMessage(getStringFromConsole("Enter note's text:"));
+        note.setDate(new GregorianCalendar());
+
+        notesBase.getNotes().add(note);
+        writeNotesToFile(notesBase.getNotes());
     }
 
     public String objectToJsonObject(ArrayList<Note> notes) {
@@ -69,5 +88,23 @@ public class NotesBaseLogic {
         }
         text = in.nextLine();
         return text;
+    }
+
+    public boolean isEmail(String email) {
+        Pattern emailPattern;
+        Matcher matcher;
+        boolean isEmail;
+
+        isEmail = false;
+
+        try {
+            emailPattern = Pattern.compile(".*@.*\\.\\w*\\S");
+            matcher = emailPattern.matcher(email);
+            isEmail = matcher.matches();
+        } catch (PatternSyntaxException e) {
+            e.printStackTrace();
+        }
+
+        return isEmail;
     }
 }

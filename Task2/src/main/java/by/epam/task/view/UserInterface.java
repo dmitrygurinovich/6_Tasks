@@ -1,17 +1,20 @@
 package by.epam.task.view;
 
 import by.epam.task.entity.NotesBase;
+import by.epam.task.logic.NotesBaseLogic;
 
 import java.util.Scanner;
 
 public class UserInterface {
     private static final Scanner in = new Scanner(System.in);
     private final View view;
-    private NotesBase notesBase;
+    private final NotesBaseLogic logic;
+    private final NotesBase notesBase;
 
     public UserInterface(NotesBase notesBase) {
         view = new View();
         this.notesBase = notesBase;
+        this.logic = new NotesBaseLogic();
     }
 
     public void menu() {
@@ -34,7 +37,8 @@ public class UserInterface {
             case 1:
                 // show notes
             case 2:
-                // add note
+                logic.addNote(notesBase);
+                menu();
             case 3:
                 // edit note
             case 4:
