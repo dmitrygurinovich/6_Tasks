@@ -104,6 +104,7 @@ public class NotesBaseLogic {
     public void editNotesFields(NotesBase notesBase, UserInterface userInterface, int noteNumber) {
         int menuItem;
         String email;
+
         view.print("## You're editing note: ##");
         view.print(notesBase.getNotes().get(noteNumber - 1));
         view.print("#### EDITING MENU ####\n" +
