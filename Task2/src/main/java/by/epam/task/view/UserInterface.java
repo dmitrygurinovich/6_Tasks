@@ -41,7 +41,8 @@ public class UserInterface {
                 logic.addNote(notesBase);
                 menu();
             case 3:
-                // edit note
+                logic.editNote(notesBase, this);
+                menu();
             case 4:
                 // delete note
         }

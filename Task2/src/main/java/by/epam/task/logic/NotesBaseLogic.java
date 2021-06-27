@@ -30,7 +30,7 @@ public class NotesBaseLogic {
     public void showAllNotes(NotesBase notesBase, UserInterface userInterface) {
         int menuItem;
 
-        showNotesThemes(notesBase, userInterface);
+        showNotesThemes(notesBase);
 
         menuItem = getNumFromConsole("Enter note's number or \"0\" for entering to the main menu" , 0, notesBase.getNotes().size());
         if (menuItem == 0) {
@@ -40,7 +40,7 @@ public class NotesBaseLogic {
         userInterface.menu();
     }
 
-    public void showNotesThemes(NotesBase notesBase, UserInterface userInterface) {
+    public void showNotesThemes(NotesBase notesBase) {
         for (Note note : notesBase.getNotes()) {
             view.print(note.getId() + ". " + note.getTheme());
         }
@@ -88,6 +88,55 @@ public class NotesBaseLogic {
 
         notesBase.getNotes().add(note);
         writeNotesToFile(notesBase.getNotes());
+    }
+
+    public void editNote(NotesBase notesBase, UserInterface userInterface) {
+        int menuItem;
+        menuItem = getNumFromConsole("Choose note for editing. Enter note's number or \"0\" for enter to the main menu: ", 0, notesBase.getNotes().size());
+
+        if (menuItem == 0) {
+            userInterface.menu();
+        } else {
+            editNotesFields(notesBase, userInterface, menuItem);
+        }
+    }
+
+    public void editNotesFields(NotesBase notesBase, UserInterface userInterface, int noteNumber) {
+        int menuItem;
+        String email;
+        view.print("## You're editing note: ##");
+        view.print(notesBase.getNotes().get(noteNumber - 1));
+        view.print("#### EDITING MENU ####\n" +
+                "1. Edit note's theme\n" +
+                "2. Edit e-mail\n" +
+                "3. Edit  note's text\n" +
+                "0. Save and go to the main menu\n");
+
+        menuItem = getNumFromConsole("Enter number 0-4:", 0, 4);
+
+        if(menuItem == 0) {
+            writeNotesToFile(notesBase.getNotes());
+            userInterface.menu();
+        }
+
+        switch (menuItem) {
+            case 1:
+                notesBase.getNotes().get(noteNumber - 1).setTheme(getStringFromConsole("Enter new note's theme:"));
+                notesBase.getNotes().get(noteNumber - 1).setDate(new GregorianCalendar());
+                editNotesFields(notesBase, userInterface, noteNumber);
+            case 2:
+                email = getStringFromConsole("Enter new e-mail:");
+                if (!isEmail(email)) {
+                    email = getStringFromConsole("Wrong format! Enter new e-mail:");
+                }
+                notesBase.getNotes().get(noteNumber - 1).setEmail(email);
+                notesBase.getNotes().get(noteNumber - 1).setDate(new GregorianCalendar());
+                editNotesFields(notesBase, userInterface, noteNumber);
+            case 3:
+                notesBase.getNotes().get(noteNumber - 1).setMessage("Enter new note's text:");
+                notesBase.getNotes().get(noteNumber - 1).setDate(new GregorianCalendar());
+                editNotesFields(notesBase, userInterface, noteNumber);
+        }
     }
 
     public String objectToJsonObject(ArrayList<Note> notes) {
