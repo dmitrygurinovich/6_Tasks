@@ -8,7 +8,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -32,7 +35,7 @@ public class NotesBaseLogic {
 
         showNotesThemes(notesBase);
 
-        menuItem = getNumFromConsole("Enter note's number or \"0\" for entering to the main menu" , 0, notesBase.getNotes().size());
+        menuItem = getNumFromConsole("Enter note's number or \"0\" for entering to the main menu", 0, notesBase.getNotes().size());
         if (menuItem == 0) {
             userInterface.menu();
         }
@@ -59,9 +62,10 @@ public class NotesBaseLogic {
         ArrayList<Note> notes;
         notes = new ArrayList<>();
 
-        try(FileReader reader = new FileReader(noteBasePath)){
+        try (FileReader reader = new FileReader(noteBasePath)) {
             Gson gson = new Gson();
-            Type collectionType = new TypeToken<ArrayList<Note>>(){}.getType();
+            Type collectionType = new TypeToken<ArrayList<Note>>() {
+            }.getType();
             notes = gson.fromJson(reader, collectionType);
             return notes;
         } catch (IOException exception) {
@@ -79,7 +83,7 @@ public class NotesBaseLogic {
         note.setTheme(getStringFromConsole("Enter note's theme:"));
 
         email = getStringFromConsole("Enter your e-mail:");
-        while (!isEmail(email)) {
+        while (itIsNotEmail(email)) {
             email = getStringFromConsole("Wrong e-mail format!\nEnter user's email:");
         }
         note.setEmail(email);
@@ -101,6 +105,29 @@ public class NotesBaseLogic {
         }
     }
 
+    public void deleteNote(NotesBase notesBase, UserInterface userInterface) {
+        int menuItem;
+        int confirmation;
+
+        menuItem = getNumFromConsole("Enter note's number which you want to delete or \"0\" for entering to the main menu", 0, notesBase.getNotes().size());
+
+        if (menuItem == 0) {
+            userInterface.menu();
+        } else {
+            view.print(notesBase.getNotes().get(menuItem - 1).getTheme() + " will be delete!");
+            confirmation = getNumFromConsole("1. Confirm\n0. Cancel ang go to the main menu", 0, 1);
+
+            if (confirmation == 0) {
+                userInterface.menu();
+            } else {
+                notesBase.getNotes().remove(menuItem - 1);
+                changeNotesId(notesBase);
+                writeNotesToFile(notesBase.getNotes());
+            }
+        }
+
+    }
+
     public void editNotesFields(NotesBase notesBase, UserInterface userInterface, int noteNumber) {
         int menuItem;
         String email;
@@ -115,7 +142,7 @@ public class NotesBaseLogic {
 
         menuItem = getNumFromConsole("Enter number 0-4:", 0, 4);
 
-        if(menuItem == 0) {
+        if (menuItem == 0) {
             writeNotesToFile(notesBase.getNotes());
             userInterface.menu();
         }
@@ -127,7 +154,7 @@ public class NotesBaseLogic {
                 editNotesFields(notesBase, userInterface, noteNumber);
             case 2:
                 email = getStringFromConsole("Enter new e-mail:");
-                if (!isEmail(email)) {
+                if (itIsNotEmail(email)) {
                     email = getStringFromConsole("Wrong format! Enter new e-mail:");
                 }
                 notesBase.getNotes().get(noteNumber - 1).setEmail(email);
@@ -177,7 +204,7 @@ public class NotesBaseLogic {
         }
     }
 
-    public boolean isEmail(String email) {
+    public boolean itIsNotEmail(String email) {
         Pattern emailPattern;
         Matcher matcher;
         boolean isEmail;
@@ -192,6 +219,12 @@ public class NotesBaseLogic {
             e.printStackTrace();
         }
 
-        return isEmail;
+        return !isEmail;
+    }
+
+    public void changeNotesId(NotesBase notesBase) {
+        for (int i = 0; i < notesBase.getNotes().size(); i++) {
+            notesBase.getNotes().get(i).setId(i + 1);
+        }
     }
 }

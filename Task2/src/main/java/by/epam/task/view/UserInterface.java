@@ -44,7 +44,8 @@ public class UserInterface {
                 logic.editNote(notesBase, this);
                 menu();
             case 4:
-                // delete note
+                logic.deleteNote(notesBase, this);
+                menu();
         }
     }
 

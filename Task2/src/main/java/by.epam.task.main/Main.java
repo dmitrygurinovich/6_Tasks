@@ -1,11 +1,5 @@
 package by.epam.task.main;
 
-import by.epam.task.entity.Note;
-import by.epam.task.entity.NotesBase;
-import by.epam.task.logic.NotesBaseLogic;
-
-import java.util.ArrayList;
-
 /*
  Задание 2. Блокнот. Разработать консольное приложение, работающее с Заметками в Блокноте. Каждая Заметка это:
  Заметка (тема, дата создания, e-mail, сообщение).
@@ -21,8 +15,6 @@ import java.util.ArrayList;
  */
 public class Main {
     public static void main(String[] args) {
-
         new Runner().run();
-
     }
 }
