@@ -13,10 +13,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -137,7 +134,11 @@ public class NotesBaseLogic {
         Matcher matcher;
         int menuItem;
 
-        menuItem = getNumFromConsole("1. Search in themes\n2. Search in themes and texts\n0. Go to the main menu", 0, 2);
+        menuItem = getNumFromConsole("" +
+                "1. Search in themes\n" +
+                "2. Search in text\n" +
+                "3. Search in themes and texts\n" +
+                "0. Go to the main menu", 0, 3);
 
         if (menuItem == 0) {
             userInterface.menu();
@@ -154,7 +155,18 @@ public class NotesBaseLogic {
                     searchResult.add(note);
                 }
             }
-        } else {
+            sortByTheme(searchResult);
+        }
+        if (menuItem == 2) {
+            for (Note note : notesBase.getNotes()) {
+                matcher = pattern.matcher(note.getMessage());
+                if (matcher.find()) {
+                    searchResult.add(note);
+                }
+            }
+            sortByText(searchResult);
+        }
+        if (menuItem == 3){
             for (Note note : notesBase.getNotes()) {
                 concatenateNoteFields = (note.getTheme() + " " + note.getMessage()).toLowerCase(Locale.ROOT);
                 matcher = pattern.matcher(concatenateNoteFields);
@@ -162,6 +174,7 @@ public class NotesBaseLogic {
                     searchResult.add(note);
                 }
             }
+            sortByTheme(searchResult);
         }
 
         if (searchResult.size() != 0) {
@@ -172,6 +185,23 @@ public class NotesBaseLogic {
         } else {
             view.print("No result!");
         }
+    }
+    public void sortByTheme(ArrayList<Note> notes) {
+        Collections.sort(notes, new Comparator<Note>() {
+            @Override
+            public int compare(Note o1, Note o2) {
+                return o1.getTheme().compareTo(o2.getTheme());
+            }
+        });
+    }
+
+    public void sortByText(ArrayList<Note> notes) {
+        Collections.sort(notes, new Comparator<Note>() {
+            @Override
+            public int compare(Note o1, Note o2) {
+                return o1.getMessage().compareTo(o2.getMessage());
+            }
+        });
     }
 
     public void editNotesFields(NotesBase notesBase, UserInterface userInterface, int noteNumber) {
