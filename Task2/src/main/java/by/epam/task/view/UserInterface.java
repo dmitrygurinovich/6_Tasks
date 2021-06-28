@@ -23,12 +23,13 @@ public class UserInterface {
         view.print("" +
                 "#### MENU ####\n" +
                 "1. Show all notes\n" +
-                "2. Add note\n" +
-                "3. Edit note\n" +
-                "4. Delete note\n" +
+                "2. Search\n" +
+                "3. Add note\n" +
+                "4. Edit note\n" +
+                "5. Delete note\n" +
                 "0. Exit\n");
 
-        menuItem = getNumFromConsole("Enter number 0 - 4:", 0, 4);
+        menuItem = getNumFromConsole("Enter number 0 - 5:", 0, 5);
 
         switch (menuItem) {
             case 0:
@@ -38,12 +39,15 @@ public class UserInterface {
                 logic.showAllNotes(notesBase, this);
                 menu();
             case 2:
-                logic.addNote(notesBase);
+                logic.searchNotes(notesBase, this);
                 menu();
             case 3:
-                logic.editNote(notesBase, this);
+                logic.addNote(notesBase);
                 menu();
             case 4:
+                logic.editNote(notesBase, this);
+                menu();
+            case 5:
                 logic.deleteNote(notesBase, this);
                 menu();
         }

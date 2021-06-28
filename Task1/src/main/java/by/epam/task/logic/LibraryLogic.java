@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.CharsetEncoder;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
@@ -49,8 +48,6 @@ public class LibraryLogic {
             if (library.getBooks().get(i).getDescription() != null) {
                 concatenateBookFields.append(library.getBooks().get(i).getDescription());
             }
-
-
 
             matcher = pattern.matcher(concatenateBookFields.toString().toLowerCase(Locale.ROOT));
 

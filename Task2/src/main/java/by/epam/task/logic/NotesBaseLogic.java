@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -126,6 +127,51 @@ public class NotesBaseLogic {
             }
         }
 
+    }
+
+    public void searchNotes(NotesBase notesBase, UserInterface userInterface) {
+        ArrayList<Note> searchResult;
+        String keyword;
+        String concatenateNoteFields;
+        Pattern pattern;
+        Matcher matcher;
+        int menuItem;
+
+        menuItem = getNumFromConsole("1. Search in themes\n2. Search in themes and texts\n0. Go to the main menu", 0, 2);
+
+        if (menuItem == 0) {
+            userInterface.menu();
+        }
+
+        keyword = getStringFromConsole("Enter keyword for searching: ");
+        pattern = Pattern.compile(keyword.toLowerCase(Locale.ROOT));
+        searchResult = new ArrayList<>();
+
+        if (menuItem == 1) {
+            for (Note note : notesBase.getNotes()){
+                matcher = pattern.matcher(note.getTheme());
+                if (matcher.find()) {
+                    searchResult.add(note);
+                }
+            }
+        } else {
+            for (Note note : notesBase.getNotes()) {
+                concatenateNoteFields = (note.getTheme() + " " + note.getMessage()).toLowerCase(Locale.ROOT);
+                matcher = pattern.matcher(concatenateNoteFields);
+                if (matcher.find()) {
+                    searchResult.add(note);
+                }
+            }
+        }
+
+        if (searchResult.size() != 0) {
+            view.print("### RESULT ###");
+            for (Note note : searchResult) {
+                view.print(note);
+            }
+        } else {
+            view.print("No result!");
+        }
     }
 
     public void editNotesFields(NotesBase notesBase, UserInterface userInterface, int noteNumber) {
