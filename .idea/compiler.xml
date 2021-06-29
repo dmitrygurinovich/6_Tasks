@@ -8,12 +8,16 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Task2" />
         <module name="Task1" />
+        <module name="Task3" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="6_Tasks" target="1.5" />
+      <module name="Server" target="1.7" />
       <module name="Task1" target="8" />
       <module name="Task2" target="1.7" />
+      <module name="Task3" target="1.7" />
+      <module name="Task3_server" target="15" />
     </bytecodeTargetLevel>
   </component>
 </project>
