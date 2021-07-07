@@ -2,6 +2,7 @@ package by.epam.task.entity;
 
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
+import java.util.Objects;
 
 public class Note {
     private int id;
@@ -68,6 +69,22 @@ public class Note {
 
     public void setDate(GregorianCalendar date) {
         this.date = date;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Note note = (Note) o;
+        return id == note.id && Objects.equals(theme, note.theme)
+                && Objects.equals(email, note.email)
+                && Objects.equals(message, note.message)
+                && Objects.equals(date, note.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, theme, email, message, date);
     }
 
     @Override

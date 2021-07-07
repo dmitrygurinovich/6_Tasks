@@ -1,30 +1,28 @@
-package by.epam.task.client;
+package by.epam.task.server.logic;
 
 import java.io.*;
+import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
 
-public class Client {
-    public static final String HOST = "localhost";
+public class Server {
     public static final int PORT = 8089;
+    public static ServerSocket serverSocket;
+    public static Socket socket;
     public static BufferedReader in;
     public static PrintWriter out;
-    public static Socket socket;
-    public static Scanner reader;
 
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
         try {
+            serverSocket = new ServerSocket(PORT);
+            System.out.println("Server is working...");
             while (true) {
                 try {
-                    socket = new Socket(HOST, PORT);
-                    reader = new Scanner(System.in);
+                    socket = serverSocket.accept();
                     in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-                    System.out.println("Enter message for Server:");
-                    String line = reader.nextLine();
-                    System.out.println("Your message: " + line);
-                    out.println(line);
-                    System.out.println(in.readLine());
+                    String line = in.readLine();
+                    System.out.println("Message from client: " + line);
+                    out.println("Your message \"" + line + "\" delivered");
                 } catch (IOException e) {
                     e.printStackTrace();
                     break;
@@ -39,5 +37,3 @@ public class Client {
         }
     }
 }
-
-
