@@ -5,6 +5,9 @@ public class Student {
     private String secondName;
     private int age;
     private int groupNumber;
+    private int id;
+    private static int defaultId = 1;
+    // TODO: add ID
 
     public Student() {
     }
@@ -14,6 +17,7 @@ public class Student {
         this.secondName = secondName;
         this.age = age;
         this.groupNumber = groupNumber;
+        this.id = defaultId++;
     }
 
     public String getFirstName() {
@@ -50,8 +54,9 @@ public class Student {
 
     @Override
     public String toString() {
-        return  "Student: " + firstName + " " + secondName + "\n" +
-                "Age: " + age + " y.o.\n" +
-                "Group number: " + groupNumber;
+        return "ID: " + id + "\n" +
+                "- Student: " + firstName + " " + secondName + "\n" +
+                "- Age: " + age + " y.o.\n" +
+                "- Group number: " + groupNumber;
     }
 }
