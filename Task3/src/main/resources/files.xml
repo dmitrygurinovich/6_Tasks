@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<root>
+<files>
     <file>
         <id>id</id>
         <firstName>Dmitry</firstName>
@@ -16,7 +16,7 @@
         <id>id</id>
         <firstName>Inna</firstName>
         <secondName>Gurinovich</secondName>
-        <age>31</age>
+        <age>30</age>
         <groupNumber>2</groupNumber>
         <math>5</math>
         <english>5</english>
@@ -24,4 +24,4 @@
         <physics>5</physics>
         <literature>4</literature>
     </file>
-</root>
+</files>

@@ -1,13 +1,13 @@
 package by.epam.task.server.logic;
 
 import by.epam.task.server.entity.File;
+import by.epam.task.server.entity.FilesBase;
 import by.epam.task.server.entity.Subject;
 import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Serializer;
 
-import java.io.OutputStream;
-import java.util.ArrayList;
+import java.io.*;
 
 public class FilesBaseLogic {
     private static final String filesBasePath = "Task3/src/main/resources/files.xml";
@@ -16,9 +16,8 @@ public class FilesBaseLogic {
 
     }
 
-    public static void
-    format(OutputStream os, Document doc) throws Exception {
-        Serializer serializer = new Serializer(os, "ISO-8859-1");
+    public static void format(OutputStream stream, Document doc) throws Exception {
+        Serializer serializer = new Serializer(stream, "ISO-8859-1");
         serializer.setIndent(4);
         serializer.setMaxLength(60);
         serializer.write(doc);
@@ -78,7 +77,20 @@ public class FilesBaseLogic {
         return file;
     }
 
-    public void writeFilesToXml(ArrayList<File> files) {
+    public Document getXmlDocument(FilesBase base) {
+        Element files = new Element("files");
+        for (File file : base.getFiles()) {
+            files.appendChild(getXmlElement(file));
+        }
+        return new Document(files);
+    }
+
+    public void writeFilesToXml(FilesBase base) throws Exception {
+            format(new BufferedOutputStream(new FileOutputStream(filesBasePath)), getXmlDocument(base));
+    }
+
+    public void readXml() {
 
     }
+
 }
