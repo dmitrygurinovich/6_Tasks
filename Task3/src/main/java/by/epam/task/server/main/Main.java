@@ -4,15 +4,19 @@ import by.epam.task.server.entity.File;
 import by.epam.task.server.entity.FilesBase;
 import by.epam.task.server.entity.Student;
 import by.epam.task.server.entity.Subject;
+import by.epam.task.server.logic.FilesBaseLogic;
+import nu.xom.Document;
+import nu.xom.Element;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Main {
-    public static void main(String[] args) {
-        Student student = new Student("Gurinovich", "Dmitry", 32, 2);
-        Student student1 = new Student("Gurinovich", "Inna", 31, 2);
-        Map<Subject, Integer> marks = new HashMap<>();
+    public static void main(String[] args) throws Exception {
+        Student student = new Student("Dmitry", "Gurinovich", 32, 2);
+        Student student1 = new Student("Inna", "Gurinovich", 31, 2);
+        HashMap<Subject, Integer> marks = new HashMap<>();
 
         marks.put(Subject.MATH, 5);
         marks.put(Subject.ENGLISH, 5);
@@ -20,15 +24,24 @@ public class Main {
         marks.put(Subject.GEOGRAPHY, 5);
         marks.put(Subject.PHYSICS, 5);
 
-        File file = new File(student, marks);
-        File file1 = new File(student1);
+        File file1 = new File(student, marks);
+        File file2 = new File(student1, marks);
 
         FilesBase base = new FilesBase();
-        base.getFiles().add(file);
         base.getFiles().add(file1);
+        base.getFiles().add(file2);
 
+        FilesBaseLogic logic = new FilesBaseLogic();
 
-        System.out.println(base.getFiles().get(0));
-        System.out.println(base.getFiles().get(1));
+        Element root = new Element("root");
+
+        for (File file : base.getFiles()) {
+            root.appendChild(logic.getXmlElement(file));
+        }
+
+        Document document = new Document(root);
+
+        FilesBaseLogic.format(System.out, document);
+        FilesBaseLogic.format(new BufferedOutputStream(new FileOutputStream("Task3/src/main/resources/files.xml")), document);
     }
 }

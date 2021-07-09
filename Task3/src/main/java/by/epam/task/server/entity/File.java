@@ -1,12 +1,10 @@
 package by.epam.task.server.entity;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 public class File {
     private Student student;
-    private Map<Subject, Integer> progress;
+    private HashMap<Subject, Integer> progress;
 
     public File() {
     }
@@ -16,7 +14,7 @@ public class File {
         this.progress = new HashMap<>();
     }
 
-    public File(Student student, Map<Subject, Integer> progress) {
+    public File(Student student, HashMap<Subject, Integer> progress) {
         this.student = student;
         this.progress = progress;
     }
@@ -29,11 +27,11 @@ public class File {
         this.student = student;
     }
 
-    public Map<Subject, Integer> getProgress() {
+    public HashMap<Subject, Integer> getProgress() {
         return progress;
     }
 
-    public void setProgress(Map<Subject, Integer> progress) {
+    public void setProgress(HashMap<Subject, Integer> progress) {
         this.progress = progress;
     }
 
