@@ -1,10 +1,14 @@
 package by.epam.task.server.entity;
 
+import nu.xom.Element;
+
 import java.util.HashMap;
 
 public class File {
+    private int id;
     private Student student;
     private HashMap<Subject, Integer> progress;
+    private static int defaultId = 1;
 
     public File() {
     }
@@ -12,11 +16,54 @@ public class File {
     public File(Student student) {
         this.student = student;
         this.progress = new HashMap<>();
+        this.id = defaultId++;
+    }
+
+    public File(int id,Student student, HashMap<Subject, Integer> progress) {
+        this.id = id;
+        this.student = student;
+        this.progress = progress;
     }
 
     public File(Student student, HashMap<Subject, Integer> progress) {
+        this.id = defaultId++;
         this.student = student;
         this.progress = progress;
+    }
+
+    public File(Element file) {
+        this.student = new Student(
+                file.getFirstChildElement("first-name").getValue(),
+                file.getFirstChildElement("second-name").getValue(),
+                Integer.parseInt(file.getFirstChildElement("age").getValue()),
+                Integer.parseInt(file.getFirstChildElement("group").getValue())
+        );
+
+        this.progress = new HashMap<>();
+
+        if (file.getFirstChildElement("math") != null) {
+            this.progress.put(Subject.MATH, Integer.parseInt(file.getFirstChildElement("math").getValue()));
+        }
+        if (file.getFirstChildElement("english") != null) {
+            this.progress.put(Subject.ENGLISH, Integer.parseInt(file.getFirstChildElement("english").getValue()));
+        }
+        if (file.getFirstChildElement("geography") != null) {
+            this.progress.put(Subject.GEOGRAPHY, Integer.parseInt(file.getFirstChildElement("geography").getValue()));
+        }
+        if (file.getFirstChildElement("physics") != null) {
+            this.progress.put(Subject.PHYSICS, Integer.parseInt(file.getFirstChildElement("physics").getValue()));
+        }
+        if (file.getFirstChildElement("literature") != null) {
+            this.progress.put(Subject.LITERATURE, Integer.parseInt(file.getFirstChildElement("literature").getValue()));
+        }
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Student getStudent() {

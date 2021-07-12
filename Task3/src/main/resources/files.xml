@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <files>
     <file>
-        <id>id</id>
-        <firstName>Dmitry</firstName>
-        <secondName>Gurinovich</secondName>
-        <age>32</age>
-        <groupNumber>2</groupNumber>
-        <math>5</math>
-        <english>5</english>
-        <geography>5</geography>
-        <physics>5</physics>
-        <literature>4</literature>
+        <id>1</id>
+        <student>
+            <first-name>Ivan</first-name>
+            <second-name>Ivanov</second-name>
+            <age>20</age>
+            <group-number>2</group-number>
+        </student>
+        <progress>
+            <math>5</math>
+            <english>4</english>
+            <geography>4</geography>
+            <physics>5</physics>
+            <literature>4</literature>
+        </progress>
     </file>
     <file>
-        <id>id</id>
-        <firstName>Inna</firstName>
-        <secondName>Gurinovich</secondName>
-        <age>30</age>
-        <groupNumber>2</groupNumber>
-        <math>5</math>
-        <english>5</english>
-        <geography>5</geography>
-        <physics>5</physics>
-        <literature>4</literature>
+        <id>2</id>
+        <student>
+            <first-name>Petr</first-name>
+            <second-name>Petrov</second-name>
+            <age>25</age>
+            <group-number>1</group-number>
+        </student>
+        <progress>
+            <math>5</math>
+            <english>4</english>
+            <geography>4</geography>
+            <physics>5</physics>
+            <literature>4</literature>
+        </progress>
     </file>
 </files>

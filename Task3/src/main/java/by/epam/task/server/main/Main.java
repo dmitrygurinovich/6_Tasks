@@ -10,27 +10,32 @@ import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        Student student = new Student("Dmitry", "Gurinovich", 32, 2);
-        Student student1 = new Student("Inna", "Gurinovich", 30, 2);
 
-        HashMap<Subject, Integer> marks = new HashMap<>();
+        Student first = new Student("Ivan", "Ivanov", 20, 2);
+        Student second = new Student("Petr", "Petrov", 25, 1);
 
-        marks.put(Subject.MATH, 5);
-        marks.put(Subject.ENGLISH, 5);
-        marks.put(Subject.LITERATURE, 4);
-        marks.put(Subject.GEOGRAPHY, 5);
-        marks.put(Subject.PHYSICS, 5);
+        HashMap<Subject, Integer> progress = new HashMap<>();
 
-        File file1 = new File(student, marks);
-        File file2 = new File(student1, marks);
+        progress.put(Subject.MATH, 5);
+        progress.put(Subject.ENGLISH, 4);
+        progress.put(Subject.PHYSICS, 5);
+        progress.put(Subject.GEOGRAPHY, 4);
+        progress.put(Subject.LITERATURE, 4);
+
+        File file1 = new File(first, progress);
+        File file2 = new File(second, progress);
 
         FilesBase base = new FilesBase();
+        FilesBaseLogic logic = new FilesBaseLogic();
 
         base.getFiles().add(file1);
         base.getFiles().add(file2);
 
-        FilesBaseLogic logic = new FilesBaseLogic();
-
         logic.writeFilesToXml(base);
+
+        for (File file : logic.readFilesFromXml()) {
+            System.out.println(file);
+        }
+
     }
 }
