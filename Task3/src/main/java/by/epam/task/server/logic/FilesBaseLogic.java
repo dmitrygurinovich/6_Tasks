@@ -1,7 +1,7 @@
 package by.epam.task.server.logic;
 
 import by.epam.task.server.entity.File;
-import by.epam.task.server.entity.FilesBase;
+import by.epam.task.server.storage.FilesBase;
 import by.epam.task.server.entity.Subject;
 import nu.xom.*;
 
@@ -12,7 +12,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class FilesBaseLogic {
-    private static final String filesBasePath = "Task3/src/main/resources/files.xml";
+    private static final String FILES_BASE_PATH = "Task3/src/main/resources/files.xml";
 
     public FilesBaseLogic() {
 
@@ -98,12 +98,12 @@ public class FilesBaseLogic {
     }
 
     public void writeFilesToXml(FilesBase base) throws Exception {
-        format(new BufferedOutputStream(new FileOutputStream(filesBasePath)), getXmlDocument(base));
+        format(new BufferedOutputStream(new FileOutputStream(FILES_BASE_PATH)), getXmlDocument(base));
     }
 
     public ArrayList<File> readFilesFromXml() throws ParsingException, IOException {
         Document document = new Builder()
-                .build(filesBasePath);
+                .build(FILES_BASE_PATH);
 
         ArrayList<File> filesList = new ArrayList<>();
 
@@ -114,5 +114,18 @@ public class FilesBaseLogic {
         }
 
         return filesList;
+    }
+
+    public void addFile(FilesBase base, File file) throws Exception {
+        base.getFiles().add(file);
+        writeFilesToXml(base);
+    }
+
+    public void deleteFile(FilesBase  base, int fileId) throws Exception {
+        base.getFiles().remove(fileId - 1);
+        for (int i = 0; i < base.getFiles().size(); i++) {
+            base.getFiles().get(i).setId(i + 1);
+        }
+        writeFilesToXml(base);
     }
 }

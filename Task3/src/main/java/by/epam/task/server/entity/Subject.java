@@ -1,20 +1,15 @@
 package by.epam.task.server.entity;
 
 public enum Subject {
-    MATH("Math"),
-    PHYSICS("Physics"),
-    LITERATURE("Literature"),
-    GEOGRAPHY("Geography"),
-    ENGLISH("English");
-
-    String name;
-
-    Subject(String name) {
-        this.name = name;
-    }
+    MATH,
+    PHYSICS,
+    LITERATURE,
+    GEOGRAPHY,
+    ENGLISH;
 
     @Override
     public String toString() {
-        return "Subject: " + name;
+        return super.toString().substring(0, 1).toUpperCase()
+                .concat(super.toString().substring(1).toLowerCase());
     }
 }

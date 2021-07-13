@@ -21,14 +21,14 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 public class UsersBaseLogic {
-    private final File usersBasePath;
-    private final SecretKeySpec key;
-    private static final Scanner in = new Scanner(System.in);
-    private static final View view = new View();
+    private final File USERS_BASE_PATH;
+    private final SecretKeySpec KEY;
+    private static Scanner in = new Scanner(System.in);
+    private static View view = new View();
 
     public UsersBaseLogic() {
-        this.usersBasePath = new File("Task1/src/main/resources/usersbase.txt");
-        this.key = new SecretKeySpec("Hdy4rl1dh64MwPfn".getBytes(), "AES");
+        this.USERS_BASE_PATH = new File("Task1/src/main/resources/usersbase.txt");
+        this.KEY = new SecretKeySpec("Hdy4rl1dh64MwPfn".getBytes(), "AES");
     }
 
     public void addUser(Library library) {
@@ -68,7 +68,7 @@ public class UsersBaseLogic {
     }
 
     public void writeUserToFile(User user) {
-        try (FileWriter writer = new FileWriter(usersBasePath, true)) {
+        try (FileWriter writer = new FileWriter(USERS_BASE_PATH, true)) {
             writer.append("---\n");
             writer.append("Id: ").append(String.valueOf(user.getId())).append("\n");
             writer.append("Name: ").append(user.getName()).append("\n");
@@ -94,7 +94,7 @@ public class UsersBaseLogic {
         usersListFromFile = new StringBuilder();
         patternForParsingUserField = Pattern.compile("(?:№\\s*|Id:\\s*|Name:\\s*|Login:\\s*|Password:\\s|Role:\\s|E-mail:\\s)(.*)(?:\\n|$|)");
 
-        try(FileReader reader = new FileReader(usersBasePath)) {
+        try(FileReader reader = new FileReader(USERS_BASE_PATH)) {
             Scanner scanner;
 
             scanner = new Scanner(reader);
@@ -136,7 +136,7 @@ public class UsersBaseLogic {
 
         try {
             Cipher cipher = Cipher.getInstance("AES");
-            cipher.init(Cipher.ENCRYPT_MODE, key);
+            cipher.init(Cipher.ENCRYPT_MODE, KEY);
             passwordsBytes = cipher.doFinal(password.getBytes());
         } catch (NoSuchPaddingException | NoSuchAlgorithmException | IllegalStateException | InvalidKeyException |
                 IllegalBlockSizeException | BadPaddingException e) {
@@ -152,7 +152,7 @@ public class UsersBaseLogic {
 
         try {
             Cipher cipher = Cipher.getInstance("AES");
-            cipher.init(Cipher.DECRYPT_MODE, key);
+            cipher.init(Cipher.DECRYPT_MODE, KEY);
             byte[] chars = cipher.doFinal(bytes);
 
             for (byte b : chars) {

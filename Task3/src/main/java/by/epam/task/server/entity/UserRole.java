@@ -1,17 +1,12 @@
 package by.epam.task.server.entity;
 
 public enum UserRole {
-    USER("User"),
-    ADMINISTRATOR("Administrator");
-
-    String name;
-
-    UserRole(String name) {
-        this.name = name;
-    }
+    USER,
+    ADMINISTRATOR;
 
     @Override
     public String toString() {
-        return "User role: " + name;
+        return super.toString().substring(0, 1).toUpperCase()
+                .concat(super.toString().substring(1).toLowerCase());
     }
 }
