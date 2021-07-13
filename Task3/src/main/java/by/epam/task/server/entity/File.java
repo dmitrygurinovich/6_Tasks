@@ -19,7 +19,7 @@ public class File {
         this.id = defaultId++;
     }
 
-    public File(int id,Student student, HashMap<Subject, Integer> progress) {
+    public File(int id, Student student, HashMap<Subject, Integer> progress) {
         this.id = id;
         this.student = student;
         this.progress = progress;
@@ -32,29 +32,34 @@ public class File {
     }
 
     public File(Element file) {
+        this.id = defaultId++;
+
+        Element student = new Element(file.getFirstChildElement("student"));
+        Element progress = new Element(file.getFirstChildElement("progress"));
+
         this.student = new Student(
-                file.getFirstChildElement("first-name").getValue(),
-                file.getFirstChildElement("second-name").getValue(),
-                Integer.parseInt(file.getFirstChildElement("age").getValue()),
-                Integer.parseInt(file.getFirstChildElement("group").getValue())
+                student.getFirstChildElement("first-name").getValue(),
+                student.getFirstChildElement("second-name").getValue(),
+                Integer.parseInt(student.getFirstChildElement("age").getValue()),
+                Integer.parseInt(student.getFirstChildElement("group-number").getValue())
         );
 
         this.progress = new HashMap<>();
 
-        if (file.getFirstChildElement("math") != null) {
-            this.progress.put(Subject.MATH, Integer.parseInt(file.getFirstChildElement("math").getValue()));
+        if (progress.getFirstChildElement("math") != null) {
+            this.progress.put(Subject.MATH, Integer.parseInt(progress.getFirstChildElement("math").getValue()));
         }
-        if (file.getFirstChildElement("english") != null) {
-            this.progress.put(Subject.ENGLISH, Integer.parseInt(file.getFirstChildElement("english").getValue()));
+        if (progress.getFirstChildElement("english") != null) {
+            this.progress.put(Subject.ENGLISH, Integer.parseInt(progress.getFirstChildElement("english").getValue()));
         }
-        if (file.getFirstChildElement("geography") != null) {
-            this.progress.put(Subject.GEOGRAPHY, Integer.parseInt(file.getFirstChildElement("geography").getValue()));
+        if (progress.getFirstChildElement("geography") != null) {
+            this.progress.put(Subject.GEOGRAPHY, Integer.parseInt(progress.getFirstChildElement("geography").getValue()));
         }
-        if (file.getFirstChildElement("physics") != null) {
-            this.progress.put(Subject.PHYSICS, Integer.parseInt(file.getFirstChildElement("physics").getValue()));
+        if (progress.getFirstChildElement("physics") != null) {
+            this.progress.put(Subject.PHYSICS, Integer.parseInt(progress.getFirstChildElement("physics").getValue()));
         }
-        if (file.getFirstChildElement("literature") != null) {
-            this.progress.put(Subject.LITERATURE, Integer.parseInt(file.getFirstChildElement("literature").getValue()));
+        if (progress.getFirstChildElement("literature") != null) {
+            this.progress.put(Subject.LITERATURE, Integer.parseInt(progress.getFirstChildElement("literature").getValue()));
         }
     }
 
@@ -84,7 +89,8 @@ public class File {
 
     @Override
     public String toString() {
-        return  student + "\n" +
+        return "File id: " + id + "\n" +
+                student + "\n" +
                 (progress.isEmpty() ? "" : "Progress: \n") +
                 (progress.containsKey(Subject.MATH) ? "- " + Subject.MATH.name + ": " + progress.get(Subject.MATH) + "\n" : "") +
                 (progress.containsKey(Subject.PHYSICS) ? "- " + Subject.PHYSICS.name + ": " + progress.get(Subject.PHYSICS) + "\n" : "") +

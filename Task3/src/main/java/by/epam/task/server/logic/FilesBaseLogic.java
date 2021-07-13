@@ -102,13 +102,12 @@ public class FilesBaseLogic {
     }
 
     public ArrayList<File> readFilesFromXml() throws ParsingException, IOException {
-        Document document = new Builder().build(filesBasePath);
+        Document document = new Builder()
+                .build(filesBasePath);
 
         ArrayList<File> filesList = new ArrayList<>();
 
         Elements elements = document.getRootElement().getChildElements();
-
-        System.out.println(elements.get(0).getChild(3));
 
         for (int i = 0; i < elements.size(); i++) {
             filesList.add(new File(elements.get(i)));
@@ -116,5 +115,4 @@ public class FilesBaseLogic {
 
         return filesList;
     }
-
 }
