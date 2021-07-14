@@ -1,5 +1,8 @@
 package by.epam.task.server.entity;
 
+import by.epam.task.server.logic.UserBaseLogic;
+import nu.xom.Element;
+
 public class User {
     private String username;
     private String password;
@@ -15,8 +18,16 @@ public class User {
         this.role = role;
     }
 
-    public User(String username, String s) {
+    public User(Element user) {
+        UserBaseLogic logic = new UserBaseLogic();
 
+        this.username = user.getFirstChildElement("username").getValue();
+        this.password = logic.decryptUserPassword(user.getFirstChildElement("password").getValue());
+        if (user.getFirstChildElement("user-role").getValue().equals("Admin")) {
+            this.role = UserRole.ADMINISTRATOR;
+        } else {
+            this.role = UserRole.USER;
+        }
     }
 
     public String getUsername() {
@@ -45,8 +56,8 @@ public class User {
 
     @Override
     public String toString() {
-        return  "username: " + username + '\n' +
-                "password: " + password + '\n' +
-                "role: " + role;
+        return  "User's name: " + username + '\n' +
+                "Password: " + password + '\n' +
+                "User role: " + role + "\n";
     }
 }

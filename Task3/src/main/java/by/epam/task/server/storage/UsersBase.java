@@ -1,14 +1,26 @@
 package by.epam.task.server.storage;
 
 import by.epam.task.server.entity.User;
+import by.epam.task.server.logic.UserBaseLogic;
+import nu.xom.ParsingException;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class UsersBase {
+    private static UsersBase instance;
     private HashMap<String, User> users;
 
-    public UsersBase() {
-        this.users = new HashMap<>();
+    private UsersBase() throws ParsingException, IOException {
+        UserBaseLogic logic = new UserBaseLogic();
+        this.users = logic.readUsersFromXml();
+    }
+
+    public static UsersBase getInstance() throws ParsingException, IOException {
+        if (instance == null) {
+            instance = new UsersBase();
+        }
+        return instance;
     }
 
     public HashMap<String, User> getUsers() {

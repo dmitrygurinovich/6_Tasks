@@ -2,9 +2,7 @@ package by.epam.task.server.logic;
 
 import by.epam.task.server.entity.User;
 import by.epam.task.server.storage.UsersBase;
-import nu.xom.Document;
-import nu.xom.Element;
-import nu.xom.Serializer;
+import nu.xom.*;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -13,6 +11,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -30,7 +29,7 @@ public class UserBaseLogic {
     public static void format(OutputStream stream, Document doc) throws Exception {
         Serializer serializer = new Serializer(stream, "ISO-8859-1");
         serializer.setIndent(4);
-        serializer.setMaxLength(60);
+        serializer.setMaxLength(120);
         serializer.write(doc);
         serializer.flush();
     }
@@ -71,10 +70,17 @@ public class UserBaseLogic {
         format(new BufferedOutputStream(new FileOutputStream(USERS_BASE_PATH)), getXmlDocument(base));
     }
 
-    public HashMap<String, String> readUsersFromXml() {
-        HashMap<String, String> users = new HashMap<>();
+    public HashMap<String, User> readUsersFromXml() throws ParsingException, IOException {
+        Document document = new Builder()
+                .build(USERS_BASE_PATH);
 
-        // create new constructor for User class for creating objects from XML
+        HashMap<String, User> users = new HashMap<>();
+
+        Elements elements = document.getRootElement().getChildElements();
+
+        for (Element element : elements) {
+            users.put(element.getFirstChildElement("username").getValue(), new User(element));
+        }
 
         return users;
     }
@@ -95,7 +101,7 @@ public class UserBaseLogic {
         return passwordsBytes;
     }
 
-    public String decryptUserPassword(String bytesArray) {
+    public String decryptUserPassword(String bytesArrayInString) {
         StringBuilder password;
 
         password = new StringBuilder();
@@ -103,7 +109,7 @@ public class UserBaseLogic {
         try {
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.DECRYPT_MODE, KEY);
-            byte[] chars = cipher.doFinal(getBytesArrayFromString(bytesArray));
+            byte[] chars = cipher.doFinal(getBytesArrayFromString(bytesArrayInString));
 
             for (byte b : chars) {
                 password.append((char) b);

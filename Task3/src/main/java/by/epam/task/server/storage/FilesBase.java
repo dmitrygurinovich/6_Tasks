@@ -7,16 +7,24 @@ import nu.xom.ParsingException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class FilesBase {
+public final class FilesBase {
+    private static FilesBase instance;
     private ArrayList<File> files;
 
-    public FilesBase(){
+    private FilesBase(){
         FilesBaseLogic logic = new FilesBaseLogic();
         try {
             this.files = logic.readFilesFromXml();
         } catch (ParsingException | IOException exception) {
             exception.printStackTrace();
         }
+    }
+
+    public static FilesBase getInstance() {
+        if (instance == null) {
+            instance = new FilesBase();
+        }
+        return instance;
     }
 
     public FilesBase(ArrayList<File> files) {

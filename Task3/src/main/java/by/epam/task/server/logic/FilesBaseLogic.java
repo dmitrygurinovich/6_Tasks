@@ -89,16 +89,16 @@ public class FilesBaseLogic {
         return file;
     }
 
-    public Document getXmlDocument(FilesBase base) {
+    public Document getXmlDocument() {
         Element files = new Element("files");
-        for (File file : base.getFiles()) {
+        for (File file : FilesBase.getInstance().getFiles()) {
             files.appendChild(getXmlElement(file));
         }
         return new Document(files);
     }
 
-    public void writeFilesToXml(FilesBase base) throws Exception {
-        format(new BufferedOutputStream(new FileOutputStream(FILES_BASE_PATH)), getXmlDocument(base));
+    public void writeFilesToXml() throws Exception {
+        format(new BufferedOutputStream(new FileOutputStream(FILES_BASE_PATH)), getXmlDocument());
     }
 
     public ArrayList<File> readFilesFromXml() throws ParsingException, IOException {
@@ -116,16 +116,16 @@ public class FilesBaseLogic {
         return filesList;
     }
 
-    public void addFile(FilesBase base, File file) throws Exception {
-        base.getFiles().add(file);
-        writeFilesToXml(base);
+    public void addFile(File file) throws Exception {
+        FilesBase.getInstance().getFiles().add(file);
+        writeFilesToXml();
     }
 
-    public void deleteFile(FilesBase  base, int fileId) throws Exception {
-        base.getFiles().remove(fileId - 1);
-        for (int i = 0; i < base.getFiles().size(); i++) {
-            base.getFiles().get(i).setId(i + 1);
+    public void deleteFile(int fileId) throws Exception {
+        FilesBase.getInstance().getFiles().remove(fileId - 1);
+        for (int i = 0; i < FilesBase.getInstance().getFiles().size(); i++) {
+            FilesBase.getInstance().getFiles().get(i).setId(i + 1);
         }
-        writeFilesToXml(base);
+        writeFilesToXml();
     }
 }
