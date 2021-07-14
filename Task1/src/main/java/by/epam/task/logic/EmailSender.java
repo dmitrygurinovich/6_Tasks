@@ -4,6 +4,7 @@ import by.epam.task.entity.Book;
 import by.epam.task.entity.Library;
 import by.epam.task.entity.User;
 import by.epam.task.entity.UserRole;
+import by.epam.task.view.View;
 
 import javax.mail.*;
 import javax.mail.internet.AddressException;
@@ -17,15 +18,12 @@ public class EmailSender {
     final String username = "gurinovich.notify@gmail.com";
     final String password = "4531689925qWe";
 
+
     public EmailSender() {
     }
 
-    /**
-     * @param library - library
-     * @param subject - Mail subject
-     * @param book - book
-     */
-    public void notifyUsersAboutAddingBooksDescription(Library library, String subject, Book book) {
+    public void notifyUsersAboutAddingBooksDescription(String subject, Book book) {
+        View view = new View();
         final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
         Properties props = System.getProperties();
         props.setProperty("mail.smtp.host", "smtp.gmail.com");
@@ -50,7 +48,7 @@ public class EmailSender {
 
             msg.setFrom(new InternetAddress("gurinovich.notify@gmail.com")); // field "from"
             msg.setRecipients(
-                    Message.RecipientType.TO, getUsersEmail(UserRole.USER, library));
+                    Message.RecipientType.TO, getUsersEmail(UserRole.USER));
             msg.setSubject(subject);
             msg.setText("Description has been added for book: \n" +
                     "№: " + book.getId() + "\n" +
@@ -60,7 +58,7 @@ public class EmailSender {
                     "Description: " + book.getDescription());
             msg.setSentDate(new Date());
             Transport.send(msg);
-            System.out.println("Message sent.");
+            view.print("Message sent.");
         } catch (MessagingException e) {
             e.printStackTrace();
         }
@@ -72,6 +70,7 @@ public class EmailSender {
      */
     public void suggestToAddABookToTheLibrary(User user, Book book) {
         final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
+        View view = new View();
         Properties props = System.getProperties();
         props.setProperty("mail.smtp.host", "smtp.gmail.com");
         props.setProperty("mail.smtp.socketFactory.class", SSL_FACTORY);
@@ -105,24 +104,19 @@ public class EmailSender {
                     (book.getDescription() != null ? "Description: " + book.getDescription() : ""));
             msg.setSentDate(new Date());
             Transport.send(msg);
-            System.out.println("Message sent.");
+            view.print("Message sent.");
         } catch (MessagingException e) {
             e.printStackTrace();
         }
     }
 
-    /**
-     * @param role - User role (Administrator or User)
-     * @param library - library
-     * @return Address[] addresses
-     */
-    public Address[] getUsersEmail(UserRole role, Library library) {
+    public Address[] getUsersEmail(UserRole role) {
         ArrayList<String> emails;
         Address[] addresses;
 
         emails = new ArrayList<>();
 
-        for (User user : library.getUsers()) {
+        for (User user : Library.getInstance().getUsers()) {
             if (user.getRole().equals(role)) {
                 emails.add(user.getEmail());
             }

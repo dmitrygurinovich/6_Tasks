@@ -9,13 +9,11 @@ import by.epam.task.logic.UsersBaseLogic;
 import java.util.Scanner;
 
 public class UserInterface {
-    private final Library library;
     private final LibraryLogic libraryLogic;
     private static final Scanner in = new Scanner(System.in);
     private static final View view = new View();
 
-    public UserInterface(Library library) {
-        this.library = library;
+    public UserInterface() {
         this.libraryLogic = new LibraryLogic();
     }
 
@@ -40,19 +38,19 @@ public class UserInterface {
 
         switch (menuItem) {
             case 1:
-                view.showBooks(library, this);
+                view.showBooks( this);
             case 2:
-                libraryLogic.searchBooksByKeyword(library);
+                libraryLogic.searchBooksByKeyword();
                 adminMenu();
             case 3:
-                libraryLogic.addBook(library);
+                libraryLogic.addBook();
                 adminMenu();
             case 4:
-                libraryLogic.editBook(library, this);
+                libraryLogic.editBook( this);
                 adminMenu();
             case 5:
                 usersBaseLogic = new UsersBaseLogic();
-                usersBaseLogic.addUser(library);
+                usersBaseLogic.addUser();
                 adminMenu();
             case 0:
                 exit();
@@ -78,14 +76,14 @@ public class UserInterface {
 
         switch (menuItem) {
             case 1:
-                view.showBooks(library, this);
+                view.showBooks( this);
                 userMenu();
             case 2:
-                libraryLogic.searchBooksByKeyword(library);
+                libraryLogic.searchBooksByKeyword();
                 userMenu();
             case 3:
                 userLogic = new UserLogic();
-                userLogic.suggestNewBook(library.getAuthorizedUser());
+                userLogic.suggestNewBook(Library.getInstance().getAuthorizedUser());
                 userMenu();
             case 0:
                 exit();
@@ -114,12 +112,12 @@ public class UserInterface {
         }
         password = in.nextLine();
 
-        for (int i = 0; i < library.getUsers().size(); i++) {
-            if (library.getUsers().get(i).getLogin().equals(login)) {
-                if (library.getUsers().get(i).getPassword().equals(password)) {
+        for (int i = 0; i < Library.getInstance().getUsers().size(); i++) {
+            if (Library.getInstance().getUsers().get(i).getLogin().equals(login)) {
+                if (Library.getInstance().getUsers().get(i).getPassword().equals(password)) {
                     authorized = true;
-                    library.setAuthorizedUser(library.getUsers().get(i));
-                    if (library.getAuthorizedUser().getRole().equals(UserRole.ADMINISTRATOR)) {
+                    Library.getInstance().setAuthorizedUser(Library.getInstance().getUsers().get(i));
+                    if (Library.getInstance().getAuthorizedUser().getRole().equals(UserRole.ADMINISTRATOR)) {
                         adminMenu();
                     } else {
                         userMenu();

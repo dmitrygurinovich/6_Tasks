@@ -27,7 +27,7 @@ public class LibraryLogic {
         this.view = new View();
     }
 
-    public void searchBooksByKeyword(Library library) {
+    public void searchBooksByKeyword() {
         String keyword;
         StringBuilder concatenateBookFields;
         Pattern pattern;
@@ -38,21 +38,21 @@ public class LibraryLogic {
         pattern = Pattern.compile(keyword.toLowerCase(Locale.ROOT));
         books = new ArrayList<>();
 
-        for (int i = 0; i < library.getBooks().size(); i++) {
+        for (int i = 0; i < Library.getInstance().getBooks().size(); i++) {
             concatenateBookFields = new StringBuilder();
             concatenateBookFields
-                    .append(library.getBooks().get(i).getName())
-                    .append(library.getBooks().get(i).getAuthor())
-                    .append(library.getBooks().get(i).getYear());
+                    .append(Library.getInstance().getBooks().get(i).getName())
+                    .append(Library.getInstance().getBooks().get(i).getAuthor())
+                    .append(Library.getInstance().getBooks().get(i).getYear());
 
-            if (library.getBooks().get(i).getDescription() != null) {
-                concatenateBookFields.append(library.getBooks().get(i).getDescription());
+            if (Library.getInstance().getBooks().get(i).getDescription() != null) {
+                concatenateBookFields.append(Library.getInstance().getBooks().get(i).getDescription());
             }
 
             matcher = pattern.matcher(concatenateBookFields.toString().toLowerCase(Locale.ROOT));
 
-            if(matcher.find()) {
-                books.add(library.getBooks().get(i));
+            if (matcher.find()) {
+                books.add(Library.getInstance().getBooks().get(i));
             }
         }
 
@@ -65,7 +65,7 @@ public class LibraryLogic {
         }
     }
 
-    public void addBook(Library library) {
+    public void addBook() {
         Book newBook;
 
         newBook = new Book();
@@ -74,32 +74,32 @@ public class LibraryLogic {
         newBook.setAuthor(getStringFromConsole("Enter book's author: "));
         newBook.setYear(getNumFromConsole("Enter book's year: ", 1800, 2021));
         newBook.setType((getNumFromConsole("Choose book's type:\n" + "1. Paper book\n" + "2. E-book", 1, 2) == 1 ? BookType.PAPER_BOOK : BookType.ELECTRONIC_BOOK));
-        newBook.setId(library.getBooks().size() + 1);
+        newBook.setId(Library.getInstance().getBooks().size() + 1);
 
         this.writeOneBookToFile(newBook);
-        library.getBooks().add(newBook);
+        Library.getInstance().getBooks().add(newBook);
 
         view.print("New book " + newBook.getName() + " added.");
     }
 
-    public void editBook(Library library, UserInterface userInterface) {
+    public void editBook( UserInterface userInterface) {
         int bookNumber;
 
         Book book;
 
         bookNumber = getNumFromConsole("" +
-                "Enter book's number or \"0\" for exit to the main menu: ", 0, library.getBooks().size());
+                "Enter book's number or \"0\" for exit to the main menu: ", 0, Library.getInstance().getBooks().size());
 
         if (bookNumber == 0) {
             userInterface.adminMenu();
         } else {
-            book = library.getBooks().get(bookNumber - 1);
-            showBookEditingMenu(library, book, userInterface);
+            book = Library.getInstance().getBooks().get(bookNumber - 1);
+            showBookEditingMenu(book, userInterface);
         }
 
     }
 
-    public void showBookEditingMenu(Library library, Book book, UserInterface userInterface){
+    public void showBookEditingMenu(Book book, UserInterface userInterface) {
         int menuItem;
         String descriptionUntilEditing;
 
@@ -116,30 +116,30 @@ public class LibraryLogic {
                 "5. Edit description\n" +
                 "0. To the main menu", 0, 5);
 
-        switch (menuItem){
+        switch (menuItem) {
             case 0:
-                writeBooksToFile(library.getBooks());
+                writeBooksToFile(Library.getInstance().getBooks());
                 userInterface.adminMenu();
             case 1:
                 book.setName(getStringFromConsole("Enter name: "));
-                showBookEditingMenu(library, book, userInterface);
+                showBookEditingMenu(book, userInterface);
             case 2:
                 book.setAuthor(getStringFromConsole("Enter author: "));
-                showBookEditingMenu(library, book, userInterface);
+                showBookEditingMenu(book, userInterface);
             case 3:
                 book.setYear(getNumFromConsole("Enter year", 1800, 2021));
-                showBookEditingMenu(library, book, userInterface);
+                showBookEditingMenu(book, userInterface);
             case 4:
-                book.setType((getNumFromConsole("1. Paper book\n2. Electronic book",1,2) == 1) ? BookType.PAPER_BOOK : BookType.ELECTRONIC_BOOK);
-                showBookEditingMenu(library, book, userInterface);
+                book.setType((getNumFromConsole("1. Paper book\n2. Electronic book", 1, 2) == 1) ? BookType.PAPER_BOOK : BookType.ELECTRONIC_BOOK);
+                showBookEditingMenu(book, userInterface);
             case 5:
                 descriptionUntilEditing = book.getDescription();
 
                 book.setDescription(getStringFromConsole("Enter description: "));
                 if (!book.getDescription().equals("") && !book.getDescription().equals(descriptionUntilEditing)) {
-                    sender.notifyUsersAboutAddingBooksDescription(library, "Description has been added for book!", book);
+                    sender.notifyUsersAboutAddingBooksDescription("Description has been added for book!", book);
                 }
-                showBookEditingMenu(library, book, userInterface);
+                showBookEditingMenu(book, userInterface);
         }
     }
 

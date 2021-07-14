@@ -10,7 +10,10 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -23,26 +26,26 @@ import java.util.regex.PatternSyntaxException;
 public class UsersBaseLogic {
     private final File USERS_BASE_PATH;
     private final SecretKeySpec KEY;
-    private static Scanner in = new Scanner(System.in);
-    private static View view = new View();
 
     public UsersBaseLogic() {
         this.USERS_BASE_PATH = new File("Task1/src/main/resources/usersbase.txt");
         this.KEY = new SecretKeySpec("Hdy4rl1dh64MwPfn".getBytes(), "AES");
     }
 
-    public void addUser(Library library) {
+    public void addUser() {
         User user;
         String email;
         String login;
+        View view;
 
         user = new User();
+        view = new View();
 
-        user.setId(library.getUsers().size() + 1);
+        user.setId(Library.getInstance().getUsers().size() + 1);
         user.setName(getStringFromConsole("Enter user's name: "));
 
         login = getStringFromConsole("Enter user's login: ");
-        while(isLoginExist(login, library)) {
+        while(isLoginExist(login)) {
             view.print("Login is exist! Enter new login!");
             login = getStringFromConsole("Enter user's login: ");
         }
@@ -63,7 +66,7 @@ public class UsersBaseLogic {
 
         view.print("User added!");
 
-        library.getUsers().add(user);
+        Library.getInstance().getUsers().add(user);
         writeUserToFile(user);
     }
 
@@ -182,6 +185,12 @@ public class UsersBaseLogic {
 
     public int getNumFromConsole(String message, int min, int max) {
         int number;
+        View view;
+        Scanner in;
+
+        view = new View();
+        in = new Scanner(System.in);
+
         view.print(message);
         while(!in.hasNextInt()) {
             view.print(message);
@@ -198,6 +207,11 @@ public class UsersBaseLogic {
 
     public String getStringFromConsole(String message) {
         String text;
+        View view;
+        Scanner in;
+
+        view = new View();
+        in = new Scanner(System.in);
         view.print(message);
 
         while (!in.hasNextLine()) {
@@ -226,12 +240,12 @@ public class UsersBaseLogic {
         return isEmail;
     }
 
-    public boolean isLoginExist(String loginForCheck, Library library) {
+    public boolean isLoginExist(String loginForCheck) {
         boolean isExist;
 
         isExist  = false;
 
-        for(User user : library.getUsers()) {
+        for(User user : Library.getInstance().getUsers()) {
             if (user.getLogin().equals(loginForCheck)) {
                 isExist = true;
                 break;

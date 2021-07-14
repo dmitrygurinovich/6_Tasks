@@ -12,40 +12,40 @@ public class View {
 
     }
 
-    public void showBooks(Library library, UserInterface userInterface) {
+    public void showBooks(UserInterface userInterface) {
         int defaultPageNumber = 1;
-        if (library.getBooks().size() == 0) {
+        if (Library.getInstance().getBooks().size() == 0) {
             print("There aren't books!");
-        } else if (library.getBooks().size() > 0 && library.getBooks().size() <= 10) {
+        } else if (Library.getInstance().getBooks().size() > 0 && Library.getInstance().getBooks().size() <= 10) {
             print("+++ BOOKS +++\n +++ Page 1 +++");
-            for (Book book : library.getBooks()) {
+            for (Book book : Library.getInstance().getBooks()) {
                 print(book);
             }
         } else {
-            showBooksByPages(library, defaultPageNumber, userInterface);
+            showBooksByPages(defaultPageNumber, userInterface);
         }
     }
 
-    public void showBooksByPages(Library library, int defaultPageNumber, UserInterface userInterface) {
+    public void showBooksByPages(int defaultPageNumber, UserInterface userInterface) {
         int pagesCount;
         Scanner in;
 
         int pageNumber = defaultPageNumber;
 
 
-        pagesCount = (library.getBooks().size() - (library.getBooks().size() % 10)) / 10;
-        if (library.getBooks().size() % 10 != 0) {
+        pagesCount = (Library.getInstance().getBooks().size() - (Library.getInstance().getBooks().size() % 10)) / 10;
+        if (Library.getInstance().getBooks().size() % 10 != 0) {
             pagesCount++;
         }
 
         if (pageNumber < pagesCount) {
-            print("---- Page " + pageNumber + " of " + pagesCount +" ----" );
+            print("---- Page " + pageNumber + " of " + pagesCount + " ----");
             for (int i = 10 * (pageNumber - 1); i < 10 * pageNumber; i++) {
-                print(library.getBooks().get(i));
+                print(Library.getInstance().getBooks().get(i));
             }
         } else if (pageNumber == pagesCount) {
-            for (int i = 10 * (pageNumber - 1); i < library.getBooks().size(); i++) {
-                print(library.getBooks().get(i));
+            for (int i = 10 * (pageNumber - 1); i < Library.getInstance().getBooks().size(); i++) {
+                print(Library.getInstance().getBooks().get(i));
             }
         }
         print("There are " + pagesCount + " pages!");
@@ -60,13 +60,13 @@ public class View {
         pageNumber = in.nextInt();
 
         if (pageNumber == 0) {
-            if(library.getAuthorizedUser().getRole().equals(UserRole.USER) ) {
+            if (Library.getInstance().getAuthorizedUser().getRole().equals(UserRole.USER)) {
                 userInterface.userMenu();
             } else {
                 userInterface.adminMenu();
             }
         } else {
-            showBooksByPages(library, pageNumber, userInterface);
+            showBooksByPages(pageNumber, userInterface);
         }
     }
 
