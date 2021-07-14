@@ -15,17 +15,32 @@ import java.util.Date;
 import java.util.Properties;
 
 public class EmailSender {
-    final String username = "gurinovich.notify@gmail.com";
-    final String password = "4531689925qWe";
+    private final String USERNAME = "gurinovich.notify@gmail.com";
+    private final String PASSWORD = "4531689925qWe";
+    private static EmailSender instance;
 
+    private EmailSender() {
 
-    public EmailSender() {
+    }
+
+    public static EmailSender getInstance() {
+        if (instance == null) {
+            instance = new EmailSender();
+        }
+        return instance;
     }
 
     public void notifyUsersAboutAddingBooksDescription(String subject, Book book) {
-        View view = new View();
-        final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
-        Properties props = System.getProperties();
+        View view;
+        final String SSL_FACTORY;
+        Properties props;
+        Session session;
+        Message message;
+
+        view = new View();
+        SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
+        props = System.getProperties();
+
         props.setProperty("mail.smtp.host", "smtp.gmail.com");
         props.setProperty("mail.smtp.socketFactory.class", SSL_FACTORY);
         props.setProperty("mail.smtp.socketFactory.fallback", "false");
@@ -37,41 +52,44 @@ public class EmailSender {
         props.put("mail.transport.protocol", "smtp");
 
         try {
-            Session session = Session.getDefaultInstance(props,
+            session = Session.getDefaultInstance(props,
                     new Authenticator() {
                         protected PasswordAuthentication getPasswordAuthentication() {
-                            return new PasswordAuthentication(username, password);
+                            return new PasswordAuthentication(USERNAME, PASSWORD);
                         }
                     });
 
-            Message msg = new MimeMessage(session);
+            message = new MimeMessage(session);
 
-            msg.setFrom(new InternetAddress("gurinovich.notify@gmail.com")); // field "from"
-            msg.setRecipients(
+            message.setFrom(new InternetAddress("gurinovich.notify@gmail.com")); // field "from"
+            message.setRecipients(
                     Message.RecipientType.TO, getUsersEmail(UserRole.USER));
-            msg.setSubject(subject);
-            msg.setText("Description has been added for book: \n" +
+            message.setSubject(subject);
+            message.setText("Description has been added for book: \n" +
                     "№: " + book.getId() + "\n" +
                     "Author: " + book.getAuthor() + "\n" +
                     "Name: " + book.getName() + "\n" +
                     "Year: " + book.getYear() + "\n" +
                     "Description: " + book.getDescription());
-            msg.setSentDate(new Date());
-            Transport.send(msg);
+            message.setSentDate(new Date());
+            Transport.send(message);
             view.print("Message sent.");
         } catch (MessagingException e) {
             e.printStackTrace();
         }
     }
 
-    /**
-     * @param user - user, who is suggesting to add new book
-     * @param book - book
-     */
     public void suggestToAddABookToTheLibrary(User user, Book book) {
-        final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
-        View view = new View();
-        Properties props = System.getProperties();
+        final String SSL_FACTORY;
+        View view;
+        Properties props;
+        Session session;
+        Message message;
+
+        SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
+        view = new View();
+        props = System.getProperties();
+
         props.setProperty("mail.smtp.host", "smtp.gmail.com");
         props.setProperty("mail.smtp.socketFactory.class", SSL_FACTORY);
         props.setProperty("mail.smtp.socketFactory.fallback", "false");
@@ -83,27 +101,27 @@ public class EmailSender {
         props.put("mail.transport.protocol", "smtp");
 
         try {
-            Session session = Session.getDefaultInstance(props,
+            session = Session.getDefaultInstance(props,
                     new Authenticator() {
                         protected PasswordAuthentication getPasswordAuthentication() {
-                            return new PasswordAuthentication(username, password);
+                            return new PasswordAuthentication(USERNAME, PASSWORD);
                         }
                     });
 
-            Message msg = new MimeMessage(session);
+            message = new MimeMessage(session);
 
-            msg.setFrom(new InternetAddress("dmitry.gurinovic1989@gmail.com"));
-            msg.setRecipients(Message.RecipientType.TO,
+            message.setFrom(new InternetAddress("dmitry.gurinovic1989@gmail.com"));
+            message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse("dmitry.gurinovich@hotmail.com", false));
-            msg.setSubject("The user " + user.getLogin() + " suggested to add a book to the library.");
-            msg.setText("The user " + user.getLogin() + " suggested to add a book to the library\n\n" +
+            message.setSubject("The user " + user.getLogin() + " suggested to add a book to the library.");
+            message.setText("The user " + user.getLogin() + " suggested to add a book to the library\n\n" +
                     "Name: " + book.getName() + "\n" +
                     "Author: " + book.getAuthor() + "\n" +
                     "Year: " + book.getYear() + "\n" +
                     "Book type: " + book.getType() + "\n" +
                     (book.getDescription() != null ? "Description: " + book.getDescription() : ""));
-            msg.setSentDate(new Date());
-            Transport.send(msg);
+            message.setSentDate(new Date());
+            Transport.send(message);
             view.print("Message sent.");
         } catch (MessagingException e) {
             e.printStackTrace();
@@ -121,7 +139,9 @@ public class EmailSender {
                 emails.add(user.getEmail());
             }
         }
+
         addresses = new Address[emails.size()];
+
         try {
             addresses = InternetAddress.parse(emails.toString().substring(1, emails.toString().length() - 1));
         } catch (AddressException exception) {

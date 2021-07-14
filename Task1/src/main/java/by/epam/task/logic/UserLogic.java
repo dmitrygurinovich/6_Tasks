@@ -8,9 +8,6 @@ import by.epam.task.view.View;
 import java.util.Scanner;
 
 public class UserLogic {
-    private static final Scanner in = new Scanner(System.in);
-    private static final View view = new View();
-
     public UserLogic() {
 
     }
@@ -20,18 +17,23 @@ public class UserLogic {
         EmailSender sender;
 
         book = new Book();
+        sender = EmailSender.getInstance();
 
         book.setName(getStringFromConsole("Enter book's name:"));
         book.setAuthor(getStringFromConsole("Enter book's author:"));
         book.setYear(getNumFromConsole("Enter book's year:", 1800, 2021));
         book.setType((getNumFromConsole("Choose book's type:\n" + "1. Paper book\n" + "2. E-book", 0, 2) == 1 ? BookType.PAPER_BOOK : BookType.ELECTRONIC_BOOK));
 
-        sender = new EmailSender();
         sender.suggestToAddABookToTheLibrary(user, book);
     }
 
     public int getNumFromConsole(String message, int min, int max) {
         int number;
+        Scanner in;
+        View view;
+
+        in = new Scanner(System.in);
+        view = new View();
 
         view.print(message);
         while (!in.hasNextInt()) {
@@ -49,6 +51,11 @@ public class UserLogic {
 
     public String getStringFromConsole(String message) {
         String text;
+        Scanner in;
+        View view;
+
+        in = new Scanner(System.in);
+        view = new View();
 
         view.print(message);
 

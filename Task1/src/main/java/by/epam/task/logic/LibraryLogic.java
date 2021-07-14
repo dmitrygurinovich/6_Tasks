@@ -17,14 +17,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LibraryLogic {
-    private final File booksBasePath;
-    private static final Scanner in = new Scanner(System.in);
-    private static final EmailSender sender = new EmailSender();
-    private final View view;
+    private static final File BOOKS_BASE_PATH = new File("Task1/src/main/resources/booksbase.txt");
 
     public LibraryLogic() {
-        this.booksBasePath = new File("Task1/src/main/resources/booksbase.txt");
-        this.view = new View();
+
     }
 
     public void searchBooksByKeyword() {
@@ -33,26 +29,29 @@ public class LibraryLogic {
         Pattern pattern;
         Matcher matcher;
         ArrayList<Book> books;
+        View view = new View();
+        Library library;
 
         keyword = getStringFromConsole("Enter keyword for search: ");
         pattern = Pattern.compile(keyword.toLowerCase(Locale.ROOT));
         books = new ArrayList<>();
+        library = Library.getInstance();
 
-        for (int i = 0; i < Library.getInstance().getBooks().size(); i++) {
+        for (int i = 0; i < library.getBooks().size(); i++) {
             concatenateBookFields = new StringBuilder();
             concatenateBookFields
-                    .append(Library.getInstance().getBooks().get(i).getName())
-                    .append(Library.getInstance().getBooks().get(i).getAuthor())
-                    .append(Library.getInstance().getBooks().get(i).getYear());
+                    .append(library.getBooks().get(i).getName())
+                    .append(library.getBooks().get(i).getAuthor())
+                    .append(library.getBooks().get(i).getYear());
 
-            if (Library.getInstance().getBooks().get(i).getDescription() != null) {
-                concatenateBookFields.append(Library.getInstance().getBooks().get(i).getDescription());
+            if (library.getBooks().get(i).getDescription() != null) {
+                concatenateBookFields.append(library.getBooks().get(i).getDescription());
             }
 
             matcher = pattern.matcher(concatenateBookFields.toString().toLowerCase(Locale.ROOT));
 
             if (matcher.find()) {
-                books.add(Library.getInstance().getBooks().get(i));
+                books.add(library.getBooks().get(i));
             }
         }
 
@@ -66,34 +65,41 @@ public class LibraryLogic {
     }
 
     public void addBook() {
-        Book newBook;
+        Book book;
+        View view;
+        Library library;
 
-        newBook = new Book();
+        book = new Book();
+        view = new View();
+        library = Library.getInstance();
 
-        newBook.setName(getStringFromConsole("Enter book's name: "));
-        newBook.setAuthor(getStringFromConsole("Enter book's author: "));
-        newBook.setYear(getNumFromConsole("Enter book's year: ", 1800, 2021));
-        newBook.setType((getNumFromConsole("Choose book's type:\n" + "1. Paper book\n" + "2. E-book", 1, 2) == 1 ? BookType.PAPER_BOOK : BookType.ELECTRONIC_BOOK));
-        newBook.setId(Library.getInstance().getBooks().size() + 1);
+        book.setName(getStringFromConsole("Enter book's name: "));
+        book.setAuthor(getStringFromConsole("Enter book's author: "));
+        book.setYear(getNumFromConsole("Enter book's year: ", 1800, 2021));
+        book.setType((getNumFromConsole("Choose book's type:\n" + "1. Paper book\n" + "2. E-book", 1, 2) == 1 ? BookType.PAPER_BOOK : BookType.ELECTRONIC_BOOK));
+        book.setId(library.getBooks().size() + 1);
 
-        this.writeOneBookToFile(newBook);
-        Library.getInstance().getBooks().add(newBook);
+        this.writeOneBookToFile(book);
+        library.getBooks().add(book);
 
-        view.print("New book " + newBook.getName() + " added.");
+        view.print("New book " + book.getName() + " added.");
     }
 
-    public void editBook( UserInterface userInterface) {
+    public void editBook() {
         int bookNumber;
-
         Book book;
+        Library library;
+        UserInterface userInterface;
 
+        library = Library.getInstance();
+        userInterface = new UserInterface();
         bookNumber = getNumFromConsole("" +
-                "Enter book's number or \"0\" for exit to the main menu: ", 0, Library.getInstance().getBooks().size());
+                "Enter book's number or \"0\" for exit to the main menu: ", 0, library.getBooks().size());
 
         if (bookNumber == 0) {
             userInterface.adminMenu();
         } else {
-            book = Library.getInstance().getBooks().get(bookNumber - 1);
+            book = library.getBooks().get(bookNumber - 1);
             showBookEditingMenu(book, userInterface);
         }
 
@@ -102,6 +108,13 @@ public class LibraryLogic {
     public void showBookEditingMenu(Book book, UserInterface userInterface) {
         int menuItem;
         String descriptionUntilEditing;
+        EmailSender sender;
+        View view;
+        Library library;
+
+        sender = EmailSender.getInstance();
+        view = new View();
+        library = Library.getInstance();
 
         view.print("" +
                 "You're editing book:\n" +
@@ -118,7 +131,7 @@ public class LibraryLogic {
 
         switch (menuItem) {
             case 0:
-                writeBooksToFile(Library.getInstance().getBooks());
+                writeBooksToFile(library.getBooks());
                 userInterface.adminMenu();
             case 1:
                 book.setName(getStringFromConsole("Enter name: "));
@@ -144,7 +157,7 @@ public class LibraryLogic {
     }
 
     public void writeOneBookToFile(Book book) {
-        try (FileWriter writer = new FileWriter(booksBasePath, true)) {
+        try (FileWriter writer = new FileWriter(BOOKS_BASE_PATH, true)) {
             writer.append("---\n");
             writer.write(book.toString());
             writer.flush();
@@ -154,12 +167,13 @@ public class LibraryLogic {
     }
 
     public void writeBooksToFile(ArrayList<Book> books) {
-        try (FileWriter writer = new FileWriter(booksBasePath)) {
+        try (FileWriter writer = new FileWriter(BOOKS_BASE_PATH)) {
 
             for (int i = 0; i < books.size() - 1; i++) {
                 writer.write(books.get(i).toString());
                 writer.append("---\n");
             }
+
             writer.write(books.get(books.size() - 1).toString());
             writer.flush();
 
@@ -174,7 +188,7 @@ public class LibraryLogic {
         Pattern patternForParsingBooksFields = Pattern
                 .compile("(?:№\\s*|Name:\\s*|Author:\\s*|Year:\\s|Type:\\s|Description:\\s)(.*)(?:\\n|$|)");
 
-        try (FileReader reader = new FileReader(booksBasePath)) {
+        try (FileReader reader = new FileReader(BOOKS_BASE_PATH)) {
             Scanner scanner = new Scanner(reader);
 
             while (scanner.hasNextLine()) {
@@ -219,6 +233,12 @@ public class LibraryLogic {
 
     public int getNumFromConsole(String message, int min, int max) {
         int number;
+        Scanner in;
+        View view;
+
+        in = new Scanner(System.in);
+        view = new View();
+
         view.print(message);
         while (!in.hasNextInt()) {
             view.print(message);
@@ -236,6 +256,12 @@ public class LibraryLogic {
 
     public String getStringFromConsole(String message) {
         String text;
+        Scanner in;
+        View view;
+
+        in = new Scanner(System.in);
+        view = new View();
+
         view.print(message);
 
         while (!in.hasNextLine()) {

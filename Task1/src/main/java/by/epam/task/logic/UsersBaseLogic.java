@@ -37,11 +37,13 @@ public class UsersBaseLogic {
         String email;
         String login;
         View view;
+        Library library;
 
         user = new User();
         view = new View();
+        library = Library.getInstance();
 
-        user.setId(Library.getInstance().getUsers().size() + 1);
+        user.setId(library.getUsers().size() + 1);
         user.setName(getStringFromConsole("Enter user's name: "));
 
         login = getStringFromConsole("Enter user's login: ");
@@ -66,7 +68,7 @@ public class UsersBaseLogic {
 
         view.print("User added!");
 
-        Library.getInstance().getUsers().add(user);
+        library.getUsers().add(user);
         writeUserToFile(user);
     }
 
@@ -242,10 +244,12 @@ public class UsersBaseLogic {
 
     public boolean isLoginExist(String loginForCheck) {
         boolean isExist;
+        Library library;
 
         isExist  = false;
+        library = Library.getInstance();
 
-        for(User user : Library.getInstance().getUsers()) {
+        for(User user : library.getUsers()) {
             if (user.getLogin().equals(loginForCheck)) {
                 isExist = true;
                 break;
