@@ -19,19 +19,24 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 public class NotesBaseLogic {
-    private final File noteBasePath;
-    private final View view;
+    private static final File NOTES_BASE_PATH = new File("Task2/src/main/resources/notesbase.json");
     private static final Scanner in = new Scanner(System.in);
 
     public NotesBaseLogic() {
-        this.noteBasePath = new File("Task2/src/main/resources/notesbase.json");
-        this.view = new View();
+
     }
 
-    public void showAllNotes(NotesBase notesBase, UserInterface userInterface) {
+    public void showAllNotes() {
         int menuItem;
+        View view;
+        NotesBase notesBase;
+        UserInterface userInterface;
 
-        showNotesThemes(notesBase);
+        view = new View();
+        notesBase = NotesBase.getInstance();
+        userInterface = new UserInterface();
+
+        showNotesThemes();
 
         menuItem = getNumFromConsole("Enter note's number or \"0\" for entering to the main menu", 0, notesBase.getNotes().size());
         if (menuItem == 0) {
@@ -41,14 +46,20 @@ public class NotesBaseLogic {
         userInterface.menu();
     }
 
-    public void showNotesThemes(NotesBase notesBase) {
+    public void showNotesThemes() {
+        View view;
+        NotesBase notesBase;
+
+        view = new View();
+        notesBase = NotesBase.getInstance();
+
         for (Note note : notesBase.getNotes()) {
             view.print(note.getId() + ". " + note.getTheme());
         }
     }
 
     public void writeNotesToFile(ArrayList<Note> notes) {
-        try (FileWriter writer = new FileWriter(noteBasePath)) {
+        try (FileWriter writer = new FileWriter(NOTES_BASE_PATH)) {
             writer.write(objectToJsonObject(notes));
             writer.flush();
         } catch (IOException exception) {
@@ -60,7 +71,7 @@ public class NotesBaseLogic {
         ArrayList<Note> notes;
         notes = new ArrayList<>();
 
-        try (FileReader reader = new FileReader(noteBasePath)) {
+        try (FileReader reader = new FileReader(NOTES_BASE_PATH)) {
             Gson gson = new Gson();
             Type collectionType = new TypeToken<ArrayList<Note>>() {
             }.getType();
@@ -73,9 +84,12 @@ public class NotesBaseLogic {
         return notes;
     }
 
-    public void addNote(NotesBase notesBase) {
+    public void addNote() {
         Note note = new Note();
         String email;
+        NotesBase notesBase;
+
+        notesBase = NotesBase.getInstance();
 
         note.setId(notesBase.getNotes().size() + 1);
         note.setTheme(getStringFromConsole("Enter note's theme:"));
@@ -92,8 +106,14 @@ public class NotesBaseLogic {
         writeNotesToFile(notesBase.getNotes());
     }
 
-    public void editNote(NotesBase notesBase, UserInterface userInterface) {
+    public void editNote() {
         int menuItem;
+        NotesBase notesBase;
+        UserInterface userInterface;
+
+        notesBase = NotesBase.getInstance();
+        userInterface = new UserInterface();
+
         menuItem = getNumFromConsole("Choose note for editing. Enter note's number or \"0\" for enter to the main menu: ", 0, notesBase.getNotes().size());
 
         if (menuItem == 0) {
@@ -103,9 +123,16 @@ public class NotesBaseLogic {
         }
     }
 
-    public void deleteNote(NotesBase notesBase, UserInterface userInterface) {
+    public void deleteNote() {
         int menuItem;
         int confirmation;
+        View view;
+        NotesBase notesBase;
+        UserInterface userInterface;
+
+        view = new View();
+        notesBase = NotesBase.getInstance();
+        userInterface = new UserInterface();
 
         menuItem = getNumFromConsole("Enter note's number which you want to delete or \"0\" for entering to the main menu", 0, notesBase.getNotes().size());
 
@@ -126,13 +153,20 @@ public class NotesBaseLogic {
 
     }
 
-    public void searchNotes(NotesBase notesBase, UserInterface userInterface) {
+    public void searchNotes() {
         ArrayList<Note> searchResult;
         String keyword;
         String concatenateNoteFields;
         Pattern pattern;
         Matcher matcher;
         int menuItem;
+        View view;
+        NotesBase notesBase;
+        UserInterface userInterface;
+
+        view = new View();
+        notesBase = NotesBase.getInstance();
+        userInterface = new UserInterface();
 
         menuItem = getNumFromConsole("" +
                 "1. Search in themes\n" +
@@ -149,7 +183,7 @@ public class NotesBaseLogic {
         searchResult = new ArrayList<>();
 
         if (menuItem == 1) {
-            for (Note note : notesBase.getNotes()){
+            for (Note note : notesBase.getNotes()) {
                 matcher = pattern.matcher(note.getTheme());
                 if (matcher.find()) {
                     searchResult.add(note);
@@ -166,7 +200,7 @@ public class NotesBaseLogic {
             }
             sortByText(searchResult);
         }
-        if (menuItem == 3){
+        if (menuItem == 3) {
             for (Note note : notesBase.getNotes()) {
                 concatenateNoteFields = (note.getTheme() + " " + note.getMessage()).toLowerCase(Locale.ROOT);
                 matcher = pattern.matcher(concatenateNoteFields);
@@ -186,6 +220,7 @@ public class NotesBaseLogic {
             view.print("No result!");
         }
     }
+
     public void sortByTheme(ArrayList<Note> notes) {
         Collections.sort(notes, new Comparator<Note>() {
             @Override
@@ -207,6 +242,9 @@ public class NotesBaseLogic {
     public void editNotesFields(NotesBase notesBase, UserInterface userInterface, int noteNumber) {
         int menuItem;
         String email;
+        View view;
+
+        view = new View();
 
         view.print("## You're editing note: ##");
         view.print(notesBase.getNotes().get(noteNumber - 1));
@@ -253,6 +291,10 @@ public class NotesBaseLogic {
 
     public String getStringFromConsole(String message) {
         String text;
+        View view;
+
+        view = new View();
+
         view.print(message);
 
         while (!in.hasNextLine()) {
@@ -265,6 +307,10 @@ public class NotesBaseLogic {
 
     public int getNumFromConsole(String message, int min, int max) {
         int number;
+        View view;
+
+        view = new View();
+
         view.print(message);
         while (!in.hasNextInt()) {
             view.print(message);

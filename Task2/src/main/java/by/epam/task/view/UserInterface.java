@@ -1,24 +1,23 @@
 package by.epam.task.view;
 
-import by.epam.task.entity.NotesBase;
 import by.epam.task.logic.NotesBaseLogic;
 
 import java.util.Scanner;
 
 public class UserInterface {
-    private static final Scanner in = new Scanner(System.in);
-    private final View view;
-    private final NotesBaseLogic logic;
-    private final NotesBase notesBase;
+    public UserInterface() {
 
-    public UserInterface(NotesBase notesBase) {
-        view = new View();
-        this.notesBase = notesBase;
-        this.logic = new NotesBaseLogic();
     }
 
     public void menu() {
         int menuItem;
+        View view;
+        NotesBaseLogic logic;
+        Scanner in;
+
+        view = new View();
+        logic = new NotesBaseLogic();
+        in = new Scanner(System.in);
 
         view.print("" +
                 "#### MENU ####\n" +
@@ -36,25 +35,31 @@ public class UserInterface {
                 in.close();
                 System.exit(0);
             case 1:
-                logic.showAllNotes(notesBase, this);
+                logic.showAllNotes();
                 menu();
             case 2:
-                logic.searchNotes(notesBase, this);
+                logic.searchNotes();
                 menu();
             case 3:
-                logic.addNote(notesBase);
+                logic.addNote();
                 menu();
             case 4:
-                logic.editNote(notesBase, this);
+                logic.editNote();
                 menu();
             case 5:
-                logic.deleteNote(notesBase, this);
+                logic.deleteNote();
                 menu();
         }
     }
 
     public int getNumFromConsole(String message, int min, int max) {
         int number;
+        View view;
+        Scanner in;
+
+        view = new View();
+        in = new Scanner(System.in);
+
         view.print(message);
         while (!in.hasNextInt()) {
             view.print(message);

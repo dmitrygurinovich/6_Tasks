@@ -16,13 +16,6 @@ public class Note {
 
     }
 
-    /**
-     * @param id - id
-     * @param theme - theme
-     * @param email - e-mail
-     * @param message - message
-     * @param date - date
-     */
     public Note(int id, String theme, String email, String message, GregorianCalendar date) {
         this.id = id;
         this.theme = theme;

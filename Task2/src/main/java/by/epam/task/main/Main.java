@@ -1,5 +1,7 @@
 package by.epam.task.main;
 
+import by.epam.task.view.UserInterface;
+
 /*
  Задание 2. Блокнот. Разработать консольное приложение, работающее с Заметками в Блокноте. Каждая Заметка это:
  Заметка (тема, дата создания, e-mail, сообщение).
@@ -15,7 +17,7 @@ package by.epam.task.main;
  */
 public class Main {
     public static void main(String[] args) {
-        Runner runner = new Runner();
-        runner.run();
+        UserInterface ui = new UserInterface();
+        ui.menu();
     }
 }

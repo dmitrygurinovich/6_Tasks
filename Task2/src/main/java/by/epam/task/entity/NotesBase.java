@@ -6,10 +6,18 @@ import java.util.ArrayList;
 
 public class NotesBase {
     private ArrayList<Note> notes;
+    private static NotesBase instance;
 
-    public NotesBase() {
+    private NotesBase() {
         NotesBaseLogic logic = new NotesBaseLogic();
         this.notes = logic.readNotesFromFile();
+    }
+
+    public static NotesBase getInstance() {
+        if (instance == null) {
+            instance = new NotesBase();
+        }
+        return instance;
     }
 
     public ArrayList<Note> getNotes() {
