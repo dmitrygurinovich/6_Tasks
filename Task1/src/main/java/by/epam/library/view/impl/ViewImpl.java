@@ -3,31 +3,23 @@ package by.epam.library.view.impl;
 import by.epam.library.bean.Book;
 import by.epam.library.bean.Library;
 import by.epam.library.bean.UserRole;
+import by.epam.library.view.UserInterface;
 import by.epam.library.view.View;
+import by.epam.library.view.ViewProvider;
 
 import java.util.Scanner;
 
 public final class ViewImpl implements View {
-    private static ViewImpl instance;
+    private static final ViewProvider viewProvider = ViewProvider.getInstance();
 
-    private ViewImpl() {
-
-    }
-
-    public static ViewImpl getInstance() {
-        if (instance == null) {
-            instance = new ViewImpl();
-        }
-        return instance;
-    }
+    public ViewImpl() {}
 
     @Override
     public void showBooks() {
         int defaultPageNumber;
-        Library library;
+        Library library = Library.getInstance();
 
         defaultPageNumber = 1;
-        library = Library.getInstance();
 
         if (library.getBooks().size() == 0) {
             print("There aren't books!");
@@ -45,13 +37,11 @@ public final class ViewImpl implements View {
     public void showBooksByPages(int defaultPageNumber) {
         int pagesCount;
         Scanner in;
-        Library library;
-        UserInterfaceImpl userInterface;
+        Library library = Library.getInstance();
+        UserInterface userInterface = viewProvider.getUserInterface();
 
         int pageNumber = defaultPageNumber;
         in = new Scanner(System.in);
-        library = Library.getInstance();
-        userInterface = UserInterfaceImpl.getInstance();
 
         pagesCount = (library.getBooks().size() - (library.getBooks().size() % 10)) / 10;
         if (library.getBooks().size() % 10 != 0) {

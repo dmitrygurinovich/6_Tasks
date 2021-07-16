@@ -3,33 +3,28 @@ package by.epam.library.view.impl;
 import by.epam.library.bean.Library;
 import by.epam.library.bean.UserRole;
 import by.epam.library.service.LibraryService;
-import by.epam.library.service.impl.LibraryServiceImpl;
-import by.epam.library.service.impl.UserBaseServiceIml;
-import by.epam.library.service.impl.UserServiceImpl;
+import by.epam.library.service.ServiceProvider;
+import by.epam.library.service.UserBaseService;
+import by.epam.library.service.UserService;
+import by.epam.library.view.DataFromConsole;
 import by.epam.library.view.UserInterface;
+import by.epam.library.view.View;
+import by.epam.library.view.ViewProvider;
 
 import java.util.Scanner;
 
 public final class UserInterfaceImpl implements UserInterface {
-    private static UserInterfaceImpl instance;
+    private final static ServiceProvider serviceProvider = ServiceProvider.getInstance();
+    private static final ViewProvider viewProvider = ViewProvider.getInstance();
 
-    private UserInterfaceImpl() {
-
-    }
-
-    public static UserInterfaceImpl getInstance() {
-        if (instance == null) {
-            instance = new UserInterfaceImpl();
-        }
-        return instance;
-    }
+    public UserInterfaceImpl() {}
 
     @Override
     public void adminMenu() {
-        UserBaseServiceIml userBaseServiceIml;
-        LibraryServiceImpl libraryService;
-        ViewImpl view;
-        DataFromConsoleImpl dataFromConsole;
+        View view = viewProvider.getView();
+        DataFromConsole dataFromConsole = viewProvider.getDataFromConsole();
+        LibraryService libraryService = serviceProvider.getLibraryService();
+        UserBaseService userBaseService = serviceProvider.getUserBaseService();
 
         int minMenuItem;
         int maxMenuItem;
@@ -37,10 +32,6 @@ public final class UserInterfaceImpl implements UserInterface {
 
         minMenuItem = 0;
         maxMenuItem = 5;
-        libraryService = LibraryServiceImpl.getInstance();
-        view = ViewImpl.getInstance();
-        userBaseServiceIml = UserBaseServiceIml.getInstance();
-        dataFromConsole = DataFromConsoleImpl.getInstance();
 
         menuItem = dataFromConsole.getMenuItem(minMenuItem, maxMenuItem, "" +
                 "+++ ADMIN MENU +++\n" +
@@ -64,7 +55,7 @@ public final class UserInterfaceImpl implements UserInterface {
                 libraryService.editBook();
                 adminMenu();
             case 5:
-                userBaseServiceIml.addUser();
+                userBaseService.addUser();
                 adminMenu();
             case 0:
                 exit();
@@ -73,22 +64,18 @@ public final class UserInterfaceImpl implements UserInterface {
 
     @Override
     public void userMenu() {
-        UserServiceImpl userService;
         int minMenuItem;
         int maxMenuItem;
         int menuItem;
-        Library library;
-        LibraryService libraryService;
-        ViewImpl view;
-        DataFromConsoleImpl dataFromConsole;
+
+        Library library = Library.getInstance();
+        View view = viewProvider.getView();
+        DataFromConsole dataFromConsole = viewProvider.getDataFromConsole();
+        LibraryService libraryService = serviceProvider.getLibraryService();
+        UserService userService = serviceProvider.getUserService();
 
         minMenuItem = 0;
         maxMenuItem = 4;
-        library = Library.getInstance();
-        libraryService = LibraryServiceImpl.getInstance();
-        userService = UserServiceImpl.getInstance();
-        view = ViewImpl.getInstance();
-        dataFromConsole = DataFromConsoleImpl.getInstance();
 
         menuItem = dataFromConsole.getMenuItem(minMenuItem, maxMenuItem, "" +
                 "+++ USER MENU +++\n" +
@@ -114,17 +101,15 @@ public final class UserInterfaceImpl implements UserInterface {
 
     @Override
     public void authorization() {
+        Library library= Library.getInstance();
+        View view = viewProvider.getView();
+        Scanner in = new Scanner(System.in);
+
         String login;
         String password;
         boolean authorized;
-        Library library;
-        Scanner in;
-        ViewImpl view;
 
         authorized = false;
-        library = Library.getInstance();
-        in = new Scanner(System.in);
-        view = ViewImpl.getInstance();
 
         view.print("Enter login: ");
         while (!in.hasNextLine()) {

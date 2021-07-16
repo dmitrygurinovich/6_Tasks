@@ -1,5 +1,6 @@
 package by.epam.library.main;
 
+import by.epam.library.view.UserInterface;
 import by.epam.library.view.impl.UserInterfaceImpl;
 
 /*
@@ -17,7 +18,7 @@ import by.epam.library.view.impl.UserInterfaceImpl;
  */
 public class Main {
     public static void main(String[] args) {
-        UserInterfaceImpl ui = UserInterfaceImpl.getInstance();
+        UserInterface ui = new UserInterfaceImpl();
         ui.authorization();
     }
 }

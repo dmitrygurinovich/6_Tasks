@@ -5,8 +5,8 @@ import by.epam.library.bean.UserRole;
 import javax.mail.Address;
 
 public interface UserBaseService {
+
     Address[] getUsersEmail(UserRole role);
     void addUser();
-    boolean isEmail(String email);
-    boolean isLoginExist(String loginForCheck);
+
 }

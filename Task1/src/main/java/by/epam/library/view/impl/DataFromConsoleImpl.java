@@ -1,31 +1,23 @@
 package by.epam.library.view.impl;
 
 import by.epam.library.view.DataFromConsole;
+import by.epam.library.view.View;
+import by.epam.library.view.ViewProvider;
 
 import java.util.Scanner;
 
 public final class DataFromConsoleImpl implements DataFromConsole {
-    private static DataFromConsoleImpl instance;
+    private static final ViewProvider viewProvider = ViewProvider.getInstance();
 
-    private DataFromConsoleImpl() {
-
-    }
-
-    public static DataFromConsoleImpl getInstance(){
-        if (instance == null) {
-            instance = new DataFromConsoleImpl();
-        }
-        return instance;
-    }
+    public DataFromConsoleImpl() {}
 
     @Override
     public int getMenuItem(int min, int max, String message) {
-        int number;
-        Scanner in;
-        ViewImpl view;
 
-        in = new Scanner(System.in);
-        view = ViewImpl.getInstance();
+        Scanner in = new Scanner(System.in);
+        View view = viewProvider.getView();
+
+        int number;
 
         view.print(message);
 
@@ -44,14 +36,13 @@ public final class DataFromConsoleImpl implements DataFromConsole {
 
     @Override
     public int getNumFromConsole(String message, int min, int max) {
-        int number;
-        Scanner in;
-        ViewImpl view;
 
-        in = new Scanner(System.in);
-        view = ViewImpl.getInstance();
+        Scanner in = new Scanner(System.in);
+        View view = viewProvider.getView();
+        int number;
 
         view.print(message);
+
         while (!in.hasNextInt()) {
             view.print(message);
             in.next();
@@ -68,12 +59,10 @@ public final class DataFromConsoleImpl implements DataFromConsole {
 
     @Override
     public String getStringFromConsole(String message) {
-        String text;
-        Scanner in;
-        ViewImpl view;
+        Scanner in = new Scanner(System.in);
+        View view = viewProvider.getView();
 
-        in = new Scanner(System.in);
-        view = ViewImpl.getInstance();
+        String text;
 
         view.print(message);
 

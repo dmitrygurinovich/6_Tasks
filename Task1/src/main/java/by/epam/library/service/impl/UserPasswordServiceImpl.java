@@ -11,19 +11,9 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 public final class UserPasswordServiceImpl implements UserPasswordService {
-    private static UserPasswordServiceImpl instance;
     private final SecretKeySpec KEY = new SecretKeySpec("Hdy4rl1dh64MwPfn".getBytes(), "AES");
 
-    private UserPasswordServiceImpl() {
-
-    }
-
-    public static UserPasswordServiceImpl getInstance() {
-        if (instance == null) {
-            instance = new UserPasswordServiceImpl();
-        }
-        return instance;
-    }
+    public UserPasswordServiceImpl() {}
 
     @Override
     public byte[] getBytesArrayFromString(String password) {

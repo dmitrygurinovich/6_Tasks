@@ -1,7 +1,6 @@
 package by.epam.library.bean;
 
-import by.epam.library.dao.iml.FileLibraryDAO;
-import by.epam.library.dao.iml.FileUserBaseDAO;
+import by.epam.library.dao.DAOProvider;
 
 import java.util.ArrayList;
 
@@ -11,9 +10,11 @@ public final class Library {
     private User authorizedUser;
     private static Library instance;
 
+    private static final DAOProvider provider = DAOProvider.getInstance();
+
     private Library() {
-        this.books = FileLibraryDAO.getInstance().readBooksFromFile();
-        this.users = FileUserBaseDAO.getInstance().readUsersFromFile();
+        this.books = provider.getLibraryDAO().readBooksFromFile();
+        this.users = provider.getUserBaseDAO().readUsersFromFile();
     }
 
     public static Library getInstance() {

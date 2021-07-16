@@ -15,18 +15,8 @@ import java.util.regex.Pattern;
 
 public final class FileLibraryDAO implements LibraryDAO {
     private static final File BOOKS_BASE_PATH = new File("Task1/src/main/resources/booksbase.txt");
-    private static FileLibraryDAO instance;
 
-    private FileLibraryDAO() {
-
-    }
-
-    public static FileLibraryDAO getInstance() {
-        if (instance == null) {
-            instance = new FileLibraryDAO();
-        }
-        return instance;
-    }
+    public FileLibraryDAO() {}
 
     @Override
     public void writeOneBookToFile(Book book) {

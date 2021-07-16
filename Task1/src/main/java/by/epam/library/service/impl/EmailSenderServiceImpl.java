@@ -4,7 +4,9 @@ import by.epam.library.bean.Book;
 import by.epam.library.bean.User;
 import by.epam.library.bean.UserRole;
 import by.epam.library.service.EmailSenderService;
-import by.epam.library.view.impl.ViewImpl;
+import by.epam.library.service.ServiceProvider;
+import by.epam.library.view.View;
+import by.epam.library.view.ViewProvider;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -15,32 +17,22 @@ import java.util.Properties;
 public final class EmailSenderServiceImpl implements EmailSenderService {
     private final String USERNAME = "gurinovich.notify@gmail.com";
     private final String PASSWORD = "4531689925qWe";
-    private static EmailSenderServiceImpl instance;
 
-    private EmailSenderServiceImpl() {
+    private final static ServiceProvider serviceProvider = ServiceProvider.getInstance();
+    private static final ViewProvider viewProvider = ViewProvider.getInstance();
 
-    }
-
-    public static EmailSenderServiceImpl getInstance() {
-        if (instance == null) {
-            instance = new EmailSenderServiceImpl();
-        }
-        return instance;
-    }
+    public EmailSenderServiceImpl() {}
 
     @Override
     public void notifyUsersAboutAddingBookDescription(String subject, Book book) {
-        ViewImpl view;
+        View view = viewProvider.getView();
         final String SSL_FACTORY;
         Properties props;
         Session session;
         Message message;
-        UserBaseServiceIml userBaseServiceIml;
 
-        view = ViewImpl.getInstance();
         SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
         props = System.getProperties();
-        userBaseServiceIml = UserBaseServiceIml.getInstance();
 
         props.setProperty("mail.smtp.host", "smtp.gmail.com");
         props.setProperty("mail.smtp.socketFactory.class", SSL_FACTORY);
@@ -64,7 +56,7 @@ public final class EmailSenderServiceImpl implements EmailSenderService {
 
             message.setFrom(new InternetAddress("gurinovich.notify@gmail.com")); // field "from"
             message.setRecipients(
-                    Message.RecipientType.TO, userBaseServiceIml.getUsersEmail(UserRole.USER));
+                    Message.RecipientType.TO, serviceProvider.getUserBaseService().getUsersEmail(UserRole.USER));
             message.setSubject(subject);
             message.setText("Description has been added for book: \n" +
                     "№: " + book.getId() + "\n" +
@@ -83,13 +75,12 @@ public final class EmailSenderServiceImpl implements EmailSenderService {
     @Override
     public void suggestToAddABookToTheLibrary(User user, Book book) {
         final String SSL_FACTORY;
-        ViewImpl view;
+        View view = viewProvider.getView();
         Properties props;
         Session session;
         Message message;
 
         SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
-        view = ViewImpl.getInstance();
         props = System.getProperties();
 
         props.setProperty("mail.smtp.host", "smtp.gmail.com");
