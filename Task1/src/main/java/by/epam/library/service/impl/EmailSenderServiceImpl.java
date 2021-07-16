@@ -4,7 +4,7 @@ import by.epam.library.bean.Book;
 import by.epam.library.bean.User;
 import by.epam.library.bean.UserRole;
 import by.epam.library.service.EmailSenderService;
-import by.epam.library.view.View;
+import by.epam.library.view.impl.ViewImpl;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -12,32 +12,32 @@ import javax.mail.internet.MimeMessage;
 import java.util.Date;
 import java.util.Properties;
 
-public final class EmailSenderServiceIml implements EmailSenderService {
+public final class EmailSenderServiceImpl implements EmailSenderService {
     private final String USERNAME = "gurinovich.notify@gmail.com";
     private final String PASSWORD = "4531689925qWe";
-    private static EmailSenderServiceIml instance;
+    private static EmailSenderServiceImpl instance;
 
-    private EmailSenderServiceIml() {
+    private EmailSenderServiceImpl() {
 
     }
 
-    public static EmailSenderServiceIml getInstance() {
+    public static EmailSenderServiceImpl getInstance() {
         if (instance == null) {
-            instance = new EmailSenderServiceIml();
+            instance = new EmailSenderServiceImpl();
         }
         return instance;
     }
 
     @Override
-    public void notifyUsersAboutAddingBooksDescription(String subject, Book book) {
-        View view;
+    public void notifyUsersAboutAddingBookDescription(String subject, Book book) {
+        ViewImpl view;
         final String SSL_FACTORY;
         Properties props;
         Session session;
         Message message;
         UserBaseServiceIml userBaseServiceIml;
 
-        view = new View();
+        view = ViewImpl.getInstance();
         SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
         props = System.getProperties();
         userBaseServiceIml = UserBaseServiceIml.getInstance();
@@ -83,13 +83,13 @@ public final class EmailSenderServiceIml implements EmailSenderService {
     @Override
     public void suggestToAddABookToTheLibrary(User user, Book book) {
         final String SSL_FACTORY;
-        View view;
+        ViewImpl view;
         Properties props;
         Session session;
         Message message;
 
         SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
-        view = new View();
+        view = ViewImpl.getInstance();
         props = System.getProperties();
 
         props.setProperty("mail.smtp.host", "smtp.gmail.com");

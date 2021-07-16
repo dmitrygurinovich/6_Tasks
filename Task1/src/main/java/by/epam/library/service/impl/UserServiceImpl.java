@@ -23,11 +23,11 @@ public final class UserServiceImpl implements UserService {
     @Override
     public void suggestNewBook(User user) {
         Book book;
-        EmailSenderServiceIml sender;
+        EmailSenderServiceImpl sender;
         DataFromConsoleImpl console;
 
         book = new Book();
-        sender = EmailSenderServiceIml.getInstance();
+        sender = EmailSenderServiceImpl.getInstance();
         console = DataFromConsoleImpl.getInstance();
 
         book.setName(console.getStringFromConsole("Enter book's name:"));

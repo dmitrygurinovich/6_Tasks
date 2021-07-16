@@ -5,8 +5,8 @@ import by.epam.library.bean.User;
 import by.epam.library.bean.UserRole;
 import by.epam.library.dao.iml.FileUserBaseDAO;
 import by.epam.library.service.UserBaseService;
-import by.epam.library.view.View;
 import by.epam.library.view.impl.DataFromConsoleImpl;
+import by.epam.library.view.impl.ViewImpl;
 
 import javax.mail.Address;
 import javax.mail.internet.AddressException;
@@ -59,13 +59,13 @@ public final class UserBaseServiceIml implements UserBaseService {
         User user;
         String email;
         String login;
-        View view;
+        ViewImpl view;
         Library library;
         DataFromConsoleImpl dataFromConsole;
         FileUserBaseDAO fileUserBaseDAO;
 
         user = new User();
-        view = new View();
+        view = ViewImpl.getInstance();
         library = Library.getInstance();
         dataFromConsole = DataFromConsoleImpl.getInstance();
         fileUserBaseDAO = FileUserBaseDAO.getInstance();

@@ -7,12 +7,12 @@ import by.epam.library.service.impl.LibraryServiceImpl;
 import by.epam.library.service.impl.UserBaseServiceIml;
 import by.epam.library.service.impl.UserServiceImpl;
 import by.epam.library.view.UserInterface;
-import by.epam.library.view.View;
 
 import java.util.Scanner;
 
 public final class UserInterfaceImpl implements UserInterface {
     private static UserInterfaceImpl instance;
+
     private UserInterfaceImpl() {
 
     }
@@ -28,7 +28,7 @@ public final class UserInterfaceImpl implements UserInterface {
     public void adminMenu() {
         UserBaseServiceIml userBaseServiceIml;
         LibraryServiceImpl libraryService;
-        View view;
+        ViewImpl view;
         DataFromConsoleImpl dataFromConsole;
 
         int minMenuItem;
@@ -38,7 +38,7 @@ public final class UserInterfaceImpl implements UserInterface {
         minMenuItem = 0;
         maxMenuItem = 5;
         libraryService = LibraryServiceImpl.getInstance();
-        view = new View();
+        view = ViewImpl.getInstance();
         userBaseServiceIml = UserBaseServiceIml.getInstance();
         dataFromConsole = DataFromConsoleImpl.getInstance();
 
@@ -79,7 +79,7 @@ public final class UserInterfaceImpl implements UserInterface {
         int menuItem;
         Library library;
         LibraryService libraryService;
-        View view;
+        ViewImpl view;
         DataFromConsoleImpl dataFromConsole;
 
         minMenuItem = 0;
@@ -87,7 +87,7 @@ public final class UserInterfaceImpl implements UserInterface {
         library = Library.getInstance();
         libraryService = LibraryServiceImpl.getInstance();
         userService = UserServiceImpl.getInstance();
-        view = new View();
+        view = ViewImpl.getInstance();
         dataFromConsole = DataFromConsoleImpl.getInstance();
 
         menuItem = dataFromConsole.getMenuItem(minMenuItem, maxMenuItem, "" +
@@ -119,12 +119,12 @@ public final class UserInterfaceImpl implements UserInterface {
         boolean authorized;
         Library library;
         Scanner in;
-        View view;
+        ViewImpl view;
 
         authorized = false;
         library = Library.getInstance();
         in = new Scanner(System.in);
-        view = new View();
+        view = ViewImpl.getInstance();
 
         view.print("Enter login: ");
         while (!in.hasNextLine()) {

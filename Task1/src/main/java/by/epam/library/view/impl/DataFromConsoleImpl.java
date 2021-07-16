@@ -1,7 +1,6 @@
 package by.epam.library.view.impl;
 
 import by.epam.library.view.DataFromConsole;
-import by.epam.library.view.View;
 
 import java.util.Scanner;
 
@@ -23,10 +22,10 @@ public final class DataFromConsoleImpl implements DataFromConsole {
     public int getMenuItem(int min, int max, String message) {
         int number;
         Scanner in;
-        View view;
+        ViewImpl view;
 
         in = new Scanner(System.in);
-        view = new View();
+        view = ViewImpl.getInstance();
 
         view.print(message);
 
@@ -47,10 +46,10 @@ public final class DataFromConsoleImpl implements DataFromConsole {
     public int getNumFromConsole(String message, int min, int max) {
         int number;
         Scanner in;
-        View view;
+        ViewImpl view;
 
         in = new Scanner(System.in);
-        view = new View();
+        view = ViewImpl.getInstance();
 
         view.print(message);
         while (!in.hasNextInt()) {
@@ -71,10 +70,10 @@ public final class DataFromConsoleImpl implements DataFromConsole {
     public String getStringFromConsole(String message) {
         String text;
         Scanner in;
-        View view;
+        ViewImpl view;
 
         in = new Scanner(System.in);
-        view = new View();
+        view = ViewImpl.getInstance();
 
         view.print(message);
 

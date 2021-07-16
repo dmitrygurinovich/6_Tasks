@@ -5,9 +5,9 @@ import by.epam.library.bean.BookType;
 import by.epam.library.bean.Library;
 import by.epam.library.dao.iml.FileLibraryDAO;
 import by.epam.library.service.LibraryService;
-import by.epam.library.view.View;
 import by.epam.library.view.impl.DataFromConsoleImpl;
 import by.epam.library.view.impl.UserInterfaceImpl;
+import by.epam.library.view.impl.ViewImpl;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -35,7 +35,7 @@ public final class LibraryServiceImpl implements LibraryService {
         Pattern pattern;
         Matcher matcher;
         ArrayList<Book> books;
-        View view = new View();
+        ViewImpl view;
         Library library;
         DataFromConsoleImpl console;
 
@@ -44,6 +44,7 @@ public final class LibraryServiceImpl implements LibraryService {
         pattern = Pattern.compile(keyword.toLowerCase(Locale.ROOT));
         books = new ArrayList<>();
         library = Library.getInstance();
+        view =ViewImpl.getInstance();
 
         for (int i = 0; i < library.getBooks().size(); i++) {
             concatenateBookFields = new StringBuilder();
@@ -75,13 +76,13 @@ public final class LibraryServiceImpl implements LibraryService {
     @Override
     public void addBook() {
         Book book;
-        View view;
+        ViewImpl view;
         Library library;
         DataFromConsoleImpl console;
         FileLibraryDAO fileLibraryDAO;
 
         book = new Book();
-        view = new View();
+        view = ViewImpl.getInstance();
         library = Library.getInstance();
         console = DataFromConsoleImpl.getInstance();
         fileLibraryDAO = FileLibraryDAO.getInstance();
@@ -126,15 +127,15 @@ public final class LibraryServiceImpl implements LibraryService {
     public void showBookEditingMenu(Book book) {
         int menuItem;
         String descriptionUntilEditing;
-        EmailSenderServiceIml emailSenderService;
-        View view;
+        EmailSenderServiceImpl emailSenderService;
+        ViewImpl view;
         Library library;
         DataFromConsoleImpl console;
         UserInterfaceImpl userInterface;
         FileLibraryDAO fileLibraryDAO;
 
-        emailSenderService = EmailSenderServiceIml.getInstance();
-        view = new View();
+        emailSenderService = EmailSenderServiceImpl.getInstance();
+        view = ViewImpl.getInstance();
         library = Library.getInstance();
         console = DataFromConsoleImpl.getInstance();
         userInterface = UserInterfaceImpl.getInstance();
@@ -174,7 +175,7 @@ public final class LibraryServiceImpl implements LibraryService {
 
                 book.setDescription(console.getStringFromConsole("Enter description: "));
                 if (!book.getDescription().equals("") && !book.getDescription().equals(descriptionUntilEditing)) {
-                    emailSenderService.notifyUsersAboutAddingBooksDescription("Description has been added for book!", book);
+                    emailSenderService.notifyUsersAboutAddingBookDescription("Description has been added for book!", book);
                 }
                 showBookEditingMenu(book);
         }
