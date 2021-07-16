@@ -13,7 +13,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class FileLibraryDAO implements LibraryDAO {
+public final class FileLibraryDAO implements LibraryDAO {
     private static final File BOOKS_BASE_PATH = new File("Task1/src/main/resources/booksbase.txt");
     private static FileLibraryDAO instance;
 

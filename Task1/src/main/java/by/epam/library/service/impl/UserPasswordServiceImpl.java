@@ -10,7 +10,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-public class UserPasswordServiceImpl implements UserPasswordService {
+public final class UserPasswordServiceImpl implements UserPasswordService {
     private static UserPasswordServiceImpl instance;
     private final SecretKeySpec KEY = new SecretKeySpec("Hdy4rl1dh64MwPfn".getBytes(), "AES");
 

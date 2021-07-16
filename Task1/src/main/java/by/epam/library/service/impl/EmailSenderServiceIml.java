@@ -12,7 +12,7 @@ import javax.mail.internet.MimeMessage;
 import java.util.Date;
 import java.util.Properties;
 
-public class EmailSenderServiceIml implements EmailSenderService {
+public final class EmailSenderServiceIml implements EmailSenderService {
     private final String USERNAME = "gurinovich.notify@gmail.com";
     private final String PASSWORD = "4531689925qWe";
     private static EmailSenderServiceIml instance;

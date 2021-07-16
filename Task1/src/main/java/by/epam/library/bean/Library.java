@@ -5,7 +5,7 @@ import by.epam.library.dao.iml.FileUserBaseDAO;
 
 import java.util.ArrayList;
 
-public class Library {
+public final class Library {
     private ArrayList<Book> books;
     private ArrayList<User> users;
     private User authorizedUser;

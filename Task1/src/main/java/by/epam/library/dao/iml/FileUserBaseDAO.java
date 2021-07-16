@@ -15,7 +15,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class FileUserBaseDAO implements UserBaseDAO {
+public final class FileUserBaseDAO implements UserBaseDAO {
     private final File USERS_BASE_PATH = new File("Task1/src/main/resources/usersbase.txt");
     private static FileUserBaseDAO instance;
 

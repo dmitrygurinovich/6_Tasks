@@ -14,7 +14,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LibraryServiceImpl implements LibraryService {
+public final class LibraryServiceImpl implements LibraryService {
     private static LibraryServiceImpl instance;
 
     private LibraryServiceImpl() {

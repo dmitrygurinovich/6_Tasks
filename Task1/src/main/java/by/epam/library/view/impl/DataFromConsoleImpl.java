@@ -5,7 +5,7 @@ import by.epam.library.view.View;
 
 import java.util.Scanner;
 
-public class DataFromConsoleImpl implements DataFromConsole {
+public final class DataFromConsoleImpl implements DataFromConsole {
     private static DataFromConsoleImpl instance;
 
     private DataFromConsoleImpl() {

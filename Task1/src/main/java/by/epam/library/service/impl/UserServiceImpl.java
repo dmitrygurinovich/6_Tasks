@@ -6,7 +6,7 @@ import by.epam.library.bean.User;
 import by.epam.library.service.UserService;
 import by.epam.library.view.impl.DataFromConsoleImpl;
 
-public class UserServiceImpl implements UserService {
+public final class UserServiceImpl implements UserService {
     private static UserServiceImpl instance;
 
     private UserServiceImpl() {

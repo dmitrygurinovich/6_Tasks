@@ -11,7 +11,7 @@ import by.epam.library.view.View;
 
 import java.util.Scanner;
 
-public class UserInterfaceImpl implements UserInterface {
+public final class UserInterfaceImpl implements UserInterface {
     private static UserInterfaceImpl instance;
     private UserInterfaceImpl() {
 

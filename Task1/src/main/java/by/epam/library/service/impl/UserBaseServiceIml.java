@@ -16,7 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-public class UserBaseServiceIml implements UserBaseService {
+public final class UserBaseServiceIml implements UserBaseService {
     private static UserBaseServiceIml instance;
 
     private UserBaseServiceIml() {
