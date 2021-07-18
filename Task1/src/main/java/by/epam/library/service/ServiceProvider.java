@@ -2,7 +2,7 @@ package by.epam.library.service;
 
 import by.epam.library.service.impl.*;
 
-public class ServiceProvider {
+public final class ServiceProvider {
     private static ServiceProvider instance;
 
     private final EmailSenderService emailSenderService = new EmailSenderServiceImpl();

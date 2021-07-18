@@ -4,7 +4,7 @@ import by.epam.library.view.impl.DataFromConsoleImpl;
 import by.epam.library.view.impl.UserInterfaceImpl;
 import by.epam.library.view.impl.ViewImpl;
 
-public class ViewProvider {
+public final class ViewProvider {
     private static ViewProvider instance;
 
     private final View view = new ViewImpl();

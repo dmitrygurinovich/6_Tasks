@@ -1,5 +1,6 @@
 package by.epam.library.dao.iml;
 
+import by.epam.library.bean.Library;
 import by.epam.library.bean.User;
 import by.epam.library.bean.UserRole;
 import by.epam.library.dao.UserBaseDAO;
@@ -19,7 +20,8 @@ public final class FileUserBaseDAO implements UserBaseDAO {
     private final static ServiceProvider serviceProvider = ServiceProvider.getInstance();
     private final File USERS_BASE_PATH = new File("Task1/src/main/resources/usersbase.txt");
 
-    public FileUserBaseDAO() {}
+    public FileUserBaseDAO() {
+    }
 
     @Override
     public void writeUserToFile(User user) {
@@ -85,5 +87,22 @@ public final class FileUserBaseDAO implements UserBaseDAO {
             e.printStackTrace();
         }
         return users;
+    }
+
+    @Override
+    public boolean isLoginExist(String loginForCheck) {
+        boolean isExist;
+        Library library = Library.getInstance();
+
+        isExist = false;
+
+        for (User user : library.getUsers()) {
+            if (user.getLogin().equals(loginForCheck)) {
+                isExist = true;
+                break;
+            }
+        }
+
+        return isExist;
     }
 }

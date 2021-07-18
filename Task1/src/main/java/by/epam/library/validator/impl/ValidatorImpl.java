@@ -1,7 +1,5 @@
 package by.epam.library.validator.impl;
 
-import by.epam.library.bean.Library;
-import by.epam.library.bean.User;
 import by.epam.library.validator.Validator;
 
 import java.util.regex.Matcher;
@@ -41,21 +39,4 @@ public final class ValidatorImpl implements Validator {
         return isEmail;
     }
 
-    @Override
-    public boolean isLoginExist(String loginForCheck) {
-        boolean isExist;
-        Library library;
-
-        isExist  = false;
-        library = Library.getInstance();
-
-        for(User user : library.getUsers()) {
-            if (user.getLogin().equals(loginForCheck)) {
-                isExist = true;
-                break;
-            }
-        }
-
-        return isExist;
-    }
 }

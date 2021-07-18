@@ -65,7 +65,7 @@ public final class UserBaseServiceIml implements UserBaseService {
         user.setName(dataFromConsole.getStringFromConsole("Enter user's name: "));
 
         login = dataFromConsole.getStringFromConsole("Enter user's login: ");
-        while (validator.isLoginExist(login)) {
+        while (userBaseDAO.isLoginExist(login)) {
             view.print("Login is exist! Enter new login!");
             login = dataFromConsole.getStringFromConsole("Enter user's login: ");
         }
