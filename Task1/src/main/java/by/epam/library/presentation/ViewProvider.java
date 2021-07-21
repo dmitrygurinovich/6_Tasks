@@ -1,8 +1,8 @@
-package by.epam.library.view;
+package by.epam.library.presentation;
 
-import by.epam.library.view.impl.DataFromConsoleImpl;
-import by.epam.library.view.impl.UserInterfaceImpl;
-import by.epam.library.view.impl.ViewImpl;
+import by.epam.library.presentation.impl.DataFromConsoleImpl;
+import by.epam.library.presentation.impl.UserInterfaceImpl;
+import by.epam.library.presentation.impl.ViewImpl;
 
 public final class ViewProvider {
     private static ViewProvider instance;
@@ -11,7 +11,7 @@ public final class ViewProvider {
     private final UserInterface userInterface = new UserInterfaceImpl();
     private final DataFromConsole dataFromConsole = new DataFromConsoleImpl();
 
-    private ViewProvider() {}
+    public ViewProvider() {}
 
     public static ViewProvider getInstance(){
         if (instance == null) {

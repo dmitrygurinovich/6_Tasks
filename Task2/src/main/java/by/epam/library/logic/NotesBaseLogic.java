@@ -2,8 +2,8 @@ package by.epam.library.logic;
 
 import by.epam.library.bean.Note;
 import by.epam.library.bean.NotesBase;
-import by.epam.library.view.UserInterface;
-import by.epam.library.view.View;
+import by.epam.library.presentation.UserInterface;
+import by.epam.library.presentation.View;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;

@@ -6,13 +6,13 @@ import by.epam.library.bean.Library;
 import by.epam.library.dao.DAOProvider;
 import by.epam.library.dao.LibraryDAO;
 import by.epam.library.dao.iml.FileLibraryDAO;
+import by.epam.library.presentation.DataFromConsole;
+import by.epam.library.presentation.UserInterface;
+import by.epam.library.presentation.View;
+import by.epam.library.presentation.ViewProvider;
 import by.epam.library.service.EmailSenderService;
 import by.epam.library.service.LibraryService;
 import by.epam.library.service.ServiceProvider;
-import by.epam.library.view.DataFromConsole;
-import by.epam.library.view.UserInterface;
-import by.epam.library.view.View;
-import by.epam.library.view.ViewProvider;
 
 import java.util.ArrayList;
 import java.util.Locale;

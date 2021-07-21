@@ -1,6 +1,6 @@
 package by.epam.library.main;
 
-import by.epam.library.view.UserInterface;
+import by.epam.library.presentation.UserInterface;
 
 /*
  Задание 2. Блокнот. Разработать консольное приложение, работающее с Заметками в Блокноте. Каждая Заметка это:

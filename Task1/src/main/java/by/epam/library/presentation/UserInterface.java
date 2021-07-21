@@ -1,4 +1,4 @@
-package by.epam.library.view;
+package by.epam.library.presentation;
 
 public interface UserInterface {
     void adminMenu();

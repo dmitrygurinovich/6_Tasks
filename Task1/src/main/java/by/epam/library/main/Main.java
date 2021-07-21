@@ -1,7 +1,7 @@
 package by.epam.library.main;
 
-import by.epam.library.view.UserInterface;
-import by.epam.library.view.impl.UserInterfaceImpl;
+import by.epam.library.controller.Controller;
+import by.epam.library.controller.impl.UserInterfaceController;
 
 /*
 Задание 1: создать консольное приложение “Учет книг в домашней библиотеке”.
@@ -18,7 +18,9 @@ import by.epam.library.view.impl.UserInterfaceImpl;
  */
 public class Main {
     public static void main(String[] args) {
-        UserInterface ui = new UserInterfaceImpl();
-        ui.authorization();
+
+        Controller controller = new UserInterfaceController();
+        controller.doAction("authorization");
+
     }
 }

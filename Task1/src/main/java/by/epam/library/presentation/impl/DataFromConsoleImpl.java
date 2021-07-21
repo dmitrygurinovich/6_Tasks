@@ -1,8 +1,8 @@
-package by.epam.library.view.impl;
+package by.epam.library.presentation.impl;
 
-import by.epam.library.view.DataFromConsole;
-import by.epam.library.view.View;
-import by.epam.library.view.ViewProvider;
+import by.epam.library.presentation.DataFromConsole;
+import by.epam.library.presentation.View;
+import by.epam.library.presentation.ViewProvider;
 
 import java.util.Scanner;
 

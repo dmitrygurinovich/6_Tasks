@@ -5,11 +5,11 @@ import by.epam.library.bean.User;
 import by.epam.library.bean.UserRole;
 import by.epam.library.dao.DAOProvider;
 import by.epam.library.dao.UserBaseDAO;
+import by.epam.library.presentation.DataFromConsole;
+import by.epam.library.presentation.View;
+import by.epam.library.presentation.ViewProvider;
 import by.epam.library.service.UserBaseService;
 import by.epam.library.validator.impl.ValidatorImpl;
-import by.epam.library.view.DataFromConsole;
-import by.epam.library.view.View;
-import by.epam.library.view.ViewProvider;
 
 import javax.mail.Address;
 import javax.mail.internet.AddressException;

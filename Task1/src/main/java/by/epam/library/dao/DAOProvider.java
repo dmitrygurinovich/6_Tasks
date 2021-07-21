@@ -25,5 +25,4 @@ public final class DAOProvider {
     public LibraryDAO getLibraryDAO() {
         return libraryDAO;
     }
-
 }

@@ -1,4 +1,4 @@
-package by.epam.library.view;
+package by.epam.library.presentation;
 
 public interface DataFromConsole {
     int getMenuItem(int min, int max, String message);

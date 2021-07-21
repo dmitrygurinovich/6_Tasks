@@ -1,11 +1,11 @@
-package by.epam.library.view.impl;
+package by.epam.library.presentation.impl;
 
 import by.epam.library.bean.Book;
 import by.epam.library.bean.Library;
 import by.epam.library.bean.UserRole;
-import by.epam.library.view.UserInterface;
-import by.epam.library.view.View;
-import by.epam.library.view.ViewProvider;
+import by.epam.library.presentation.UserInterface;
+import by.epam.library.presentation.View;
+import by.epam.library.presentation.ViewProvider;
 
 import java.util.Scanner;
 

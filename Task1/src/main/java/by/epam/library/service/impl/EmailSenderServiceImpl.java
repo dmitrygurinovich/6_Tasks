@@ -3,10 +3,10 @@ package by.epam.library.service.impl;
 import by.epam.library.bean.Book;
 import by.epam.library.bean.User;
 import by.epam.library.bean.UserRole;
+import by.epam.library.presentation.View;
+import by.epam.library.presentation.ViewProvider;
 import by.epam.library.service.EmailSenderService;
 import by.epam.library.service.ServiceProvider;
-import by.epam.library.view.View;
-import by.epam.library.view.ViewProvider;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;

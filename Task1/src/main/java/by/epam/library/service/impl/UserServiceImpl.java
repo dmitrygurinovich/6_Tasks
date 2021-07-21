@@ -3,10 +3,10 @@ package by.epam.library.service.impl;
 import by.epam.library.bean.Book;
 import by.epam.library.bean.BookType;
 import by.epam.library.bean.User;
+import by.epam.library.presentation.DataFromConsole;
+import by.epam.library.presentation.ViewProvider;
 import by.epam.library.service.ServiceProvider;
 import by.epam.library.service.UserService;
-import by.epam.library.view.DataFromConsole;
-import by.epam.library.view.ViewProvider;
 
 public final class UserServiceImpl implements UserService {
     private final static ServiceProvider serviceProvider = ServiceProvider.getInstance();
