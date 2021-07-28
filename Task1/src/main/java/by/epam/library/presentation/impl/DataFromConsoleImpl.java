@@ -1,13 +1,13 @@
 package by.epam.library.presentation.impl;
 
 import by.epam.library.presentation.DataFromConsole;
+import by.epam.library.presentation.PresentationProvider;
 import by.epam.library.presentation.View;
-import by.epam.library.presentation.ViewProvider;
 
 import java.util.Scanner;
 
 public final class DataFromConsoleImpl implements DataFromConsole {
-    private static final ViewProvider viewProvider = ViewProvider.getInstance();
+    private static final PresentationProvider viewProvider = PresentationProvider.getInstance();
 
     public DataFromConsoleImpl() {}
 

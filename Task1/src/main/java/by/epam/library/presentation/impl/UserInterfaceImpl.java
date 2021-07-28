@@ -3,9 +3,9 @@ package by.epam.library.presentation.impl;
 import by.epam.library.bean.Library;
 import by.epam.library.bean.UserRole;
 import by.epam.library.presentation.DataFromConsole;
+import by.epam.library.presentation.PresentationProvider;
 import by.epam.library.presentation.UserInterface;
 import by.epam.library.presentation.View;
-import by.epam.library.presentation.ViewProvider;
 import by.epam.library.service.LibraryService;
 import by.epam.library.service.ServiceProvider;
 import by.epam.library.service.UserBaseService;
@@ -14,15 +14,15 @@ import by.epam.library.service.UserService;
 import java.util.Scanner;
 
 public final class UserInterfaceImpl implements UserInterface {
-    private final static ServiceProvider serviceProvider = ServiceProvider.getInstance();
-    private static final ViewProvider viewProvider = ViewProvider.getInstance();
+    private static ServiceProvider serviceProvider = ServiceProvider.getInstance();
+    private static PresentationProvider presentationProvider = PresentationProvider.getInstance();
 
     public UserInterfaceImpl() {}
 
     @Override
     public void adminMenu() {
-        View view = viewProvider.getView();
-        DataFromConsole dataFromConsole = viewProvider.getDataFromConsole();
+        View view = presentationProvider.getView();
+        DataFromConsole dataFromConsole = presentationProvider.getDataFromConsole();
         LibraryService libraryService = serviceProvider.getLibraryService();
         UserBaseService userBaseService = serviceProvider.getUserBaseService();
 
@@ -69,8 +69,8 @@ public final class UserInterfaceImpl implements UserInterface {
         int menuItem;
 
         Library library = Library.getInstance();
-        View view = viewProvider.getView();
-        DataFromConsole dataFromConsole = viewProvider.getDataFromConsole();
+        View view = presentationProvider.getView();
+        DataFromConsole dataFromConsole = presentationProvider.getDataFromConsole();
         LibraryService libraryService = serviceProvider.getLibraryService();
         UserService userService = serviceProvider.getUserService();
 
@@ -102,7 +102,7 @@ public final class UserInterfaceImpl implements UserInterface {
     @Override
     public void authorization() {
         Library library= Library.getInstance();
-        View view = viewProvider.getView();
+        View view = presentationProvider.getView();
         Scanner in = new Scanner(System.in);
 
         String login;

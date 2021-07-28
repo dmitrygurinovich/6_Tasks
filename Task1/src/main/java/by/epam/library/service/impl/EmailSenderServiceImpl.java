@@ -3,8 +3,8 @@ package by.epam.library.service.impl;
 import by.epam.library.bean.Book;
 import by.epam.library.bean.User;
 import by.epam.library.bean.UserRole;
+import by.epam.library.presentation.PresentationProvider;
 import by.epam.library.presentation.View;
-import by.epam.library.presentation.ViewProvider;
 import by.epam.library.service.EmailSenderService;
 import by.epam.library.service.ServiceProvider;
 
@@ -19,7 +19,7 @@ public final class EmailSenderServiceImpl implements EmailSenderService {
     private final String PASSWORD = "4531689925qWe";
 
     private final static ServiceProvider serviceProvider = ServiceProvider.getInstance();
-    private static final ViewProvider viewProvider = ViewProvider.getInstance();
+    private static final PresentationProvider viewProvider = PresentationProvider.getInstance();
 
     public EmailSenderServiceImpl() {}
 
@@ -56,7 +56,7 @@ public final class EmailSenderServiceImpl implements EmailSenderService {
 
             message.setFrom(new InternetAddress("gurinovich.notify@gmail.com")); // field "from"
             message.setRecipients(
-                    Message.RecipientType.TO, serviceProvider.getUserBaseService().getUsersEmail(UserRole.USER));
+                    Message.RecipientType.TO, serviceProvider.getUserBaseService().getUsersEmails(UserRole.USER));
             message.setSubject(subject);
             message.setText("Description has been added for book: \n" +
                     "№: " + book.getId() + "\n" +

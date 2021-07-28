@@ -7,9 +7,9 @@ import by.epam.library.dao.DAOProvider;
 import by.epam.library.dao.LibraryDAO;
 import by.epam.library.dao.iml.FileLibraryDAO;
 import by.epam.library.presentation.DataFromConsole;
+import by.epam.library.presentation.PresentationProvider;
 import by.epam.library.presentation.UserInterface;
 import by.epam.library.presentation.View;
-import by.epam.library.presentation.ViewProvider;
 import by.epam.library.service.EmailSenderService;
 import by.epam.library.service.LibraryService;
 import by.epam.library.service.ServiceProvider;
@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 public final class LibraryServiceImpl implements LibraryService {
     private static final DAOProvider daoProvider = DAOProvider.getInstance();
     private static final ServiceProvider serviceProvider = ServiceProvider.getInstance();
-    private static final ViewProvider viewProvider = ViewProvider.getInstance();
+    private static final PresentationProvider viewProvider = PresentationProvider.getInstance();
 
     public LibraryServiceImpl() {
     }

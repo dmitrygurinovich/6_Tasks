@@ -11,8 +11,7 @@ public final class ServiceProvider {
     private final UserPasswordService userPasswordService = new UserPasswordServiceImpl();
     private final UserService userService = new UserServiceImpl();
 
-    private ServiceProvider() {
-    }
+    private ServiceProvider() {}
 
     public static ServiceProvider getInstance() {
         if (instance == null) {

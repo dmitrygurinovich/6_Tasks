@@ -6,8 +6,8 @@ import by.epam.library.bean.UserRole;
 import by.epam.library.dao.DAOProvider;
 import by.epam.library.dao.UserBaseDAO;
 import by.epam.library.presentation.DataFromConsole;
+import by.epam.library.presentation.PresentationProvider;
 import by.epam.library.presentation.View;
-import by.epam.library.presentation.ViewProvider;
 import by.epam.library.service.UserBaseService;
 import by.epam.library.validator.impl.ValidatorImpl;
 
@@ -18,13 +18,13 @@ import java.util.ArrayList;
 
 public final class UserBaseServiceIml implements UserBaseService {
     private final DAOProvider provider = DAOProvider.getInstance();
-    private static final ViewProvider viewProvider = ViewProvider.getInstance();
+    private static PresentationProvider viewProvider = PresentationProvider.getInstance();
 
     public UserBaseServiceIml() {
     }
 
     @Override
-    public Address[] getUsersEmail(UserRole role) {
+    public Address[] getUsersEmails(UserRole role) {
         ArrayList<String> emails;
         Address[] addresses;
 

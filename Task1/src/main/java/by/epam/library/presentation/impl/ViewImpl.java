@@ -3,14 +3,14 @@ package by.epam.library.presentation.impl;
 import by.epam.library.bean.Book;
 import by.epam.library.bean.Library;
 import by.epam.library.bean.UserRole;
+import by.epam.library.presentation.PresentationProvider;
 import by.epam.library.presentation.UserInterface;
 import by.epam.library.presentation.View;
-import by.epam.library.presentation.ViewProvider;
 
 import java.util.Scanner;
 
 public final class ViewImpl implements View {
-    private static final ViewProvider viewProvider = ViewProvider.getInstance();
+    private static final PresentationProvider viewProvider = PresentationProvider.getInstance();
 
     public ViewImpl() {}
 

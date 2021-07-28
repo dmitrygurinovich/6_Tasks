@@ -4,13 +4,13 @@ import by.epam.library.bean.Book;
 import by.epam.library.bean.BookType;
 import by.epam.library.bean.User;
 import by.epam.library.presentation.DataFromConsole;
-import by.epam.library.presentation.ViewProvider;
+import by.epam.library.presentation.PresentationProvider;
 import by.epam.library.service.ServiceProvider;
 import by.epam.library.service.UserService;
 
 public final class UserServiceImpl implements UserService {
     private final static ServiceProvider serviceProvider = ServiceProvider.getInstance();
-    private static final ViewProvider viewProvider = ViewProvider.getInstance();
+    private static final PresentationProvider viewProvider = PresentationProvider.getInstance();
 
     public UserServiceImpl() {}
 

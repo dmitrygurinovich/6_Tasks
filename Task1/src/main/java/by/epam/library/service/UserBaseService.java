@@ -6,7 +6,7 @@ import javax.mail.Address;
 
 public interface UserBaseService {
 
-    Address[] getUsersEmail(UserRole role);
+    Address[] getUsersEmails(UserRole role);
     void addUser();
 
 }

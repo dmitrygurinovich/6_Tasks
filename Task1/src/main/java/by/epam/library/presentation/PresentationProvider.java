@@ -4,18 +4,18 @@ import by.epam.library.presentation.impl.DataFromConsoleImpl;
 import by.epam.library.presentation.impl.UserInterfaceImpl;
 import by.epam.library.presentation.impl.ViewImpl;
 
-public final class ViewProvider {
-    private static ViewProvider instance;
+public final class PresentationProvider {
+    private static PresentationProvider instance;
 
     private final View view = new ViewImpl();
     private final UserInterface userInterface = new UserInterfaceImpl();
     private final DataFromConsole dataFromConsole = new DataFromConsoleImpl();
 
-    public ViewProvider() {}
+    public PresentationProvider() {}
 
-    public static ViewProvider getInstance(){
+    public static PresentationProvider getInstance(){
         if (instance == null) {
-            instance = new ViewProvider();
+            instance = new PresentationProvider();
         }
         return instance;
     }
