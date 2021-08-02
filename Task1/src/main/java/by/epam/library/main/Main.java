@@ -1,7 +1,6 @@
 package by.epam.library.main;
 
-import by.epam.library.controller.Controller;
-import by.epam.library.controller.impl.ControllerProvider;
+import by.epam.library.controller.impl.MainController;
 
 /*
 Задание 1: создать консольное приложение “Учет книг в домашней библиотеке”.
@@ -19,8 +18,7 @@ import by.epam.library.controller.impl.ControllerProvider;
 public class Main {
     public static void main(String[] args) {
 
-        Controller controller = ControllerProvider.getInstance();
-        controller.doAction("presentation authorization");
+        new MainController().doAction("presentation admin_menu");
 
     }
 }
