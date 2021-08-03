@@ -25,12 +25,13 @@ public final class EmailSenderServiceImpl implements EmailSenderService {
 
     @Override
     public void notifyUsersAboutAddingBookDescription(String subject, Book book) {
-        View view = viewProvider.getView();
+        View view;
         final String SSL_FACTORY;
         Properties props;
         Session session;
         Message message;
 
+        view = viewProvider.getView();
         SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
         props = System.getProperties();
 
@@ -75,11 +76,12 @@ public final class EmailSenderServiceImpl implements EmailSenderService {
     @Override
     public void suggestToAddABookToTheLibrary(User user, Book book) {
         final String SSL_FACTORY;
-        View view = viewProvider.getView();
+        View view;
         Properties props;
         Session session;
         Message message;
 
+        view = viewProvider.getView();
         SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
         props = System.getProperties();
 

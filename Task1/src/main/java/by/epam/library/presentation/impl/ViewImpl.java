@@ -17,9 +17,10 @@ public final class ViewImpl implements View {
     @Override
     public void showBooks() {
         int defaultPageNumber;
-        Library library = Library.getInstance();
+        Library library;
 
         defaultPageNumber = 1;
+        library = Library.getInstance();
 
         if (library.getBooks().size() == 0) {
             print("There aren't books!");
@@ -37,11 +38,13 @@ public final class ViewImpl implements View {
     public void showBooksByPages(int defaultPageNumber) {
         int pagesCount;
         Scanner in;
-        Library library = Library.getInstance();
-        UserInterface userInterface = viewProvider.getUserInterface();
+        Library library;
+        UserInterface userInterface;
 
         int pageNumber = defaultPageNumber;
         in = new Scanner(System.in);
+        library = Library.getInstance();
+        userInterface = viewProvider.getUserInterface();
 
         pagesCount = (library.getBooks().size() - (library.getBooks().size() % 10)) / 10;
         if (library.getBooks().size() % 10 != 0) {

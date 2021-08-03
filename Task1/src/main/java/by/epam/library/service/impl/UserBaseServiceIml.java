@@ -52,14 +52,18 @@ public final class UserBaseServiceIml implements UserBaseService {
         User user;
         String email;
         String login;
-
-        View view = viewProvider.getView();
-        Library library = Library.getInstance();
-        DataFromConsole dataFromConsole = viewProvider.getDataFromConsole();
-        UserBaseDAO userBaseDAO = provider.getUserBaseDAO();
-        ValidatorImpl validator = ValidatorImpl.getInstance();
+        View view;
+        Library library;
+        DataFromConsole dataFromConsole;
+        UserBaseDAO userBaseDAO;
+        ValidatorImpl validator;
 
         user = new User();
+        view = viewProvider.getView();
+        library = Library.getInstance();
+        dataFromConsole = viewProvider.getDataFromConsole();
+        userBaseDAO = provider.getUserBaseDAO();
+        validator = ValidatorImpl.getInstance();
 
         user.setId(library.getUsers().size() + 1);
         user.setName(dataFromConsole.getStringFromConsole("Enter user's name: "));

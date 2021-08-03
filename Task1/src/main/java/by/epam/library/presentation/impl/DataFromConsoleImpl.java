@@ -13,14 +13,14 @@ public final class DataFromConsoleImpl implements DataFromConsole {
 
     @Override
     public int getMenuItem(int min, int max, String message) {
-
-        Scanner in = new Scanner(System.in);
-        View view = viewProvider.getView();
-
+        Scanner in;
+        View view;
         int number;
 
-        view.print(message);
+        in = new Scanner(System.in);
+        view = viewProvider.getView();
 
+        view.print(message);
         while (!in.hasNextInt()) {
             view.print(message);
             in.next();
@@ -36,10 +36,12 @@ public final class DataFromConsoleImpl implements DataFromConsole {
 
     @Override
     public int getNumFromConsole(String message, int min, int max) {
-
-        Scanner in = new Scanner(System.in);
-        View view = viewProvider.getView();
+        Scanner in;
+        View view;
         int number;
+
+        in = new Scanner(System.in);
+        view = viewProvider.getView();
 
         view.print(message);
 
@@ -59,13 +61,14 @@ public final class DataFromConsoleImpl implements DataFromConsole {
 
     @Override
     public String getStringFromConsole(String message) {
-        Scanner in = new Scanner(System.in);
-        View view = viewProvider.getView();
-
+        Scanner in;
+        View view;
         String text;
 
-        view.print(message);
+        in = new Scanner(System.in);
+        view = viewProvider.getView();
 
+        view.print(message);
         while (!in.hasNextLine()) {
             view.print(message);
             in.next();

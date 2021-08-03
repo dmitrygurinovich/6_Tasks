@@ -347,3 +347,10 @@ Name: Book 58
 Author: Author 58-th book
 Year: 1858
 Type: Electronic book
+---
+№ 59
+Name: Philosophy of Java
+Author: Bruce Eccel
+Year: 2020
+Type: Paper book
+Description: The best book for Java developers!!!

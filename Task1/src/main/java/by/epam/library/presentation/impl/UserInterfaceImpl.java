@@ -8,22 +8,18 @@ import by.epam.library.presentation.DataFromConsole;
 import by.epam.library.presentation.PresentationProvider;
 import by.epam.library.presentation.UserInterface;
 import by.epam.library.presentation.View;
-import by.epam.library.service.ServiceProvider;
 
 import java.util.Scanner;
 
 public final class UserInterfaceImpl implements UserInterface {
-    private static final ServiceProvider serviceProvider = ServiceProvider.getInstance();
     private static final PresentationProvider presentationProvider = PresentationProvider.getInstance();
+    private static final DataFromConsole dataFromConsole = presentationProvider.getDataFromConsole();
+    private static final Controller controller = new MainController();
 
     public UserInterfaceImpl() {}
 
     @Override
     public void adminMenu() {
-        Controller controller = new MainController();
-
-        DataFromConsole dataFromConsole = presentationProvider.getDataFromConsole();
-
         int minMenuItem;
         int maxMenuItem;
         int menuItem;
@@ -62,13 +58,9 @@ public final class UserInterfaceImpl implements UserInterface {
 
     @Override
     public void userMenu() {
-        Controller controller;
         int minMenuItem;
         int maxMenuItem;
         int menuItem;
-
-        controller = new MainController();
-        DataFromConsole dataFromConsole = presentationProvider.getDataFromConsole();
 
         minMenuItem = 0;
         maxMenuItem = 4;
@@ -97,15 +89,17 @@ public final class UserInterfaceImpl implements UserInterface {
 
     @Override
     public void authorization() {
-        Library library= Library.getInstance();
-        View view = presentationProvider.getView();
-        Scanner in = new Scanner(System.in);
-
+        Library library;
+        View view;
+        Scanner in;
         String login;
         String password;
         boolean authorized;
 
         authorized = false;
+        library= Library.getInstance();
+        view = presentationProvider.getView();
+        in = new Scanner(System.in);
 
         view.print("Enter login: ");
         while (!in.hasNextLine()) {

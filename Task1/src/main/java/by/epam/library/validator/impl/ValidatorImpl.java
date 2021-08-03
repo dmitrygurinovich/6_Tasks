@@ -9,9 +9,7 @@ import java.util.regex.PatternSyntaxException;
 public final class ValidatorImpl implements Validator {
     private static ValidatorImpl instance;
 
-    private ValidatorImpl() {
-
-    }
+    private ValidatorImpl() {}
 
     public static ValidatorImpl getInstance() {
         if (instance == null) {

@@ -5,7 +5,6 @@ import by.epam.library.bean.BookType;
 import by.epam.library.bean.Library;
 import by.epam.library.dao.DAOProvider;
 import by.epam.library.dao.LibraryDAO;
-import by.epam.library.dao.iml.FileLibraryDAO;
 import by.epam.library.presentation.DataFromConsole;
 import by.epam.library.presentation.PresentationProvider;
 import by.epam.library.presentation.UserInterface;
@@ -34,10 +33,12 @@ public final class LibraryServiceImpl implements LibraryService {
         Pattern pattern;
         Matcher matcher;
         ArrayList<Book> books;
-        View view = viewProvider.getView();
-        DataFromConsole console = viewProvider.getDataFromConsole();
+        View view;
+        DataFromConsole console;
         Library library;
 
+        view = viewProvider.getView();
+        console = viewProvider.getDataFromConsole();
         keyword = console.getStringFromConsole("Enter keyword for search: ");
         pattern = Pattern.compile(keyword.toLowerCase(Locale.ROOT));
         books = new ArrayList<>();
@@ -73,12 +74,16 @@ public final class LibraryServiceImpl implements LibraryService {
     @Override
     public void addBook() {
         Book book;
-        Library library = Library.getInstance();
-        View view = viewProvider.getView();
-        DataFromConsole console = viewProvider.getDataFromConsole();
-        LibraryDAO libraryDAO = new FileLibraryDAO();
+        Library library;
+        View view;
+        DataFromConsole console;
+        LibraryDAO libraryDAO;
 
         book = new Book();
+        library = Library.getInstance();
+        view = viewProvider.getView();
+        console = viewProvider.getDataFromConsole();
+        libraryDAO = DAOProvider.getInstance().getLibraryDAO();
 
         book.setName(console.getStringFromConsole("Enter book's name: "));
         book.setAuthor(console.getStringFromConsole("Enter book's author: "));
@@ -86,7 +91,7 @@ public final class LibraryServiceImpl implements LibraryService {
         book.setType((console.getNumFromConsole("Choose book's type:\n" + "1. Paper book\n" + "2. E-book", 1, 2) == 1 ? BookType.PAPER_BOOK : BookType.ELECTRONIC_BOOK));
         book.setId(library.getBooks().size() + 1);
 
-        daoProvider.getLibraryDAO().writeOneBookToFile(book);
+        libraryDAO.writeOneBookToFile(book);
         library.getBooks().add(book);
 
         view.print("New book " + book.getName() + " added.");
@@ -96,9 +101,13 @@ public final class LibraryServiceImpl implements LibraryService {
     public void editBook() {
         int bookNumber;
         Book book;
-        Library library = Library.getInstance();
-        UserInterface userInterface = viewProvider.getUserInterface();
-        DataFromConsole console = viewProvider.getDataFromConsole();
+        Library library;
+        UserInterface userInterface;
+        DataFromConsole console;
+
+        library = Library.getInstance();
+        userInterface = viewProvider.getUserInterface();
+        console = viewProvider.getDataFromConsole();
 
         bookNumber = console.getNumFromConsole("" +
                 "Enter book's number or \"0\" for exit to the main menu: ", 0, library.getBooks().size());
@@ -116,13 +125,19 @@ public final class LibraryServiceImpl implements LibraryService {
     public void bookEditingMenu(Book book) {
         int menuItem;
         String descriptionUntilEditing;
+        Library library;
+        View view;
+        DataFromConsole dataFromConsole;
+        UserInterface userInterface;
+        EmailSenderService emailSenderService;
+        LibraryDAO libraryService;
 
-        Library library = Library.getInstance();
-        View view = viewProvider.getView();
-        DataFromConsole dataFromConsole = viewProvider.getDataFromConsole();
-        UserInterface userInterface = viewProvider.getUserInterface();
-        EmailSenderService emailSenderService = serviceProvider.getEmailSenderService();
-        LibraryDAO libraryService = daoProvider.getLibraryDAO();
+        library = Library.getInstance();
+        view = viewProvider.getView();
+        dataFromConsole = viewProvider.getDataFromConsole();
+        userInterface = viewProvider.getUserInterface();
+        emailSenderService = serviceProvider.getEmailSenderService();
+        libraryService = daoProvider.getLibraryDAO();
 
         view.print("" +
                 "You're editing book:\n" +
