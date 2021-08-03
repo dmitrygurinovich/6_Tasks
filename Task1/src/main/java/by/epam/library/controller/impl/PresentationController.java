@@ -1,7 +1,7 @@
 package by.epam.library.controller.impl;
 
+import by.epam.library.command.CommandProvider;
 import by.epam.library.controller.Controller;
-import by.epam.library.controller.command.CommandProvider;
 
 public class PresentationController implements Controller {
     private final CommandProvider commandProvider = new CommandProvider();

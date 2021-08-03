@@ -1,5 +1,6 @@
 package by.epam.library.main;
 
+import by.epam.library.controller.Controller;
 import by.epam.library.controller.impl.MainController;
 
 /*
@@ -18,7 +19,8 @@ import by.epam.library.controller.impl.MainController;
 public class Main {
     public static void main(String[] args) {
 
-        new MainController().doAction("presentation authorization");
+        Controller controller = new MainController();
+        controller.doAction("presentation authorization");
 
     }
 }

@@ -1,4 +1,4 @@
-package by.epam.library.controller.command;
+package by.epam.library.command;
 
 public interface Command {
     void execute();

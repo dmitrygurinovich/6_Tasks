@@ -1,8 +1,8 @@
-package by.epam.library.controller.command.impl;
+package by.epam.library.command.impl;
 
 import by.epam.library.bean.Library;
 import by.epam.library.bean.User;
-import by.epam.library.controller.command.Command;
+import by.epam.library.command.Command;
 import by.epam.library.service.ServiceProvider;
 import by.epam.library.service.UserService;
 

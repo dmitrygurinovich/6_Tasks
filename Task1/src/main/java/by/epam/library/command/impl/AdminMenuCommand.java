@@ -1,14 +1,14 @@
-package by.epam.library.controller.command.impl;
+package by.epam.library.command.impl;
 
-import by.epam.library.controller.command.Command;
+import by.epam.library.command.Command;
 import by.epam.library.presentation.PresentationProvider;
 import by.epam.library.presentation.UserInterface;
 
-public class ExitCommand implements Command {
+public class AdminMenuCommand implements Command {
     private final UserInterface userInterface = PresentationProvider.getInstance().getUserInterface();
 
     @Override
     public void execute() {
-        userInterface.exit();
+        userInterface.adminMenu();
     }
 }
