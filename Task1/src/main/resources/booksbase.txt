@@ -19,7 +19,7 @@ Type: Paper book
 № 4
 Name: Book 4
 Author: Author 4-th book
-Year: 1805
+Year: 1998
 Type: Electronic book
 ---
 № 5
@@ -27,6 +27,7 @@ Name: Book 5
 Author: Author 5-th book
 Year: 1805
 Type: Paper book
+Description: new description
 ---
 № 6
 Name: Book 6

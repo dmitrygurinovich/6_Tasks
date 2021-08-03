@@ -14,8 +14,10 @@ public class MainController implements Controller {
         switch (params[0]) {
             case "presentation":
                 provider.getPresentationController().doAction(params[1]);
+                break;
             case "service":
                 provider.getServiceController().doAction(params[1]);
+                break;
         }
     }
 }

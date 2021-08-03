@@ -2,29 +2,27 @@ package by.epam.library.presentation.impl;
 
 import by.epam.library.bean.Library;
 import by.epam.library.bean.UserRole;
+import by.epam.library.controller.Controller;
+import by.epam.library.controller.impl.MainController;
 import by.epam.library.presentation.DataFromConsole;
 import by.epam.library.presentation.PresentationProvider;
 import by.epam.library.presentation.UserInterface;
 import by.epam.library.presentation.View;
-import by.epam.library.service.LibraryService;
 import by.epam.library.service.ServiceProvider;
-import by.epam.library.service.UserBaseService;
-import by.epam.library.service.UserService;
 
 import java.util.Scanner;
 
 public final class UserInterfaceImpl implements UserInterface {
-    private static ServiceProvider serviceProvider = ServiceProvider.getInstance();
-    private static PresentationProvider presentationProvider = PresentationProvider.getInstance();
+    private static final ServiceProvider serviceProvider = ServiceProvider.getInstance();
+    private static final PresentationProvider presentationProvider = PresentationProvider.getInstance();
 
     public UserInterfaceImpl() {}
 
     @Override
     public void adminMenu() {
-        View view = presentationProvider.getView();
+        Controller controller = new MainController();
+
         DataFromConsole dataFromConsole = presentationProvider.getDataFromConsole();
-        LibraryService libraryService = serviceProvider.getLibraryService();
-        UserBaseService userBaseService = serviceProvider.getUserBaseService();
 
         int minMenuItem;
         int maxMenuItem;
@@ -44,35 +42,33 @@ public final class UserInterfaceImpl implements UserInterface {
 
         switch (menuItem) {
             case 1:
-                view.showBooks();
+                controller.doAction("presentation show_books");
             case 2:
-                libraryService.searchBooksByKeyword();
-                adminMenu();
+                controller.doAction("service search_books");
+                controller.doAction("presentation admin_menu");
             case 3:
-                libraryService.addBook();
-                adminMenu();
+                controller.doAction("service add_book");
+                controller.doAction("presentation admin_menu");
             case 4:
-                libraryService.editBook();
-                adminMenu();
+                controller.doAction("service edit_book");
+                controller.doAction("presentation admin_menu");
             case 5:
-                userBaseService.addUser();
-                adminMenu();
+                controller.doAction("service add_user");
+                controller.doAction("presentation admin_menu");
             case 0:
-                exit();
+                controller.doAction("presentation exit");
         }
     }
 
     @Override
     public void userMenu() {
+        Controller controller;
         int minMenuItem;
         int maxMenuItem;
         int menuItem;
 
-        Library library = Library.getInstance();
-        View view = presentationProvider.getView();
+        controller = new MainController();
         DataFromConsole dataFromConsole = presentationProvider.getDataFromConsole();
-        LibraryService libraryService = serviceProvider.getLibraryService();
-        UserService userService = serviceProvider.getUserService();
 
         minMenuItem = 0;
         maxMenuItem = 4;
@@ -86,16 +82,16 @@ public final class UserInterfaceImpl implements UserInterface {
 
         switch (menuItem) {
             case 1:
-                view.showBooks();
-                userMenu();
+                controller.doAction("presentation show_books");
+                controller.doAction("presentation user_menu");
             case 2:
-                libraryService.searchBooksByKeyword();
-                userMenu();
+                controller.doAction("service search_books");
+                controller.doAction("presentation user_menu");
             case 3:
-                userService.suggestNewBook(library.getAuthorizedUser());
-                userMenu();
+                controller.doAction("service suggest_books");
+                controller.doAction("presentation user_menu");
             case 0:
-                exit();
+                controller.doAction("presentation exit");
         }
     }
 

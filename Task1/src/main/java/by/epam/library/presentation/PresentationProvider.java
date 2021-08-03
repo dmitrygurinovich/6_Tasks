@@ -11,7 +11,7 @@ public final class PresentationProvider {
     private final UserInterface userInterface = new UserInterfaceImpl();
     private final DataFromConsole dataFromConsole = new DataFromConsoleImpl();
 
-    public PresentationProvider() {}
+    private PresentationProvider() {}
 
     public static PresentationProvider getInstance(){
         if (instance == null) {

@@ -18,7 +18,7 @@ import by.epam.library.controller.impl.MainController;
 public class Main {
     public static void main(String[] args) {
 
-        new MainController().doAction("presentation admin_menu");
+        new MainController().doAction("presentation authorization");
 
     }
 }
