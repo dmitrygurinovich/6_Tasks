@@ -1,4 +1,4 @@
-package by.epam.library.bean;
+package by.epam.note.bean;
 
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;

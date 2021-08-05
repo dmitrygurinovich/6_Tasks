@@ -22,7 +22,7 @@ public class CommandProvider {
         commands.put("user_menu", new UserMenuCommand());
         commands.put("suggest_book", new SuggestNewBookCommand());
 
-        // user's and admin's commands
+        // user's and admin's menu commands
         commands.put("show_books", new ShowBooksCommand());
         commands.put("search_books", new SearchBooksByKeywordCommand());
         commands.put("exit", new ExitCommand());

@@ -1,6 +1,6 @@
-package by.epam.library.presentation;
+package by.epam.note.presentation;
 
-import by.epam.library.logic.NotesBaseLogic;
+import by.epam.note.logic.NotesBaseLogic;
 
 import java.util.Scanner;
 

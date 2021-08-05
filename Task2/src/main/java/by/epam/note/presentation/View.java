@@ -1,6 +1,6 @@
-package by.epam.library.presentation;
+package by.epam.note.presentation;
 
-import by.epam.library.bean.Note;
+import by.epam.note.bean.Note;
 
 public class View {
     public View() {

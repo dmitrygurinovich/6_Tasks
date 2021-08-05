@@ -1,30 +1,24 @@
-package by.epam.library.logic;
+package by.epam.note.logic;
 
-import by.epam.library.bean.Note;
-import by.epam.library.bean.NotesBase;
-import by.epam.library.presentation.UserInterface;
-import by.epam.library.presentation.View;
+import by.epam.note.bean.Note;
+import by.epam.note.bean.NotesBase;
+import by.epam.note.dao.NotesBaseDAO;
+import by.epam.note.dao.impl.FileNotesBaseDAO;
+import by.epam.note.presentation.UserInterface;
+import by.epam.note.presentation.View;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 public class NotesBaseLogic {
-    private static final File NOTES_BASE_PATH = new File("Task2/src/main/resources/notesbase.json");
+    private final NotesBaseDAO notesBaseDAO = FileNotesBaseDAO.getInstance();
     private static final Scanner in = new Scanner(System.in);
 
-    public NotesBaseLogic() {
-
-    }
+    public NotesBaseLogic() {}
 
     public void showAllNotes() {
         int menuItem;
@@ -58,32 +52,6 @@ public class NotesBaseLogic {
         }
     }
 
-    public void writeNotesToFile(ArrayList<Note> notes) {
-        try (FileWriter writer = new FileWriter(NOTES_BASE_PATH)) {
-            writer.write(objectToJsonObject(notes));
-            writer.flush();
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
-    }
-
-    public ArrayList<Note> readNotesFromFile() {
-        ArrayList<Note> notes;
-        notes = new ArrayList<>();
-
-        try (FileReader reader = new FileReader(NOTES_BASE_PATH)) {
-            Gson gson = new Gson();
-            Type collectionType = new TypeToken<ArrayList<Note>>() {
-            }.getType();
-            notes = gson.fromJson(reader, collectionType);
-            return notes;
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
-
-        return notes;
-    }
-
     public void addNote() {
         Note note = new Note();
         String email;
@@ -103,7 +71,7 @@ public class NotesBaseLogic {
         note.setDate(new GregorianCalendar());
 
         notesBase.getNotes().add(note);
-        writeNotesToFile(notesBase.getNotes());
+        notesBaseDAO.writeNotesToFile(notesBase.getNotes());
     }
 
     public void editNote() {
@@ -147,7 +115,7 @@ public class NotesBaseLogic {
             } else {
                 notesBase.getNotes().remove(menuItem - 1);
                 changeNotesId(notesBase);
-                writeNotesToFile(notesBase.getNotes());
+                notesBaseDAO.writeNotesToFile(notesBase.getNotes());
             }
         }
 
@@ -257,7 +225,7 @@ public class NotesBaseLogic {
         menuItem = getNumFromConsole("Enter number 0-4:", 0, 4);
 
         if (menuItem == 0) {
-            writeNotesToFile(notesBase.getNotes());
+            notesBaseDAO.writeNotesToFile(notesBase.getNotes());
             userInterface.menu();
         }
 

@@ -22,5 +22,13 @@ public class Main {
         Controller controller = new MainController();
         controller.doAction("presentation authorization");
 
+        /*
+            Administrator
+                login: 1111
+                password: 1111
+            User
+                login: user
+                password: user
+         */
     }
 }

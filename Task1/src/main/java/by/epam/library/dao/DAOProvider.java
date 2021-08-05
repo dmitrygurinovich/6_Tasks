@@ -5,7 +5,6 @@ import by.epam.library.dao.iml.FileUserBaseDAO;
 
 public final class DAOProvider {
     private static DAOProvider instance;
-
     private final UserBaseDAO userBaseDAO = new FileUserBaseDAO();
     private final LibraryDAO libraryDAO = new FileLibraryDAO();
 

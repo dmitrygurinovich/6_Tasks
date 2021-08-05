@@ -1,6 +1,6 @@
-package by.epam.library.bean;
+package by.epam.note.bean;
 
-import by.epam.library.logic.NotesBaseLogic;
+import by.epam.note.logic.NotesBaseLogic;
 
 import java.util.ArrayList;
 
@@ -10,7 +10,7 @@ public class NotesBase {
 
     private NotesBase() {
         NotesBaseLogic logic = new NotesBaseLogic();
-        this.notes = logic.readNotesFromFile();
+        // read file
     }
 
     public static NotesBase getInstance() {
