@@ -2,7 +2,8 @@ package by.epam.note.dao.impl;
 
 import by.epam.note.bean.Note;
 import by.epam.note.dao.NotesBaseDAO;
-import by.epam.note.logic.NotesBaseLogic;
+import by.epam.note.service.JsonService;
+import by.epam.note.service.ServiceProvider;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -29,6 +30,7 @@ public class FileNotesBaseDAO implements NotesBaseDAO {
     @Override
     public ArrayList<Note> readNotesFromFile() {
         ArrayList<Note> notes;
+
         notes = new ArrayList<>();
 
         try (FileReader reader = new FileReader(NOTES_BASE_PATH)) {
@@ -45,9 +47,12 @@ public class FileNotesBaseDAO implements NotesBaseDAO {
 
     @Override
     public void writeNotesToFile(ArrayList<Note> notes) {
+        JsonService jsonService;
+
+        jsonService = ServiceProvider.getInstance().getJsonService();
+
         try (FileWriter writer = new FileWriter(NOTES_BASE_PATH)) {
-            NotesBaseLogic temp = new NotesBaseLogic();                                                          // TODO: delete
-            writer.write(temp.objectToJsonObject(notes));
+            writer.write(jsonService.objectToJsonObject(notes));
             writer.flush();
         } catch (IOException exception) {
             exception.printStackTrace();

@@ -1,6 +1,6 @@
 package by.epam.note.main;
 
-import by.epam.note.presentation.UserInterface;
+import by.epam.note.presentation.PresentationProvider;
 
 /*
  Задание 2. Блокнот. Разработать консольное приложение, работающее с Заметками в Блокноте. Каждая Заметка это:
@@ -17,7 +17,6 @@ import by.epam.note.presentation.UserInterface;
  */
 public class Main {
     public static void main(String[] args) {
-        UserInterface ui = new UserInterface();
-        ui.menu();
+        PresentationProvider.getInstance().getUserInterface().menu();
     }
 }
