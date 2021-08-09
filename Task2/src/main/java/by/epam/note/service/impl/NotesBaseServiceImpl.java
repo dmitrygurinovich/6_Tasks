@@ -18,31 +18,33 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class NotesBaseServiceImpl implements NoteBaseService {
+    private final NotesBase notesBase = NotesBase.getInstance();
+    private final View view = PresentationProvider.getInstance().getView();
+    private final UserInterface userInterface = PresentationProvider.getInstance().getUserInterface();
+    private final NotesBaseDAO notesBaseDAO = FileNotesBaseDAO.getInstance();
 
     @Override
     public void showAllNotes() {
         int menuItem;
-        View view = PresentationProvider.getInstance().getView();
-        NotesBase notesBase = NotesBase.getInstance();
-        UserInterface userInterface = PresentationProvider.getInstance().getUserInterface();
-        ConsoleDataService consoleDataService = ServiceProvider.getInstance().getConsoleDataService();
+        ConsoleDataService consoleDataService;
+
+        consoleDataService = ServiceProvider.getInstance().getConsoleDataService();
 
         showNotesThemes();
 
         menuItem = consoleDataService.getNumFromConsole("Enter note's number or \"0\" " +
                 "for entering to the main menu", 0, notesBase.getNotes().size());
+
         if (menuItem == 0) {
             userInterface.menu();
         }
+
         view.print(notesBase.getNotes().get(menuItem - 1));
         userInterface.menu();
     }
 
     @Override
     public void showNotesThemes() {
-        View view = PresentationProvider.getInstance().getView();
-        NotesBase notesBase = NotesBase.getInstance();
-
         for (Note note : notesBase.getNotes()) {
             view.print(note.getId() + ". " + note.getTheme());
         }
@@ -50,12 +52,14 @@ public class NotesBaseServiceImpl implements NoteBaseService {
 
     @Override
     public void addNote() {
-        Note note = new Note();
+        Note note;
         String email;
-        NotesBase notesBase = NotesBase.getInstance();
-        NotesBaseDAO notesBaseDAO = FileNotesBaseDAO.getInstance();
-        Validation validation = new ValidationImpl();
-        ConsoleDataService consoleDataService = ServiceProvider.getInstance().getConsoleDataService();
+        Validation validation;
+        ConsoleDataService consoleDataService;
+
+        note = new Note();
+        validation = new ValidationImpl();
+        consoleDataService = ServiceProvider.getInstance().getConsoleDataService();
 
         note.setId(notesBase.getNotes().size() + 1);
         note.setTheme(consoleDataService.getStringFromConsole("Enter note's theme:"));
@@ -75,11 +79,11 @@ public class NotesBaseServiceImpl implements NoteBaseService {
     @Override
     public void editNote() {
         int menuItem;
-        NotesBase notesBase = NotesBase.getInstance();
-        UserInterface userInterface = PresentationProvider.getInstance().getUserInterface();
-        ConsoleDataService consoleDataService = ServiceProvider.getInstance().getConsoleDataService();
+        ConsoleDataService consoleDataService;
 
-        menuItem = consoleDataService.getNumFromConsole("Choose note for editing. Enter note's number or \"0\" for enter to the main menu: ", 0, notesBase.getNotes().size());
+        consoleDataService = ServiceProvider.getInstance().getConsoleDataService();
+        menuItem = consoleDataService.getNumFromConsole("Choose note for editing. " +
+                "Enter note's number or \"0\" for enter to the main menu: ", 0, notesBase.getNotes().size());
 
         if (menuItem == 0) {
             userInterface.menu();
@@ -92,12 +96,9 @@ public class NotesBaseServiceImpl implements NoteBaseService {
     public void deleteNote() {
         int menuItem;
         int confirmation;
-        View view = PresentationProvider.getInstance().getView();
-        NotesBase notesBase = NotesBase.getInstance();
-        UserInterface userInterface = PresentationProvider.getInstance().getUserInterface();
-        NotesBaseDAO notesBaseDAO = FileNotesBaseDAO.getInstance();
-        ConsoleDataService consoleDataService = ServiceProvider.getInstance().getConsoleDataService();
+        ConsoleDataService consoleDataService;
 
+        consoleDataService = ServiceProvider.getInstance().getConsoleDataService();
         menuItem = consoleDataService.getNumFromConsole("Enter note's number which you want to delete or \"0\" " +
                 "for entering to the main menu", 0, notesBase.getNotes().size());
 
@@ -126,11 +127,12 @@ public class NotesBaseServiceImpl implements NoteBaseService {
         Pattern pattern;
         Matcher matcher;
         int menuItem;
-        View view = PresentationProvider.getInstance().getView();
-        NotesBase notesBase = NotesBase.getInstance();
-        UserInterface userInterface = PresentationProvider.getInstance().getUserInterface();
-        ConsoleDataService consoleDataService = ServiceProvider.getInstance().getConsoleDataService();
+        ConsoleDataService consoleDataService;
 
+        consoleDataService = ServiceProvider.getInstance().getConsoleDataService();
+        keyword = consoleDataService.getStringFromConsole("Enter keyword for searching: ");
+        pattern = Pattern.compile(keyword.toLowerCase(Locale.ROOT));
+        searchResult = new ArrayList<>();
         menuItem = consoleDataService.getNumFromConsole("" +
                 "1. Search in themes\n" +
                 "2. Search in text\n" +
@@ -140,10 +142,6 @@ public class NotesBaseServiceImpl implements NoteBaseService {
         if (menuItem == 0) {
             userInterface.menu();
         }
-
-        keyword = consoleDataService.getStringFromConsole("Enter keyword for searching: ");
-        pattern = Pattern.compile(keyword.toLowerCase(Locale.ROOT));
-        searchResult = new ArrayList<>();
 
         if (menuItem == 1) {
             for (Note note : notesBase.getNotes()) {
@@ -208,12 +206,11 @@ public class NotesBaseServiceImpl implements NoteBaseService {
     public void editNotesFields(int noteNumber) {
         int menuItem;
         String email;
-        View view = PresentationProvider.getInstance().getView();
-        NotesBase notesBase = NotesBase.getInstance();
-        UserInterface userInterface = PresentationProvider.getInstance().getUserInterface();
-        NotesBaseDAO notesBaseDAO = FileNotesBaseDAO.getInstance();
-        Validation validation = new ValidationImpl();
-        ConsoleDataService consoleDataService = ServiceProvider.getInstance().getConsoleDataService();
+        Validation validation;
+        ConsoleDataService consoleDataService;
+
+        validation = new ValidationImpl();
+        consoleDataService = ServiceProvider.getInstance().getConsoleDataService();
 
         view.print("## You're editing note: ##");
         view.print(notesBase.getNotes().get(noteNumber - 1));
