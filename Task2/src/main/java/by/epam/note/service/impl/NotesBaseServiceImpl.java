@@ -3,7 +3,7 @@ package by.epam.note.service.impl;
 import by.epam.note.bean.Note;
 import by.epam.note.bean.NotesBase;
 import by.epam.note.dao.NotesBaseDAO;
-import by.epam.note.dao.impl.FileNotesBaseDAO;
+import by.epam.note.dao.impl.JSONNotesBaseDAO;
 import by.epam.note.presentation.PresentationProvider;
 import by.epam.note.presentation.UserInterface;
 import by.epam.note.presentation.View;
@@ -21,7 +21,7 @@ public class NotesBaseServiceImpl implements NoteBaseService {
     private final NotesBase notesBase = NotesBase.getInstance();
     private final View view = PresentationProvider.getInstance().getView();
     private final UserInterface userInterface = PresentationProvider.getInstance().getUserInterface();
-    private final NotesBaseDAO notesBaseDAO = FileNotesBaseDAO.getInstance();
+    private final NotesBaseDAO notesBaseDAO = JSONNotesBaseDAO.getInstance();
 
     @Override
     public void showAllNotes() {

@@ -1,6 +1,6 @@
 package by.epam.note.bean;
 
-import by.epam.note.dao.impl.FileNotesBaseDAO;
+import by.epam.note.dao.impl.JSONNotesBaseDAO;
 
 import java.util.ArrayList;
 
@@ -9,7 +9,7 @@ public class NotesBase {
     private static NotesBase instance;
 
     private NotesBase() {
-        this.notes = FileNotesBaseDAO.getInstance().readNotesFromFile();
+        this.notes = JSONNotesBaseDAO.getInstance().readNotesFromFile();
     }
 
     public static NotesBase getInstance() {

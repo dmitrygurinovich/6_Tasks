@@ -14,15 +14,15 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class FileNotesBaseDAO implements NotesBaseDAO {
+public class JSONNotesBaseDAO implements NotesBaseDAO {
     private static final File NOTES_BASE_PATH = new File("Task2/src/main/resources/notesbase.json");
-    private static FileNotesBaseDAO instance;
+    private static JSONNotesBaseDAO instance;
 
-    private FileNotesBaseDAO() {}
+    private JSONNotesBaseDAO() {}
 
-    public static FileNotesBaseDAO getInstance() {
+    public static JSONNotesBaseDAO getInstance() {
         if (instance == null) {
-            instance = new FileNotesBaseDAO();
+            instance = new JSONNotesBaseDAO();
         }
         return instance;
     }

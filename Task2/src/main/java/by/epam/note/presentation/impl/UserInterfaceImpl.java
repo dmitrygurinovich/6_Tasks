@@ -1,10 +1,10 @@
 package by.epam.note.presentation.impl;
 
+import by.epam.note.controller.Controller;
 import by.epam.note.presentation.PresentationProvider;
 import by.epam.note.presentation.UserInterface;
 import by.epam.note.presentation.View;
 import by.epam.note.service.ConsoleDataService;
-import by.epam.note.service.NoteBaseService;
 import by.epam.note.service.ServiceProvider;
 
 public class UserInterfaceImpl implements UserInterface {
@@ -14,12 +14,12 @@ public class UserInterfaceImpl implements UserInterface {
     public void menu() {
         int menuItem;
         View view;
-        NoteBaseService noteBaseService;
         ConsoleDataService consoleDataService;
+        Controller controller;
 
         view = PresentationProvider.getInstance().getView();
-        noteBaseService = ServiceProvider.getInstance().getNoteBaseService();
         consoleDataService = ServiceProvider.getInstance().getConsoleDataService();
+        controller = by.epam.note.controller.impl.Controller.getInstance();
 
         view.print("" +
                 "#### MENU ####\n" +
@@ -34,22 +34,22 @@ public class UserInterfaceImpl implements UserInterface {
 
         switch (menuItem) {
             case 0:
-                System.exit(0);
+                controller.doAction("exit");
             case 1:
-                noteBaseService.showAllNotes();
-                menu();
+                controller.doAction("show_notes");
+                controller.doAction("menu");
             case 2:
-                noteBaseService.searchNotes();
-                menu();
+                controller.doAction("search_notes");
+                controller.doAction("menu");
             case 3:
-                noteBaseService.addNote();
-                menu();
+                controller.doAction("add_note");
+                controller.doAction("menu");
             case 4:
-                noteBaseService.editNote();
-                menu();
+                controller.doAction("edit_note");
+                controller.doAction("menu");
             case 5:
-                noteBaseService.deleteNote();
-                menu();
+                controller.doAction("delete_note");
+                controller.doAction("menu");
         }
     }
 }
