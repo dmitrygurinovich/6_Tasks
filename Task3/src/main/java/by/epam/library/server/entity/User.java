@@ -1,6 +1,7 @@
 package by.epam.library.server.entity;
 
-import by.epam.library.server.logic.UserBaseLogic;
+import by.epam.library.server.service.ServiceProvider;
+import by.epam.library.server.service.UserBaseService;
 import nu.xom.Element;
 
 public class User {
@@ -8,9 +9,7 @@ public class User {
     private String password;
     private UserRole role;
 
-    public User() {
-
-    }
+    public User() {}
 
     public User(String username, String password, UserRole role) {
         this.username = username;
@@ -19,10 +18,9 @@ public class User {
     }
 
     public User(Element user) {
-        UserBaseLogic logic = new UserBaseLogic();
-
+        UserBaseService userBaseService = ServiceProvider.getInstance().getUserBaseService();
         this.username = user.getFirstChildElement("username").getValue();
-        this.password = logic.decryptUserPassword(user.getFirstChildElement("password").getValue());
+        this.password = userBaseService.decryptUserPassword(user.getFirstChildElement("password").getValue());
         if (user.getFirstChildElement("user-role").getValue().equals("Admin")) {
             this.role = UserRole.ADMINISTRATOR;
         } else {

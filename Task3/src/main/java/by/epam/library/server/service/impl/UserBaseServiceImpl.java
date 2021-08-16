@@ -1,44 +1,52 @@
-package by.epam.library.server.logic;
+package by.epam.library.server.service.impl;
 
+import by.epam.library.server.dao.DAOProvider;
+import by.epam.library.server.dao.UsersBaseDAO;
 import by.epam.library.server.entity.User;
-import by.epam.library.server.storage.UsersBase;
-import nu.xom.*;
+import by.epam.library.server.service.UserBaseService;
+import nu.xom.Document;
+import nu.xom.Element;
+import nu.xom.Serializer;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.HashMap;
 
-public class UserBaseLogic {
-    private static final String USERS_BASE_PATH = "Task3/src/main/resources/users.xml";
+
+public class UserBaseServiceImpl implements UserBaseService {
     private static final SecretKeySpec KEY = new SecretKeySpec("Hdy2rl1ds64MePhn".getBytes(), "AES");
 
-    public UserBaseLogic() {
-
+    @Override
+    public void format(OutputStream stream, Document doc) {
+        try{
+            Serializer serializer = new Serializer(stream, "ISO-8859-1");
+            serializer.setIndent(4);
+            serializer.setMaxLength(120);
+            serializer.write(doc);
+            serializer.flush();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
     }
 
-    public static void format(OutputStream stream, Document doc) throws Exception {
-        Serializer serializer = new Serializer(stream, "ISO-8859-1");
-        serializer.setIndent(4);
-        serializer.setMaxLength(120);
-        serializer.write(doc);
-        serializer.flush();
+    @Override
+    public void addUser(User user) {
+        UsersBaseDAO usersBaseDAO;
+
+        usersBaseDAO = DAOProvider.getInstance().getUsersBaseDAO();
+
+        usersBaseDAO.getUsers().put(user.getUsername(), user);
+        usersBaseDAO.writeUsersToXml();
     }
 
-    public void addUser(UsersBase base, User user) throws Exception {
-        base.getUsers().put(user.getUsername(), user);
-        writeUsersToXml(base);
-    }
-
+    @Override
     public Element getXmlElement(User user) {
         Element userXml = new Element("user");
         Element username = new Element("username");
@@ -56,35 +64,7 @@ public class UserBaseLogic {
         return userXml;
     }
 
-    public Document getXmlDocument(UsersBase base) {
-        Element users = new Element("users");
-
-        for (User user : base.getUsers().values()) {
-            users.appendChild(getXmlElement(user));
-        }
-
-        return new Document(users);
-    }
-
-    public void writeUsersToXml(UsersBase base) throws Exception {
-        format(new BufferedOutputStream(new FileOutputStream(USERS_BASE_PATH)), getXmlDocument(base));
-    }
-
-    public HashMap<String, User> readUsersFromXml() throws ParsingException, IOException {
-        Document document = new Builder()
-                .build(USERS_BASE_PATH);
-
-        HashMap<String, User> users = new HashMap<>();
-
-        Elements elements = document.getRootElement().getChildElements();
-
-        for (Element element : elements) {
-            users.put(element.getFirstChildElement("username").getValue(), new User(element));
-        }
-
-        return users;
-    }
-
+    @Override
     public byte[] encryptUserPassword(String password) {
         byte[] passwordsBytes;
 
@@ -101,6 +81,7 @@ public class UserBaseLogic {
         return passwordsBytes;
     }
 
+    @Override
     public String decryptUserPassword(String bytesArrayInString) {
         StringBuilder password;
 
@@ -122,6 +103,7 @@ public class UserBaseLogic {
         return password.toString();
     }
 
+    @Override
     public byte[] getBytesArrayFromString(String password) {
         String[] passwordParsedToStringsArray;
         byte[] passwordParsedToBytesArray;
@@ -136,4 +118,15 @@ public class UserBaseLogic {
         return passwordParsedToBytesArray;
     }
 
+    @Override
+    public Document getXmlDocument() {
+        Element users = new Element("users");
+        UsersBaseDAO usersBaseDAO = DAOProvider.getInstance().getUsersBaseDAO();
+
+        for (User user : usersBaseDAO.getUsers().values()) {
+            users.appendChild(getXmlElement(user));
+        }
+
+        return new Document(users);
+    }
 }

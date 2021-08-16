@@ -1,31 +1,34 @@
-package by.epam.library.server.logic;
+package by.epam.library.server.service.impl;
 
+import by.epam.library.server.dao.DAOProvider;
+import by.epam.library.server.dao.FilesBaseDAO;
 import by.epam.library.server.entity.File;
 import by.epam.library.server.entity.Subject;
-import by.epam.library.server.storage.FilesBase;
-import nu.xom.*;
+import by.epam.library.server.service.FileBaseService;
+import nu.xom.Document;
+import nu.xom.Element;
+import nu.xom.Serializer;
 
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
 
-public class FilesBaseLogic {
-    private static final String FILES_BASE_PATH = "Task3/src/main/resources/files.xml";
+public class FileBaseServiceImpl implements FileBaseService {
+    private final FilesBaseDAO filesBaseDAO = DAOProvider.getInstance().getFilesBaseDAO();
 
-    public FilesBaseLogic() {
-
+    @Override
+    public void format(OutputStream stream, Document doc) {
+        try {
+            Serializer serializer = new Serializer(stream, "ISO-8859-1");
+            serializer.setIndent(4);
+            serializer.setMaxLength(60);
+            serializer.write(doc);
+            serializer.flush();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
     }
 
-    public static void format(OutputStream stream, Document doc) throws Exception {
-        Serializer serializer = new Serializer(stream, "ISO-8859-1");
-        serializer.setIndent(4);
-        serializer.setMaxLength(60);
-        serializer.write(doc);
-        serializer.flush();
-    }
-
+    @Override
     public Element getXmlElement(File studentFile) {
         Element file = new Element("file");
 
@@ -89,43 +92,37 @@ public class FilesBaseLogic {
         return file;
     }
 
+    @Override
     public Document getXmlDocument() {
         Element files = new Element("files");
-        for (File file : FilesBase.getInstance().getFiles()) {
+        for (File file : filesBaseDAO.getFiles()) {
             files.appendChild(getXmlElement(file));
         }
         return new Document(files);
     }
 
-    public void writeFilesToXml() throws Exception {
-        format(new BufferedOutputStream(new FileOutputStream(FILES_BASE_PATH)), getXmlDocument());
-    }
-
-    public ArrayList<File> readFilesFromXml() throws ParsingException, IOException {
-        Document document = new Builder()
-                .build(FILES_BASE_PATH);
-
-        ArrayList<File> filesList = new ArrayList<>();
-
-        Elements elements = document.getRootElement().getChildElements();
-
-        for (int i = 0; i < elements.size(); i++) {
-            filesList.add(new File(elements.get(i)));
+    @Override
+    public void addFile(File file) {
+        try {
+            filesBaseDAO.getFiles().add(file);
+            filesBaseDAO.writeFilesToXml();
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
 
-        return filesList;
     }
 
-    public void addFile(File file) throws Exception {
-        FilesBase.getInstance().getFiles().add(file);
-        writeFilesToXml();
-    }
-
-    public void deleteFile(int fileId) throws Exception {
-        FilesBase.getInstance().getFiles().remove(fileId - 1);
-        for (int i = 0; i < FilesBase.getInstance().getFiles().size(); i++) {
-            FilesBase.getInstance().getFiles().get(i).setId(i + 1);
+    @Override
+    public void deleteFile(int fileId) {
+        filesBaseDAO.getFiles().remove(fileId - 1);
+        for (int i = 0; i < filesBaseDAO.getFiles().size(); i++) {
+            filesBaseDAO.getFiles().get(i).setId(i + 1);
         }
-        writeFilesToXml();
+        try {
+            filesBaseDAO.writeFilesToXml();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
     }
 }
+

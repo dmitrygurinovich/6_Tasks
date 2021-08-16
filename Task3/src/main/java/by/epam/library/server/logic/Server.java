@@ -1,7 +1,7 @@
 package by.epam.library.server.logic;
 
+import by.epam.library.server.dao.DAOProvider;
 import by.epam.library.server.entity.File;
-import by.epam.library.server.storage.FilesBase;
 import by.epam.library.server.view.View;
 
 import java.io.*;
@@ -42,7 +42,7 @@ public class Server {
                     out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
                     String line = in.readLine();
                     if (line.equals("showFiles")) {
-                        for (File file : FilesBase.getInstance().getFiles()) {
+                        for (File file : DAOProvider.getInstance().getFilesBaseDAO().getFiles()) {
                             System.out.println(file);
                         }
                     }
