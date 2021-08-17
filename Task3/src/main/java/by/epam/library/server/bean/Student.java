@@ -1,4 +1,4 @@
-package by.epam.library.server.entity;
+package by.epam.library.server.bean;
 
 import java.util.Objects;
 

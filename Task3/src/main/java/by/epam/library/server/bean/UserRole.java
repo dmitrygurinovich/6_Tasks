@@ -1,11 +1,8 @@
-package by.epam.library.server.entity;
+package by.epam.library.server.bean;
 
-public enum Subject {
-    MATH,
-    PHYSICS,
-    LITERATURE,
-    GEOGRAPHY,
-    ENGLISH;
+public enum UserRole {
+    USER,
+    ADMINISTRATOR;
 
     @Override
     public String toString() {

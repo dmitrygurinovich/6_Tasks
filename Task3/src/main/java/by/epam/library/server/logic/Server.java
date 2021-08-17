@@ -1,7 +1,7 @@
 package by.epam.library.server.logic;
 
+import by.epam.library.server.bean.File;
 import by.epam.library.server.dao.DAOProvider;
-import by.epam.library.server.entity.File;
 import by.epam.library.server.view.View;
 
 import java.io.*;

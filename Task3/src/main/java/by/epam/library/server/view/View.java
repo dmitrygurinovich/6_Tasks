@@ -1,6 +1,6 @@
 package by.epam.library.server.view;
 
-import by.epam.library.server.entity.File;
+import by.epam.library.server.bean.File;
 
 public class View {
     public View() {

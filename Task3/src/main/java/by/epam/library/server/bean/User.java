@@ -1,8 +1,4 @@
-package by.epam.library.server.entity;
-
-import by.epam.library.server.service.ServiceProvider;
-import by.epam.library.server.service.UserBaseService;
-import nu.xom.Element;
+package by.epam.library.server.bean;
 
 public class User {
     private String username;
@@ -15,17 +11,6 @@ public class User {
         this.username = username;
         this.password = password;
         this.role = role;
-    }
-
-    public User(Element user) {
-        UserBaseService userBaseService = ServiceProvider.getInstance().getUserBaseService();
-        this.username = user.getFirstChildElement("username").getValue();
-        this.password = userBaseService.decryptUserPassword(user.getFirstChildElement("password").getValue());
-        if (user.getFirstChildElement("user-role").getValue().equals("Admin")) {
-            this.role = UserRole.ADMINISTRATOR;
-        } else {
-            this.role = UserRole.USER;
-        }
     }
 
     public String getUsername() {
