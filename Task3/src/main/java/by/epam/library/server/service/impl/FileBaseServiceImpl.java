@@ -7,7 +7,6 @@ import by.epam.library.server.service.FileBaseService;
 
 import java.io.IOException;
 
-
 public class FileBaseServiceImpl implements FileBaseService {
 
     @Override
@@ -38,6 +37,15 @@ public class FileBaseServiceImpl implements FileBaseService {
             filesBaseDAO.writeFilesToXml();
         } catch (IOException exception) {
             exception.printStackTrace();
+        }
+    }
+
+    @Override
+    public void showFiles() {
+        FilesBaseDAO filesBaseDAO = DAOProvider.getInstance().getFilesBaseDAO();
+
+        for (File file : filesBaseDAO.getFiles()) {
+            System.out.println(file);
         }
     }
 }

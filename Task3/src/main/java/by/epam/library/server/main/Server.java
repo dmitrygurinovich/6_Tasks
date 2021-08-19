@@ -1,4 +1,4 @@
-package by.epam.library.server.logic;
+package by.epam.library.server.main;
 
 import by.epam.library.server.bean.File;
 import by.epam.library.server.dao.DAOProvider;
