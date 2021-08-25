@@ -8,7 +8,7 @@ public class ShowFilesCommand implements Command {
     private final FileBaseService fileBaseService = ServiceProvider.getInstance().getFileBaseService();
 
     @Override
-    public void execute() {
+    public void execute(String request) {
         fileBaseService.showFiles();
     }
 }

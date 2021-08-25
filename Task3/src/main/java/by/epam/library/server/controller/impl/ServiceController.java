@@ -8,6 +8,7 @@ public class ServiceController implements Controller {
 
     @Override
     public void action(String request) {
-        commandProvider.getCommand(request).execute();
+        String[] params = request.split("\\s+");
+        commandProvider.getCommand(params[1]).execute(request);
     }
 }

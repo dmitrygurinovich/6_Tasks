@@ -6,7 +6,8 @@ import by.epam.library.server.controller.ControllerProvider;
 public class MainController implements by.epam.library.server.controller.Controller {
     private static MainController instance;
 
-    private MainController() {}
+    private MainController() {
+    }
 
     public static MainController getInstance() {
         if (instance == null) {
@@ -27,10 +28,10 @@ public class MainController implements by.epam.library.server.controller.Control
 
         switch (params[0]) {
             case "authorization":
-              authorizationController.action(params[1].concat(" ").concat(params[2]));
-              break;
+                authorizationController.action(request);
+                break;
             case "service":
-                serviceController.action(params[1]);
+                serviceController.action(request);
                 break;
         }
     }
