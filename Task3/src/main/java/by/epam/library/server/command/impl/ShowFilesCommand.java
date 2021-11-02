@@ -8,7 +8,11 @@ public class ShowFilesCommand implements Command {
     private final FileBaseService fileBaseService = ServiceProvider.getInstance().getFileBaseService();
 
     @Override
-    public void execute(String request) {
+    public String execute(String request) {
+        String response;
+        response = "All files received to the client!";
+
         fileBaseService.showFiles();
+        return response;
     }
 }

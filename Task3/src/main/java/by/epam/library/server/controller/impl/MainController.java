@@ -6,8 +6,7 @@ import by.epam.library.server.controller.ControllerProvider;
 public class MainController implements by.epam.library.server.controller.Controller {
     private static MainController instance;
 
-    private MainController() {
-    }
+    private MainController() {}
 
     public static MainController getInstance() {
         if (instance == null) {
@@ -17,7 +16,8 @@ public class MainController implements by.epam.library.server.controller.Control
     }
 
     @Override
-    public void action(String request) {
+    public String action(String request) {
+
         String[] params = request.split("\\s+");
 
         Controller authorizationController;
@@ -28,11 +28,10 @@ public class MainController implements by.epam.library.server.controller.Control
 
         switch (params[0]) {
             case "authorization":
-                authorizationController.action(request);
-                break;
+                return authorizationController.action(request);
             case "service":
-                serviceController.action(request);
-                break;
+                return serviceController.action(request);
         }
+        return "invalid command";
     }
 }

@@ -3,8 +3,6 @@ package by.epam.library.server.dao.impl;
 import by.epam.library.server.bean.File;
 import by.epam.library.server.bean.Subject;
 import by.epam.library.server.dao.FilesBaseDAO;
-import by.epam.library.server.service.FileBaseService;
-import by.epam.library.server.service.ServiceProvider;
 import nu.xom.*;
 
 import java.io.BufferedOutputStream;
@@ -42,7 +40,6 @@ public final class XMLFilesBaseDAO implements FilesBaseDAO {
 
     @Override
     public void writeFilesToXml(){
-        FileBaseService fileBaseService = ServiceProvider.getInstance().getFileBaseService();
         try {
             format(new BufferedOutputStream(new FileOutputStream(FILES_BASE_PATH)), getXmlDocument());
         } catch (IOException exception) {

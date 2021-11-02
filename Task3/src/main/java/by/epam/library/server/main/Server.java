@@ -1,7 +1,7 @@
 package by.epam.library.server.main;
 
-import by.epam.library.server.bean.File;
-import by.epam.library.server.dao.DAOProvider;
+import by.epam.library.server.controller.Controller;
+import by.epam.library.server.controller.impl.MainController;
 import by.epam.library.server.view.View;
 
 import java.io.*;
@@ -16,9 +16,7 @@ public class Server {
     public static PrintWriter out;
     public static Server instance;
 
-    private Server() {
-
-    }
+    private Server() {}
 
     public static Server getInstance() {
         if (instance == null) {
@@ -29,6 +27,7 @@ public class Server {
 
     public void runServer() {
         View view;
+        Controller controller = MainController.getInstance();
 
         view = new View();
 
@@ -40,12 +39,11 @@ public class Server {
                     socket = serverSocket.accept();
                     in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+
                     String line = in.readLine();
-                    if (line.equals("showFiles")) {
-                        for (File file : DAOProvider.getInstance().getFilesBaseDAO().getFiles()) {
-                            System.out.println(file);
-                        }
-                    }
+
+                    System.out.println(controller.action(line));
+
                     out.println("Your message \"" + line + "\" delivered");
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -60,6 +58,5 @@ public class Server {
             e.printStackTrace();
         }
     }
-
 }
 
