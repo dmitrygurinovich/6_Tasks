@@ -3,12 +3,13 @@ package by.epam.library.server.dao.impl;
 import by.epam.library.server.bean.File;
 import by.epam.library.server.bean.Subject;
 import by.epam.library.server.dao.FilesBaseDAO;
-import nu.xom.*;
+import nu.xom.Builder;
+import nu.xom.Document;
+import nu.xom.Elements;
+import nu.xom.ParsingException;
 
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 
 public final class XMLFilesBaseDAO implements FilesBaseDAO {
@@ -19,6 +20,7 @@ public final class XMLFilesBaseDAO implements FilesBaseDAO {
         this.files = readFilesFromXml();
     }
 
+    //TODO: create custom XML parser!
     @Override
     public ArrayList<File> readFilesFromXml(){
         ArrayList<File> filesList = new ArrayList<>();
@@ -39,95 +41,57 @@ public final class XMLFilesBaseDAO implements FilesBaseDAO {
     }
 
     @Override
-    public void writeFilesToXml(){
-        try {
-            format(new BufferedOutputStream(new FileOutputStream(FILES_BASE_PATH)), getXmlDocument());
+    public StringBuilder getXmlElement(File file) {
+        StringBuilder element = new StringBuilder();
+        element.append("\t<file>\n");
+            element.append("\t\t<id>").append(file.getId()).append("</id>\n");
+            element.append("\t\t<student>\n");
+                element.append("\t\t\t<first-name>").append(file.getStudent().getFirstName()).append("</first-name>\n");
+                element.append("\t\t\t<second-name>").append(file.getStudent().getSecondName()).append("</second-name>\n");
+            element.append("\t\t</student>\n");
+            if (!file.getProgress().isEmpty()) {
+                element.append("\t\t<progress>\n");
+                if (file.getProgress().containsKey(Subject.MATH)) {
+                    element.append("\t\t\t<math>").append(file.getProgress().get(Subject.MATH)).append("</math>\n");
+                }
+                if (file.getProgress().containsKey(Subject.ENGLISH)) {
+                    element.append("\t\t\t<english>").append(file.getProgress().get(Subject.ENGLISH)).append("</english>\n");
+                }
+                if (file.getProgress().containsKey(Subject.GEOGRAPHY)) {
+                    element.append("\t\t\t<geography>").append(file.getProgress().get(Subject.GEOGRAPHY)).append("</geography>\n");
+                }
+                if (file.getProgress().containsKey(Subject.PHYSICS)) {
+                    element.append("\t\t\t<physics>").append(file.getProgress().get(Subject.PHYSICS)).append("</physics>\n");
+                }
+                if (file.getProgress().containsKey(Subject.LITERATURE)){
+                    element.append("\t\t\t<literature>").append(file.getProgress().get(Subject.LITERATURE)).append("</literature>\n");
+                }
+                element.append("\t\t</progress>\n");
+            }
+            element.append("\t</file>\n");
+
+        return element;
+    }
+
+    @Override
+    public StringBuilder getXmlDocument(ArrayList<File> files) {
+        StringBuilder document = new StringBuilder();
+        document.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
+        document.append("<files>\n");
+        for (File file : files) {
+            document.append(getXmlElement(file));
+        }
+        document.append("</files>");
+        return document;
+    }
+
+    @Override
+    public void writeFilesToXmlFile() {
+        try(FileWriter writer = new FileWriter(FILES_BASE_PATH, false)) {
+            writer.write(getXmlDocument(this.files).toString());
         } catch (IOException exception) {
-            exception.printStackTrace();
+           exception.printStackTrace();
         }
-    }
-
-    public void format(OutputStream stream, Document doc) {
-        try {
-            Serializer serializer = new Serializer(stream, "ISO-8859-1");
-            serializer.setIndent(4);
-            serializer.setMaxLength(60);
-            serializer.write(doc);
-            serializer.flush();
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
-    }
-
-    public Element getXmlElement(File studentFile) {
-        Element file = new Element("file");
-
-        Element student = new Element("student");
-
-        Element id = new Element("id");
-        id.appendChild(Integer.toString(studentFile.getId()));
-        file.appendChild(id);
-
-        file.appendChild(student);
-
-        Element firstName = new Element("first-name");
-        firstName.appendChild(studentFile.getStudent().getFirstName());
-        Element secondName = new Element("second-name");
-        secondName.appendChild(studentFile.getStudent().getSecondName());
-        Element age = new Element("age");
-        age.appendChild(Integer.toString(studentFile.getStudent().getAge()));
-        Element groupNumber = new Element("group-number");
-        groupNumber.appendChild(Integer.toString(studentFile.getStudent().getGroupNumber()));
-
-        student.appendChild(firstName);
-        student.appendChild(secondName);
-        student.appendChild(age);
-        student.appendChild(groupNumber);
-
-        if (!studentFile.getProgress().isEmpty()) {
-            Element progress = new Element("progress");
-            file.appendChild(progress);
-
-            if (studentFile.getProgress().containsKey(Subject.MATH)) {
-                Element math = new Element("math");
-                math.appendChild(String.valueOf(studentFile.getProgress().get(Subject.MATH)));
-                progress.appendChild(math);
-            }
-
-            if (studentFile.getProgress().containsKey(Subject.ENGLISH)) {
-                Element english = new Element("english");
-                english.appendChild(String.valueOf(studentFile.getProgress().get(Subject.ENGLISH)));
-                progress.appendChild(english);
-            }
-
-            if (studentFile.getProgress().containsKey(Subject.GEOGRAPHY)) {
-                Element geography = new Element("geography");
-                geography.appendChild(String.valueOf(studentFile.getProgress().get(Subject.GEOGRAPHY)));
-                progress.appendChild(geography);
-            }
-
-            if (studentFile.getProgress().containsKey(Subject.PHYSICS)) {
-                Element physics = new Element("physics");
-                physics.appendChild(String.valueOf(studentFile.getProgress().get(Subject.PHYSICS)));
-                progress.appendChild(physics);
-            }
-
-            if (studentFile.getProgress().containsKey(Subject.LITERATURE)) {
-                Element literature = new Element("literature");
-                literature.appendChild(String.valueOf(studentFile.getProgress().get(Subject.LITERATURE)));
-                progress.appendChild(literature);
-            }
-        }
-
-        return file;
-    }
-
-    public Document getXmlDocument() {
-        Element files = new Element("files");
-        for (File file : this.files) {
-            files.appendChild(getXmlElement(file));
-        }
-        return new Document(files);
     }
 
     public ArrayList<File> getFiles() {

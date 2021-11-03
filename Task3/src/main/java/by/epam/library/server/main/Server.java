@@ -33,7 +33,8 @@ public class Server {
 
         try {
             serverSocket = new ServerSocket(PORT);
-            view.print("Server is working...");
+            view.print("#Server: server is working...");
+
             while (true) {
                 try {
                     socket = serverSocket.accept();
@@ -42,9 +43,7 @@ public class Server {
 
                     String line = in.readLine();
 
-                    System.out.println(controller.action(line));
-
-                    out.println("Your message \"" + line + "\" delivered");
+                    out.println(controller.action(line));
                 } catch (IOException e) {
                     e.printStackTrace();
                     break;

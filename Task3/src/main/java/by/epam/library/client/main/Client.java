@@ -33,7 +33,10 @@ public class Client {
                     String line = reader.nextLine();
                     System.out.println("Your message: " + line);
                     out.println(line);
-                    System.out.println(in.readLine());
+
+                    String response = in.readLine();
+
+                    System.out.println(response);
                 } catch (IOException e) {
                     e.printStackTrace();
                     break;
@@ -47,9 +50,6 @@ public class Client {
             e.printStackTrace();
         }
     }
-
-
-
 }
 
 

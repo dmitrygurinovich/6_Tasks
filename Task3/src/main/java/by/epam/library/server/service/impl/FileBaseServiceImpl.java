@@ -5,8 +5,6 @@ import by.epam.library.server.dao.DAOProvider;
 import by.epam.library.server.dao.FilesBaseDAO;
 import by.epam.library.server.service.FileBaseService;
 
-import java.io.IOException;
-
 public class FileBaseServiceImpl implements FileBaseService {
 
     @Override
@@ -15,12 +13,8 @@ public class FileBaseServiceImpl implements FileBaseService {
 
         filesBaseDAO = DAOProvider.getInstance().getFilesBaseDAO();
 
-        try {
-            filesBaseDAO.getFiles().add(file);
-            filesBaseDAO.writeFilesToXml();
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
+        filesBaseDAO.getFiles().add(file);
+        filesBaseDAO.writeFilesToXmlFile();
     }
 
     @Override
@@ -33,20 +27,13 @@ public class FileBaseServiceImpl implements FileBaseService {
         for (int i = 0; i < filesBaseDAO.getFiles().size(); i++) {
             filesBaseDAO.getFiles().get(i).setId(i + 1);
         }
-        try {
-            filesBaseDAO.writeFilesToXml();
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
+        filesBaseDAO.writeFilesToXmlFile();
     }
 
     @Override
-    public void showFiles() {
+    public String getAllFiles() {
         FilesBaseDAO filesBaseDAO = DAOProvider.getInstance().getFilesBaseDAO();
-
-        for (File file : filesBaseDAO.getFiles()) {
-            System.out.println(file);
-        }
+        return filesBaseDAO.getXmlDocument(filesBaseDAO.getFiles()).toString();
     }
 }
 
