@@ -1,16 +1,19 @@
 package by.epam.library.server.dao.impl;
 
 import by.epam.library.server.bean.File;
+import by.epam.library.server.bean.Student;
 import by.epam.library.server.bean.Subject;
 import by.epam.library.server.dao.FilesBaseDAO;
-import nu.xom.Builder;
-import nu.xom.Document;
-import nu.xom.Elements;
-import nu.xom.ParsingException;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class XMLFilesBaseDAO implements FilesBaseDAO {
     private final String FILES_BASE_PATH = "Task3/src/main/resources/files.xml";
@@ -20,24 +23,105 @@ public final class XMLFilesBaseDAO implements FilesBaseDAO {
         this.files = readFilesFromXml();
     }
 
-    //TODO: create custom XML parser!
     @Override
-    public ArrayList<File> readFilesFromXml(){
-        ArrayList<File> filesList = new ArrayList<>();
-
-        try{
-            Document document = new Builder().build(FILES_BASE_PATH);
-            Elements elements = document.getRootElement().getChildElements();
-
-            for (int i = 0; i < elements.size(); i++) {
-                filesList.add(new File(elements.get(i)));
+    public ArrayList<File> readFilesFromXml() {
+        ArrayList<File> files = new ArrayList<>();
+        try {
+            List<String> lines = Files.readAllLines(Paths.get(FILES_BASE_PATH), StandardCharsets.UTF_8);
+            StringBuilder xml = new StringBuilder();
+            for (String line : lines) {
+                xml.append(line);
             }
+            files = parseXmlToListOfFiles(xml.toString()
+                    .replaceAll("\n", "")
+                    .replaceAll("\t", ""));
 
-        } catch (ParsingException | IOException exception) {
+            return files;
+        } catch (IOException exception) {
             exception.printStackTrace();
         }
+        return files;
+    }
 
-        return filesList;
+    @Override
+    public ArrayList<File> parseXmlToListOfFiles(String xml) {
+        ArrayList<File> files = new ArrayList<>();
+        ArrayList<String> xmlElements = new ArrayList<>();
+        boolean hasProgress = false;
+
+        Pattern elementsPattern = Pattern.compile("<file>(.*?)</file>");
+        Pattern idPattern = Pattern.compile("<id>(.*)</id>");
+        Pattern firstNamePattern = Pattern.compile("<first-name>(.*)</first-name>");
+        Pattern secondNamePattern = Pattern.compile("<second-name>(.*)</second-name>");
+        Pattern progressPattern = Pattern.compile("<progress>(.*)</progress>");
+        Pattern mathPattern = Pattern.compile("<math>(.*)</math>");
+        Pattern englishPattern = Pattern.compile("<english>(.*)</english>");
+        Pattern geographyPattern = Pattern.compile("<geography>(.*)</geography>");
+        Pattern physicsPattern = Pattern.compile("<physics>(.*)</physics>");
+        Pattern literaturePattern = Pattern.compile("<literature>(.*)</literature>");
+
+        Matcher matcher = elementsPattern.matcher(xml.replaceAll("\t", "").replaceAll("\n", ""));
+        while (matcher.find()) {
+            xmlElements.add(matcher.group());
+        }
+
+        for (String element : xmlElements) {
+            File file = new File();
+            Student student = new Student();
+            matcher = idPattern.matcher(element);
+            while (matcher.find()) {
+                file.setId(Integer.parseInt(matcher.group(1)));
+            }
+
+            matcher = firstNamePattern.matcher(element);
+            while (matcher.find()) {
+                student.setFirstName(matcher.group(1));
+            }
+
+            matcher = secondNamePattern.matcher(element);
+            while (matcher.find()) {
+                student.setSecondName(matcher.group(1));
+            }
+
+            file.setStudent(student);
+
+            matcher = progressPattern.matcher(element);
+            while (matcher.find()) {
+                if (matcher.group(1).length() > 0) {
+                    hasProgress = true;
+                }
+            }
+
+            if (hasProgress) {
+                matcher = mathPattern.matcher(element);
+                while (matcher.find()) {
+                    file.getProgress().put(Subject.MATH, Integer.parseInt(matcher.group(1)));
+                }
+
+                matcher = englishPattern.matcher(element);
+                while (matcher.find()) {
+                    file.getProgress().put(Subject.ENGLISH, Integer.parseInt(matcher.group(1)));
+                }
+
+                matcher = geographyPattern.matcher(element);
+                while (matcher.find()) {
+                    file.getProgress().put(Subject.GEOGRAPHY, Integer.parseInt(matcher.group(1)));
+                }
+
+                matcher = physicsPattern.matcher(element);
+                while (matcher.find()) {
+                    file.getProgress().put(Subject.PHYSICS, Integer.parseInt(matcher.group(1)));
+                }
+
+                matcher = literaturePattern.matcher(element);
+                while (matcher.find()) {
+                    file.getProgress().put(Subject.LITERATURE, Integer.parseInt(matcher.group(1)));
+                }
+
+                files.add(file);
+            }
+        }
+        return files;
     }
 
     @Override

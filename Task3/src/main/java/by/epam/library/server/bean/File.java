@@ -1,7 +1,5 @@
 package by.epam.library.server.bean;
 
-import nu.xom.Element;
-
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -12,6 +10,9 @@ public class File {
     private static int defaultId = 1;
 
     public File() {
+        this.id = 0;
+        this.student = new Student();
+        this.progress = new HashMap<>();
     }
 
     public File(Student student) {
@@ -30,38 +31,6 @@ public class File {
         this.id = defaultId++;
         this.student = student;
         this.progress = progress;
-    }
-
-    public File(Element file) {
-        this.id = defaultId++;
-
-        Element student = new Element(file.getFirstChildElement("student"));
-        Element progress = new Element(file.getFirstChildElement("progress"));
-
-        this.student = new Student(
-                student.getFirstChildElement("first-name").getValue(),
-                student.getFirstChildElement("second-name").getValue(),
-                Integer.parseInt(student.getFirstChildElement("age").getValue()),
-                Integer.parseInt(student.getFirstChildElement("group-number").getValue())
-        );
-
-        this.progress = new HashMap<>();
-
-        if (progress.getFirstChildElement("math") != null) {
-            this.progress.put(Subject.MATH, Integer.parseInt(progress.getFirstChildElement("math").getValue()));
-        }
-        if (progress.getFirstChildElement("english") != null) {
-            this.progress.put(Subject.ENGLISH, Integer.parseInt(progress.getFirstChildElement("english").getValue()));
-        }
-        if (progress.getFirstChildElement("geography") != null) {
-            this.progress.put(Subject.GEOGRAPHY, Integer.parseInt(progress.getFirstChildElement("geography").getValue()));
-        }
-        if (progress.getFirstChildElement("physics") != null) {
-            this.progress.put(Subject.PHYSICS, Integer.parseInt(progress.getFirstChildElement("physics").getValue()));
-        }
-        if (progress.getFirstChildElement("literature") != null) {
-            this.progress.put(Subject.LITERATURE, Integer.parseInt(progress.getFirstChildElement("literature").getValue()));
-        }
     }
 
     public int getId() {
