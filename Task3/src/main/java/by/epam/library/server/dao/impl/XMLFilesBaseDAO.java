@@ -47,13 +47,11 @@ public final class XMLFilesBaseDAO implements FilesBaseDAO {
     public ArrayList<File> parseXmlToListOfFiles(String xml) {
         ArrayList<File> files = new ArrayList<>();
         ArrayList<String> xmlElements = new ArrayList<>();
-        boolean hasProgress = false;
 
         Pattern elementsPattern = Pattern.compile("<file>(.*?)</file>");
         Pattern idPattern = Pattern.compile("<id>(.*)</id>");
         Pattern firstNamePattern = Pattern.compile("<first-name>(.*)</first-name>");
         Pattern secondNamePattern = Pattern.compile("<second-name>(.*)</second-name>");
-        Pattern progressPattern = Pattern.compile("<progress>(.*)</progress>");
         Pattern mathPattern = Pattern.compile("<math>(.*)</math>");
         Pattern englishPattern = Pattern.compile("<english>(.*)</english>");
         Pattern geographyPattern = Pattern.compile("<geography>(.*)</geography>");
@@ -85,42 +83,34 @@ public final class XMLFilesBaseDAO implements FilesBaseDAO {
 
             file.setStudent(student);
 
-            matcher = progressPattern.matcher(element);
+            matcher = mathPattern.matcher(element);
             while (matcher.find()) {
-                if (matcher.group(1).length() > 0) {
-                    hasProgress = true;
-                }
+                file.getProgress().put(Subject.MATH, Integer.parseInt(matcher.group(1)));
             }
 
-            if (hasProgress) {
-                matcher = mathPattern.matcher(element);
-                while (matcher.find()) {
-                    file.getProgress().put(Subject.MATH, Integer.parseInt(matcher.group(1)));
-                }
-
-                matcher = englishPattern.matcher(element);
-                while (matcher.find()) {
-                    file.getProgress().put(Subject.ENGLISH, Integer.parseInt(matcher.group(1)));
-                }
-
-                matcher = geographyPattern.matcher(element);
-                while (matcher.find()) {
-                    file.getProgress().put(Subject.GEOGRAPHY, Integer.parseInt(matcher.group(1)));
-                }
-
-                matcher = physicsPattern.matcher(element);
-                while (matcher.find()) {
-                    file.getProgress().put(Subject.PHYSICS, Integer.parseInt(matcher.group(1)));
-                }
-
-                matcher = literaturePattern.matcher(element);
-                while (matcher.find()) {
-                    file.getProgress().put(Subject.LITERATURE, Integer.parseInt(matcher.group(1)));
-                }
-
-                files.add(file);
+            matcher = englishPattern.matcher(element);
+            while (matcher.find()) {
+                file.getProgress().put(Subject.ENGLISH, Integer.parseInt(matcher.group(1)));
             }
+
+            matcher = geographyPattern.matcher(element);
+            while (matcher.find()) {
+                file.getProgress().put(Subject.GEOGRAPHY, Integer.parseInt(matcher.group(1)));
+            }
+
+            matcher = physicsPattern.matcher(element);
+            while (matcher.find()) {
+                file.getProgress().put(Subject.PHYSICS, Integer.parseInt(matcher.group(1)));
+            }
+
+            matcher = literaturePattern.matcher(element);
+            while (matcher.find()) {
+                file.getProgress().put(Subject.LITERATURE, Integer.parseInt(matcher.group(1)));
+            }
+
+            files.add(file);
         }
+
         return files;
     }
 
@@ -128,31 +118,31 @@ public final class XMLFilesBaseDAO implements FilesBaseDAO {
     public StringBuilder getXmlElement(File file) {
         StringBuilder element = new StringBuilder();
         element.append("\t<file>\n");
-            element.append("\t\t<id>").append(file.getId()).append("</id>\n");
-            element.append("\t\t<student>\n");
-                element.append("\t\t\t<first-name>").append(file.getStudent().getFirstName()).append("</first-name>\n");
-                element.append("\t\t\t<second-name>").append(file.getStudent().getSecondName()).append("</second-name>\n");
-            element.append("\t\t</student>\n");
-            if (!file.getProgress().isEmpty()) {
-                element.append("\t\t<progress>\n");
-                if (file.getProgress().containsKey(Subject.MATH)) {
-                    element.append("\t\t\t<math>").append(file.getProgress().get(Subject.MATH)).append("</math>\n");
-                }
-                if (file.getProgress().containsKey(Subject.ENGLISH)) {
-                    element.append("\t\t\t<english>").append(file.getProgress().get(Subject.ENGLISH)).append("</english>\n");
-                }
-                if (file.getProgress().containsKey(Subject.GEOGRAPHY)) {
-                    element.append("\t\t\t<geography>").append(file.getProgress().get(Subject.GEOGRAPHY)).append("</geography>\n");
-                }
-                if (file.getProgress().containsKey(Subject.PHYSICS)) {
-                    element.append("\t\t\t<physics>").append(file.getProgress().get(Subject.PHYSICS)).append("</physics>\n");
-                }
-                if (file.getProgress().containsKey(Subject.LITERATURE)){
-                    element.append("\t\t\t<literature>").append(file.getProgress().get(Subject.LITERATURE)).append("</literature>\n");
-                }
-                element.append("\t\t</progress>\n");
+        element.append("\t\t<id>").append(file.getId()).append("</id>\n");
+        element.append("\t\t<student>\n");
+        element.append("\t\t\t<first-name>").append(file.getStudent().getFirstName()).append("</first-name>\n");
+        element.append("\t\t\t<second-name>").append(file.getStudent().getSecondName()).append("</second-name>\n");
+        element.append("\t\t</student>\n");
+        if (!file.getProgress().isEmpty()) {
+            element.append("\t\t<progress>\n");
+            if (file.getProgress().containsKey(Subject.MATH)) {
+                element.append("\t\t\t<math>").append(file.getProgress().get(Subject.MATH)).append("</math>\n");
             }
-            element.append("\t</file>\n");
+            if (file.getProgress().containsKey(Subject.ENGLISH)) {
+                element.append("\t\t\t<english>").append(file.getProgress().get(Subject.ENGLISH)).append("</english>\n");
+            }
+            if (file.getProgress().containsKey(Subject.GEOGRAPHY)) {
+                element.append("\t\t\t<geography>").append(file.getProgress().get(Subject.GEOGRAPHY)).append("</geography>\n");
+            }
+            if (file.getProgress().containsKey(Subject.PHYSICS)) {
+                element.append("\t\t\t<physics>").append(file.getProgress().get(Subject.PHYSICS)).append("</physics>\n");
+            }
+            if (file.getProgress().containsKey(Subject.LITERATURE)) {
+                element.append("\t\t\t<literature>").append(file.getProgress().get(Subject.LITERATURE)).append("</literature>\n");
+            }
+            element.append("\t\t</progress>\n");
+        }
+        element.append("\t</file>\n");
 
         return element;
     }
@@ -171,10 +161,10 @@ public final class XMLFilesBaseDAO implements FilesBaseDAO {
 
     @Override
     public void writeFilesToXmlFile() {
-        try(FileWriter writer = new FileWriter(FILES_BASE_PATH, false)) {
+        try (FileWriter writer = new FileWriter(FILES_BASE_PATH, false)) {
             writer.write(getXmlDocument(this.files).toString());
         } catch (IOException exception) {
-           exception.printStackTrace();
+            exception.printStackTrace();
         }
     }
 
