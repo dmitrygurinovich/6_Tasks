@@ -12,6 +12,8 @@ import java.util.regex.Pattern;
 
 public class FileBaseServiceImpl implements FileBaseService {
 
+    public FileBaseServiceImpl() {}
+
     @Override
     public void addFile(File file) {
         FilesBaseDAO filesBaseDAO;
@@ -39,7 +41,6 @@ public class FileBaseServiceImpl implements FileBaseService {
     public String getAllFiles() {
         FilesBaseDAO filesBaseDAO = DAOProvider.getInstance().getFilesBaseDAO();
         return filesBaseDAO.getXmlDocument(filesBaseDAO.getFiles())
-                .toString()
                 .replaceAll("\n", "")
                 .replaceAll("\t", "");
     }
@@ -70,7 +71,6 @@ public class FileBaseServiceImpl implements FileBaseService {
 
         if (result.size() != 0) {
             return filesBaseDAO.getXmlDocument(result)
-                    .toString()
                     .replaceAll("\n", "")
                     .replaceAll("\t", "");
         }

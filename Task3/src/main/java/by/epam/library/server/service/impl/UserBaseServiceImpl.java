@@ -14,7 +14,6 @@ public class UserBaseServiceImpl implements UserBaseService {
         UsersBaseDAO usersBaseDAO;
 
         usersBaseDAO = DAOProvider.getInstance().getUsersBaseDAO();
-
         usersBaseDAO.getUsers().put(user.getUsername(), user);
         usersBaseDAO.writeUsersToXml();
     }

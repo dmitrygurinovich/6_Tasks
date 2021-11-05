@@ -26,15 +26,16 @@ public final class XMLFilesBaseDAO implements FilesBaseDAO {
     @Override
     public ArrayList<File> readFilesFromXml() {
         ArrayList<File> files = new ArrayList<>();
+        List<String> lines;
+        StringBuilder xmlDocument;
+
         try {
-            List<String> lines = Files.readAllLines(Paths.get(FILES_BASE_PATH), StandardCharsets.UTF_8);
-            StringBuilder xml = new StringBuilder();
+            lines = Files.readAllLines(Paths.get(FILES_BASE_PATH), StandardCharsets.UTF_8);
+            xmlDocument = new StringBuilder();
             for (String line : lines) {
-                xml.append(line);
+                xmlDocument.append(line);
             }
-            files = parseXmlToListOfFiles(xml.toString()
-                    .replaceAll("\n", "")
-                    .replaceAll("\t", ""));
+            files = parseXmlToTheListOfFiles(xmlDocument.toString());
 
             return files;
         } catch (IOException exception) {
@@ -44,7 +45,7 @@ public final class XMLFilesBaseDAO implements FilesBaseDAO {
     }
 
     @Override
-    public ArrayList<File> parseXmlToListOfFiles(String xml) {
+    public ArrayList<File> parseXmlToTheListOfFiles(String xmlDocument) {
         ArrayList<File> files = new ArrayList<>();
         ArrayList<String> xmlElements = new ArrayList<>();
 
@@ -58,7 +59,7 @@ public final class XMLFilesBaseDAO implements FilesBaseDAO {
         Pattern physicsPattern = Pattern.compile("<physics>(.*)</physics>");
         Pattern literaturePattern = Pattern.compile("<literature>(.*)</literature>");
 
-        Matcher matcher = elementsPattern.matcher(xml.replaceAll("\t", "").replaceAll("\n", ""));
+        Matcher matcher = elementsPattern.matcher(xmlDocument.replaceAll("\t", "").replaceAll("\n", ""));
         while (matcher.find()) {
             xmlElements.add(matcher.group());
         }
@@ -148,21 +149,24 @@ public final class XMLFilesBaseDAO implements FilesBaseDAO {
     }
 
     @Override
-    public StringBuilder getXmlDocument(ArrayList<File> files) {
-        StringBuilder document = new StringBuilder();
+    public String getXmlDocument(ArrayList<File> files) {
+        StringBuilder document;
+
+        document = new StringBuilder();
+
         document.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
         document.append("<files>\n");
         for (File file : files) {
             document.append(getXmlElement(file));
         }
         document.append("</files>");
-        return document;
+        return document.toString();
     }
 
     @Override
     public void writeFilesToXmlFile() {
         try (FileWriter writer = new FileWriter(FILES_BASE_PATH, false)) {
-            writer.write(getXmlDocument(this.files).toString());
+            writer.write(getXmlDocument(this.files));
         } catch (IOException exception) {
             exception.printStackTrace();
         }

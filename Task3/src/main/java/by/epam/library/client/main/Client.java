@@ -27,11 +27,8 @@ public class Client {
                 Scanner reader = new Scanner(System.in);
                 System.out.println("Enter command for Server:");
                 String line = reader.nextLine();
-                System.out.println("Your message: " + line);
                 out.println(line);
-
                 String response = in.readLine();
-
                 System.out.println(response);
             } catch (IOException exception) {
                 System.err.println("Server is not available now!\nPlease, start server!");

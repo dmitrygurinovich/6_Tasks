@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 public interface FilesBaseDAO {
     ArrayList<File> readFilesFromXml() throws ParsingException, IOException;
-    ArrayList<File> parseXmlToListOfFiles(String xml);
+    ArrayList<File> parseXmlToTheListOfFiles(String xml);
     ArrayList<File> getFiles();
     StringBuilder getXmlElement(File file);
-    StringBuilder getXmlDocument(ArrayList<File> files);
+    String getXmlDocument(ArrayList<File> files);
     void writeFilesToXmlFile();
 }

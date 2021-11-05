@@ -4,98 +4,148 @@ import by.epam.library.server.bean.User;
 import by.epam.library.server.bean.UserRole;
 import by.epam.library.server.dao.DAOProvider;
 import by.epam.library.server.dao.UsersBaseDAO;
-import nu.xom.*;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class XMLUsersBaseDAO implements UsersBaseDAO {
     private static final String USERS_BASE_PATH = "Task3/src/main/resources/users.xml";
     private static final SecretKeySpec KEY = new SecretKeySpec("Hdy2rl1ds64MePhn".getBytes(), "AES");
     private final HashMap<String, User> users;
 
-    public XMLUsersBaseDAO(){
+    public XMLUsersBaseDAO() {
         this.users = readUsersFromXml();
+    }
+
+    @Override
+    public HashMap<String, User> parseXmlToTheListOfUsers(String xmlDocument) {
+        HashMap<String, User> users;
+        ArrayList<String> xmlElements;
+        User user;
+        Pattern elementPattern;
+        Pattern userNamePattern;
+        Pattern passwordPattern;
+        Pattern userRolePattern;
+        Matcher matcher;
+
+        users = new HashMap<>();
+        xmlElements = new ArrayList<>();
+        elementPattern = Pattern.compile("<user>(.*?)</user>");
+        userNamePattern = Pattern.compile("<username>(.*)</username>");
+        passwordPattern = Pattern.compile("<password>(.*)</password>");
+        userRolePattern = Pattern.compile("<user-role>(.*)</user-role>");
+
+        matcher = elementPattern.matcher(xmlDocument
+                .replaceAll("\n", "")
+                .replaceAll("\t", ""));
+        while (matcher.find()) {
+            xmlElements.add(matcher.group());
+        }
+
+        for (String element : xmlElements) {
+            user = new User();
+            matcher = userNamePattern.matcher(element);
+            while (matcher.find()) {
+                user.setUsername(matcher.group(1));
+            }
+
+            matcher = passwordPattern.matcher(element);
+            while (matcher.find()) {
+                user.setPassword(decryptUserPassword(matcher.group(1)));
+            }
+
+            matcher = userRolePattern.matcher(element);
+            while (matcher.find()) {
+                if (matcher.group(1).equals("Administrator")) {
+                    user.setRole(UserRole.ADMINISTRATOR);
+                } else {
+                    user.setRole(UserRole.USER);
+                }
+            }
+            users.put(user.getUsername(), user);
+        }
+        return users;
     }
 
     @Override
     public HashMap<String, User> readUsersFromXml() {
         HashMap<String, User> users;
-        String username;
-        String password;
-        UserRole role;
+        List<String> lines;
+        StringBuilder xmlDocument;
 
         users = new HashMap<>();
 
         try {
-            Document document = new Builder()
-                    .build(USERS_BASE_PATH);
-
-            Elements elements = document.getRootElement().getChildElements();
-
-            for (Element element : elements) {
-
-                username = element.getFirstChildElement("username").getValue();
-                password = decryptUserPassword(element.getFirstChildElement("password").getValue());
-                if (element.getFirstChildElement("user-role").getValue().equals("Admin")) {
-                    role = UserRole.ADMINISTRATOR;
-                } else {
-                    role = UserRole.USER;
-                }
-
-                users.put(username, new User(username, password, role));
+            lines = Files.readAllLines(Paths.get(USERS_BASE_PATH), StandardCharsets.UTF_8);
+            xmlDocument = new StringBuilder();
+            for (String line : lines) {
+                xmlDocument.append(line);
             }
-        } catch (ParsingException | IOException exception) {
+            users = parseXmlToTheListOfUsers(xmlDocument.toString());
+            return users;
+        } catch (IOException exception) {
             exception.printStackTrace();
         }
-
         return users;
     }
 
     @Override
     public void writeUsersToXml() {
-        try {
-            format(new BufferedOutputStream(new FileOutputStream(USERS_BASE_PATH)), getXmlDocument());
-        } catch (FileNotFoundException exception) {
-            exception.printStackTrace();
-        }
-    }
-
-    public void format(OutputStream stream, Document doc) {
-        try{
-            Serializer serializer = new Serializer(stream, "ISO-8859-1");
-            serializer.setIndent(4);
-            serializer.setMaxLength(120);
-            serializer.write(doc);
-            serializer.flush();
+        try(FileWriter writer = new FileWriter(USERS_BASE_PATH, false)) {
+            writer.write(getXmlDocument(this.users));
         } catch (IOException exception) {
             exception.printStackTrace();
         }
     }
 
-    public Element getXmlElement(User user) {
-        Element userXml = new Element("user");
-        Element username = new Element("username");
-        Element password = new Element("password");
-        Element userRole = new Element("user-role");
+    @Override
+    public String getXmlElementCustom(User user) {
+        StringBuilder element;
 
-        username.appendChild(user.getUsername());
-        password.appendChild(Arrays.toString(encryptUserPassword(user.getPassword())));
-        userRole.appendChild(user.getRole().toString());
+        element = new StringBuilder();
+        element.append("\t<user>\n");
+        element.append("\t\t<username>").append(user.getUsername()).append("</username>\n");
+        element.append("\t\t<password>").append(Arrays.toString(encryptUserPassword(user.getPassword()))).append("</password>\n");
+        element.append("\t\t<user-role>").append(user.getRole().toString()).append("</user-role>\n");
+        element.append("\t</user>\n");
 
-        userXml.appendChild(username);
-        userXml.appendChild(password);
-        userXml.appendChild(userRole);
+        return element.toString();
+    }
 
-        return userXml;
+    @Override
+    public String getXmlDocument(HashMap<String, User> users) {
+        StringBuilder document;
+        UsersBaseDAO usersBaseDAO;
+
+        document = new StringBuilder();
+        usersBaseDAO = DAOProvider.getInstance().getUsersBaseDAO();
+
+        document.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
+        document.append("<user>\n");
+
+        for (User user : usersBaseDAO.getUsers().values()) {
+            document.append(getXmlElementCustom(user));
+        }
+
+        document.append("</user>");
+
+        return document.toString();
     }
 
     public byte[] encryptUserPassword(String password) {
@@ -128,7 +178,7 @@ public class XMLUsersBaseDAO implements UsersBaseDAO {
                 password.append((char) b);
             }
 
-        } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException | IllegalBlockSizeException|
+        } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException | IllegalBlockSizeException |
                 BadPaddingException e) {
             e.printStackTrace();
         }
@@ -147,20 +197,6 @@ public class XMLUsersBaseDAO implements UsersBaseDAO {
         }
 
         return passwordParsedToBytesArray;
-    }
-
-    public Document getXmlDocument() {
-        Element users;
-        UsersBaseDAO usersBaseDAO;
-
-        users = new Element("users");
-        usersBaseDAO = DAOProvider.getInstance().getUsersBaseDAO();
-
-        for (User user : usersBaseDAO.getUsers().values()) {
-            users.appendChild(getXmlElement(user));
-        }
-
-        return new Document(users);
     }
 
     public HashMap<String, User> getUsers() {
