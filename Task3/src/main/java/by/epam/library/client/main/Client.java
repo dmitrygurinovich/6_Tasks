@@ -1,8 +1,11 @@
 package by.epam.library.client.main;
 
+import by.epam.library.client.presentation.PresentationProvider;
+import by.epam.library.client.presentation.UserInterface;
+import by.epam.library.client.presentation.View;
+
 import java.io.*;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class Client {
     private static Client instance;
@@ -19,19 +22,23 @@ public class Client {
     }
 
     public void startClient() {
+        View view;
+        UserInterface userInterface;
+
+        view = PresentationProvider.getInstance().getVIEW();
+        userInterface = PresentationProvider.getInstance().getUSER_INTERFACE();
+
         while (true) {
             try (Socket socket = new Socket(HOST, PORT);
                  BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                  PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true))
             {
-                Scanner reader = new Scanner(System.in);
-                System.out.println("Enter command for Server:");
-                String line = reader.nextLine();
+                String line = userInterface.adminMenu();
                 out.println(line);
                 String response = in.readLine();
-                System.out.println(response);
+                view.print(response);
             } catch (IOException exception) {
-                System.err.println("Server is not available now!\nPlease, start server!");
+                view.print("Server is not available now!\nPlease, start server!");
                 break;
             }
         }
