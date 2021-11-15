@@ -1,6 +1,6 @@
 package by.epam.library.server.main;
 
-import by.epam.library.server.controller.Controller;
+import by.epam.library.server.controller.ServerController;
 import by.epam.library.server.controller.impl.MainController;
 import by.epam.library.server.view.View;
 import by.epam.library.server.view.impl.ViewImpl;
@@ -23,17 +23,18 @@ public class Server {
         return instance;
     }
 
-    public void runServer() {
+    public void runServer(String message) {
         View view;
-        Controller controller;
+        ServerController controller;
 
         view = ViewImpl.getInstance();
         controller = MainController.getInstance();
 
         try {
             serverSocket = new ServerSocket(PORT);
-            view.print("#Server: server is working...");
+            view.print(message);
 
+            //noinspection InfiniteLoopStatement
             while (true) {
                 try (Socket socket = serverSocket.accept();
                      BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -41,9 +42,9 @@ public class Server {
                 ) {
                     String line = in.readLine();
                     out.println(controller.action(line));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    break;
+                } catch (IOException exception) {
+                    serverSocket.close();
+                    this.runServer("\n#Server: client has been disconnected! Waiting a new connection.");
                 }
             }
         } catch (IOException e) {

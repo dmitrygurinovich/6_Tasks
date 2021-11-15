@@ -5,8 +5,8 @@ import by.epam.library.server.controller.impl.ServiceController;
 
 public class ControllerProvider {
     private static ControllerProvider instance;
-    private final Controller authorizationController = new AuthorizationController();
-    private final Controller serviceController = new ServiceController();
+    private final ServerController authorizationController = new AuthorizationController();
+    private final ServerController serviceController = new ServiceController();
 
     private ControllerProvider() {}
 
@@ -17,11 +17,11 @@ public class ControllerProvider {
         return instance;
     }
 
-    public Controller getAuthorizationController() {
+    public ServerController getAuthorizationController() {
         return authorizationController;
     }
 
-    public Controller getServiceController() {
+    public ServerController getServiceController() {
         return serviceController;
     }
 }

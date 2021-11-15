@@ -1,12 +1,13 @@
 package by.epam.library.server.controller.impl;
 
-import by.epam.library.server.controller.Controller;
 import by.epam.library.server.controller.ControllerProvider;
+import by.epam.library.server.controller.ServerController;
 
-public class MainController implements by.epam.library.server.controller.Controller {
+public class MainController implements ServerController {
     private static MainController instance;
 
-    private MainController() {}
+    private MainController() {
+    }
 
     public static MainController getInstance() {
         if (instance == null) {
@@ -20,8 +21,8 @@ public class MainController implements by.epam.library.server.controller.Control
 
         String[] params = request.split("\\s+");
 
-        Controller authorizationController;
-        Controller serviceController;
+        ServerController authorizationController;
+        ServerController serviceController;
 
         authorizationController = ControllerProvider.getInstance().getAuthorizationController();
         serviceController = ControllerProvider.getInstance().getServiceController();
@@ -31,7 +32,9 @@ public class MainController implements by.epam.library.server.controller.Control
                 return authorizationController.action(request);
             case "service":
                 return serviceController.action(request);
+            default:
+                return "invalid command";
         }
-        return "invalid command";
+
     }
 }

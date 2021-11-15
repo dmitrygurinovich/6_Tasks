@@ -1,5 +1,5 @@
 package by.epam.library.server.controller;
 
-public interface Controller {
+public interface ServerController {
     String action(String request);
 }

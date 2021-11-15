@@ -1,5 +1,5 @@
 package by.epam.library.server.command;
 
-public interface Command {
+public interface ServerCommand {
     String execute(String request);
 }

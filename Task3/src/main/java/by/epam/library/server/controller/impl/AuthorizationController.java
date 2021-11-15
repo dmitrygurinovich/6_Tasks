@@ -1,8 +1,8 @@
 package by.epam.library.server.controller.impl;
 
-import by.epam.library.server.controller.Controller;
+import by.epam.library.server.controller.ServerController;
 
-public class AuthorizationController implements Controller {
+public class AuthorizationController implements ServerController {
     @Override
     public String action(String request) {
         String[] params = request.split("\\s+");

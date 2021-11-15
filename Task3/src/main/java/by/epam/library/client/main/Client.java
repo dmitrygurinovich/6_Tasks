@@ -1,5 +1,7 @@
 package by.epam.library.client.main;
 
+import by.epam.library.client.controller.ClientController;
+import by.epam.library.client.controller.impl.MainController;
 import by.epam.library.client.presentation.PresentationProvider;
 import by.epam.library.client.presentation.UserInterface;
 import by.epam.library.client.presentation.View;
@@ -24,16 +26,18 @@ public class Client {
     public void startClient() {
         View view;
         UserInterface userInterface;
+        ClientController controller;
 
         view = PresentationProvider.getInstance().getVIEW();
         userInterface = PresentationProvider.getInstance().getUSER_INTERFACE();
+        controller = new MainController();
 
         while (true) {
             try (Socket socket = new Socket(HOST, PORT);
                  BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                  PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true))
             {
-                String line = userInterface.adminMenu();
+                String line = "";
                 out.println(line);
                 String response = in.readLine();
                 view.print(response);
