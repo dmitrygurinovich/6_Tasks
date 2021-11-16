@@ -19,7 +19,7 @@ public class MainController implements ServerController {
     @Override
     public String action(String request) {
 
-        String[] params = request.split("\\s+");
+        String[] params = request.split("&");
 
         ServerController authorizationController;
         ServerController serviceController;

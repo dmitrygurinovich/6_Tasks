@@ -1,6 +1,6 @@
 package by.epam.library.client.presentation;
 
 public interface UserInterface {
-    void adminMenu();
+    String adminMenu();
     void userMenu();
 }

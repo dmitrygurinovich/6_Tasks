@@ -1,17 +1,13 @@
 package by.epam.library.client.presentation.impl;
 
-import by.epam.library.client.controller.ClientController;
-import by.epam.library.client.controller.impl.MainController;
 import by.epam.library.client.presentation.UserInterface;
 import by.epam.library.client.service.ConsoleDataService;
 import by.epam.library.client.service.impl.ConsoleDataServiceImpl;
 
 public class UserInterfaceImpl implements UserInterface {
     ConsoleDataService consoleDataService = ConsoleDataServiceImpl.getInstance();
-    ClientController controller = new MainController();
 
-
-    public void adminMenu() {
+    public String adminMenu() {
         int menuItem;
 
         menuItem = consoleDataService.getNumFromConsole("" +
@@ -22,9 +18,11 @@ public class UserInterfaceImpl implements UserInterface {
 
         switch (menuItem) {
             case 1:
-                controller.action("service show_all_files");
+                return "service&get_all_files";
             case 2:
-                controller.action("service search Petrov");
+                return "service&search Petrov";
+            default:
+                return "Invalid command!";
         }
     }
 

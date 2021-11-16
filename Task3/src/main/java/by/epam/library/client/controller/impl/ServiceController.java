@@ -8,6 +8,10 @@ public class ServiceController implements ClientController {
 
     @Override
     public String action(String request) {
-     return null;
+        String[] params;
+
+        params = request.split("&");
+
+        return commandProvider.getCommand(params[1]).execute(request);
     }
 }

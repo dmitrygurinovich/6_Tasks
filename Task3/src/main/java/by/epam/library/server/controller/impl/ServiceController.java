@@ -8,7 +8,7 @@ public class ServiceController implements ServerController {
 
     @Override
     public String action(String request) {
-        String[] params = request.split("\\s+");
-        return serverCommandProvider.getCommand(params[1]).execute(request);
+        String[] params = request.split("&");
+        return params[0].concat("&").concat(serverCommandProvider.getCommand(params[1]).execute(request));
     }
 }

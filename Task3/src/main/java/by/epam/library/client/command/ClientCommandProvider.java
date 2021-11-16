@@ -11,7 +11,7 @@ public class ClientCommandProvider {
     private final Map<String, ClientCommand> COMMANDS = new HashMap<>();
 
     private ClientCommandProvider() {
-        COMMANDS.put("show_all_files", new ShowAllFilesCommand());
+        COMMANDS.put("get_all_files", new ShowAllFilesCommand());
         COMMANDS.put("search_files", new SearchFilesCommand());
     }
 

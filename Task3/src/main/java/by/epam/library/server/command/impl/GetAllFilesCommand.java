@@ -9,6 +9,10 @@ public class GetAllFilesCommand implements ServerCommand {
 
     @Override
     public String execute(String request) {
-        return fileBaseService.getAllFiles();
+        String[] params;
+
+        params = request.split("&");
+
+        return params[1].concat("&").concat(fileBaseService.getAllFiles());
     }
 }
