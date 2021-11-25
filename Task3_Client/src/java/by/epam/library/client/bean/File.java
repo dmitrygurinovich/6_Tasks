@@ -10,6 +10,7 @@ public class File {
     private static int defaultId = 1;
 
     public File() {
+        this.progress = new HashMap<>();
     }
 
     public File(Student student) {

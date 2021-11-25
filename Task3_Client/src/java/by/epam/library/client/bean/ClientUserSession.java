@@ -1,16 +1,15 @@
 package by.epam.library.client.bean;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class ClientUserSession {
     private User user;
-    private Map<String, File> files;
+    private ArrayList<File> files;
     private static ClientUserSession instance;
 
     private ClientUserSession() {
         this.user = new User();
-        this.files = new HashMap<>();
+        this.files = new ArrayList<>();
     }
 
     public static ClientUserSession getInstance() {
@@ -24,7 +23,11 @@ public class ClientUserSession {
         return user;
     }
 
-    public Map<String, File> getFiles() {
+    public ArrayList<File> getFiles() {
         return files;
+    }
+
+    public void setFiles(ArrayList<File> files) {
+        this.files = files;
     }
 }

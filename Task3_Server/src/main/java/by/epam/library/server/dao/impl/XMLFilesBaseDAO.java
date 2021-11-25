@@ -44,7 +44,7 @@ public final class XMLFilesBaseDAO implements FilesBaseDAO {
         return files;
     }
 
-    @Override
+    @Override //TODO: добавить парсинг возраста и группы!!!
     public ArrayList<File> parseXmlToTheListOfFiles(String xmlDocument) {
         ArrayList<File> files = new ArrayList<>();
         ArrayList<String> xmlElements = new ArrayList<>();
@@ -123,6 +123,8 @@ public final class XMLFilesBaseDAO implements FilesBaseDAO {
         element.append("\t\t<student>\n");
         element.append("\t\t\t<first-name>").append(file.getStudent().getFirstName()).append("</first-name>\n");
         element.append("\t\t\t<second-name>").append(file.getStudent().getSecondName()).append("</second-name>\n");
+        element.append("\t\t\t<age>").append(file.getStudent().getAge()).append("</age>\n");
+        element.append("\t\t\t<group>").append(file.getStudent().getGroupNumber()).append("</group>\n");
         element.append("\t\t</student>\n");
         if (!file.getProgress().isEmpty()) {
             element.append("\t\t<progress>\n");
