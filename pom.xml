@@ -9,7 +9,8 @@
     <modules>
         <module>Task1</module>
         <module>Task2</module>
-        <module>Task3</module>
+        <module>Task3_Client</module>
+        <module>Task3_Server</module>
     </modules>
     <dependencies>
         <dependency>

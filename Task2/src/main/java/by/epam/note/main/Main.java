@@ -17,7 +17,7 @@ import by.epam.note.controller.impl.Controller;
  */
 public class Main {
     public static void main(String[] args) {
-        by.epam.note.controller.Controller controller = Controller.getInstance();
+        Controller controller = Controller.getInstance();
         controller.doAction("menu");
     }
 }

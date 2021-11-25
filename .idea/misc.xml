@@ -4,12 +4,12 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/Task3_Server/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/Server/pom.xml" />
-        <option value="$PROJECT_DIR$/Task3_Server/pom.xml" />
         <option value="$PROJECT_DIR$/Task3_client/pom.xml" />
         <option value="$PROJECT_DIR$/Task3_server/pom.xml" />
       </set>

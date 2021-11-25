@@ -1,0 +1,28 @@
+package client.command;
+
+import client.command.impl.SearchFilesCommand;
+import client.command.impl.ShowAllFilesCommand;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class ClientCommandProvider {
+    private static ClientCommandProvider instance;
+    private final Map<String, ClientCommand> COMMANDS = new HashMap<>();
+
+    private ClientCommandProvider() {
+        COMMANDS.put("get_all_files", new ShowAllFilesCommand());
+        COMMANDS.put("search_files", new SearchFilesCommand());
+    }
+
+    public static ClientCommandProvider getInstance() {
+        if (instance == null) {
+            instance = new ClientCommandProvider();
+        }
+        return instance;
+    }
+
+    public ClientCommand getCommand(String request) {
+        return COMMANDS.get(request);
+    }
+}
