@@ -1,6 +1,7 @@
 package by.epam.library.client.command.impl;
 
 import by.epam.library.client.bean.ClientUserSession;
+import by.epam.library.client.bean.File;
 import by.epam.library.client.command.ClientCommand;
 import by.epam.library.client.presentation.PresentationProvider;
 import by.epam.library.client.presentation.View;
@@ -20,7 +21,9 @@ public class ShowAllFilesCommand implements ClientCommand {
 
         clientUserSession.setFiles(clientService.parseXmlToTheListOfFiles(request));
 
-        clientUserSession.getFiles().forEach(view::print);
+        for (File file : clientUserSession.getFiles()) {
+            view.print(file);
+        }
 
         return "return null";
     }

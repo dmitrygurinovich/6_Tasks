@@ -20,6 +20,8 @@ public class ClientServiceImpl implements ClientService {
         Pattern idPattern = Pattern.compile("<id>(.*)</id>");
         Pattern firstNamePattern = Pattern.compile("<first-name>(.*)</first-name>");
         Pattern secondNamePattern = Pattern.compile("<second-name>(.*)</second-name>");
+        Pattern agePattern = Pattern.compile("<age>(.*)</age>");
+        Pattern groupNumberPattern = Pattern.compile("<group>(.*)</group>");
         Pattern mathPattern = Pattern.compile("<math>(.*)</math>");
         Pattern englishPattern = Pattern.compile("<english>(.*)</english>");
         Pattern geographyPattern = Pattern.compile("<geography>(.*)</geography>");
@@ -47,6 +49,16 @@ public class ClientServiceImpl implements ClientService {
             matcher = secondNamePattern.matcher(element);
             while (matcher.find()) {
                 student.setSecondName(matcher.group(1));
+            }
+
+            matcher = agePattern.matcher(element);
+            while (matcher.find()) {
+                student.setAge(Integer.parseInt(matcher.group(1)));
+            }
+
+            matcher = groupNumberPattern.matcher(element);
+            while (matcher.find()) {
+                student.setGroupNumber(Integer.parseInt(matcher.group(1)));
             }
 
             file.setStudent(student);

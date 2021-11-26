@@ -37,11 +37,12 @@ public class Client {
                  BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                  PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true))
             {
+
                 String request = userInterface.adminMenu();
                 out.println(request);
                 String response = in.readLine();
                 controller.action(response);
-                //view.print(response);
+
             } catch (IOException exception) {
                 view.print("Server is not available now!\nPlease, start server!");
                 break;

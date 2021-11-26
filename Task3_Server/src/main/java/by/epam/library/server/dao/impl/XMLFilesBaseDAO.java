@@ -44,7 +44,7 @@ public final class XMLFilesBaseDAO implements FilesBaseDAO {
         return files;
     }
 
-    @Override //TODO: добавить парсинг возраста и группы!!!
+    @Override
     public ArrayList<File> parseXmlToTheListOfFiles(String xmlDocument) {
         ArrayList<File> files = new ArrayList<>();
         ArrayList<String> xmlElements = new ArrayList<>();
@@ -53,6 +53,8 @@ public final class XMLFilesBaseDAO implements FilesBaseDAO {
         Pattern idPattern = Pattern.compile("<id>(.*)</id>");
         Pattern firstNamePattern = Pattern.compile("<first-name>(.*)</first-name>");
         Pattern secondNamePattern = Pattern.compile("<second-name>(.*)</second-name>");
+        Pattern agePattern = Pattern.compile("<age>(.*)</age>");
+        Pattern groupNumberPattern = Pattern.compile("<group>(.*)</group>");
         Pattern mathPattern = Pattern.compile("<math>(.*)</math>");
         Pattern englishPattern = Pattern.compile("<english>(.*)</english>");
         Pattern geographyPattern = Pattern.compile("<geography>(.*)</geography>");
@@ -80,6 +82,16 @@ public final class XMLFilesBaseDAO implements FilesBaseDAO {
             matcher = secondNamePattern.matcher(element);
             while (matcher.find()) {
                 student.setSecondName(matcher.group(1));
+            }
+
+            matcher = agePattern.matcher(element);
+            while (matcher.find()) {
+                student.setAge(Integer.parseInt(matcher.group(1)));
+            }
+
+            matcher = groupNumberPattern.matcher(element);
+            while (matcher.find()) {
+                student.setGroupNumber(Integer.parseInt(matcher.group(1)));
             }
 
             file.setStudent(student);
