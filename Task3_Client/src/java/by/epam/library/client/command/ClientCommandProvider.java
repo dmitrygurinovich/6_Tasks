@@ -1,5 +1,6 @@
 package by.epam.library.client.command;
 
+import by.epam.library.client.command.impl.AuthorizationCommand;
 import by.epam.library.client.command.impl.SearchFilesCommand;
 import by.epam.library.client.command.impl.ShowAllFilesCommand;
 
@@ -13,6 +14,7 @@ public class ClientCommandProvider {
     private ClientCommandProvider() {
         COMMANDS.put("get_all_files", new ShowAllFilesCommand());
         COMMANDS.put("search_files", new SearchFilesCommand());
+        COMMANDS.put("authorization", new AuthorizationCommand());
     }
 
     public static ClientCommandProvider getInstance() {

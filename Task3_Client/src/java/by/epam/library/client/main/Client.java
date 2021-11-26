@@ -32,13 +32,16 @@ public class Client {
         userInterface = PresentationProvider.getInstance().getUSER_INTERFACE();
         controller = new MainController();
 
+        controller.action("authorization");
+
         while (true) {
             try (Socket socket = new Socket(HOST, PORT);
                  BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                  PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true))
             {
 
-                String request = userInterface.adminMenu();
+                //String request = userInterface.adminMenu();
+                String request = controller.action("authorization");
                 out.println(request);
                 String response = in.readLine();
                 controller.action(response);

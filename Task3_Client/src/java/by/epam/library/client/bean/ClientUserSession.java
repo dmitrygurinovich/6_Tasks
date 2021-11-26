@@ -3,6 +3,7 @@ package by.epam.library.client.bean;
 import java.util.ArrayList;
 
 public class ClientUserSession {
+    private boolean authorized;
     private User user;
     private ArrayList<File> files;
     private static ClientUserSession instance;
@@ -10,6 +11,7 @@ public class ClientUserSession {
     private ClientUserSession() {
         this.user = new User();
         this.files = new ArrayList<>();
+        this.authorized = false;
     }
 
     public static ClientUserSession getInstance() {
