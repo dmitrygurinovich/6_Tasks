@@ -10,14 +10,19 @@ public class MainController implements ClientController {
         String[] params;
         ClientController authorizationController;
         ClientController serviceController;
+        ClientController menuController;
 
         params = request.split("&");
+
         authorizationController = ControllerProvider.getInstance().getAUTHORIZATION_CONTROLLER();
         serviceController = ControllerProvider.instance.getSERVICE_CONTROLLER();
+        menuController = ControllerProvider.getInstance().getMENU_CONTROLLER();
 
         switch (params[0]) {
             case "authorization":
                 return authorizationController.action(request);
+            case "menu":
+                return menuController.action(request);
             case "service":
                 return serviceController.action(request);
             default:

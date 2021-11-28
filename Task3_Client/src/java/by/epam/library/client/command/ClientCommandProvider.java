@@ -1,8 +1,6 @@
 package by.epam.library.client.command;
 
-import by.epam.library.client.command.impl.AuthorizationCommand;
-import by.epam.library.client.command.impl.SearchFilesCommand;
-import by.epam.library.client.command.impl.ShowAllFilesCommand;
+import by.epam.library.client.command.impl.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +13,9 @@ public class ClientCommandProvider {
         COMMANDS.put("get_all_files", new ShowAllFilesCommand());
         COMMANDS.put("search_files", new SearchFilesCommand());
         COMMANDS.put("authorization", new AuthorizationCommand());
+        COMMANDS.put("log_in", new LogInCommand());
+        COMMANDS.put("menu", new GetMenuCommand());
+        COMMANDS.put("filed", new AuthorizationFailedCommand());
     }
 
     public static ClientCommandProvider getInstance() {

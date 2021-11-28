@@ -42,9 +42,10 @@ public class Server {
                 ) {
                     String line = in.readLine();
                     out.println(controller.action(line));
+
                 } catch (IOException exception) {
                     serverSocket.close();
-                    this.runServer("\n#Server: client has been disconnected! Waiting a new connection.");
+                    this.runServer("\n#Server: client has been disconnected!\nWaiting a new connection.");
                 }
             }
         } catch (IOException e) {

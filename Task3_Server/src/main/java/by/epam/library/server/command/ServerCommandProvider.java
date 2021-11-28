@@ -1,9 +1,6 @@
 package by.epam.library.server.command;
 
-import by.epam.library.server.command.impl.AddFileCommand;
-import by.epam.library.server.command.impl.DeleteFileCommand;
-import by.epam.library.server.command.impl.GetAllFilesCommand;
-import by.epam.library.server.command.impl.GetFilesBySearchCommand;
+import by.epam.library.server.command.impl.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +14,7 @@ public class ServerCommandProvider {
         commands.put("delete_file", new DeleteFileCommand());
         commands.put("add_file", new AddFileCommand());
         commands.put("search", new GetFilesBySearchCommand());
+        commands.put("authorization", new AuthorizationCommand());
     }
 
     public static ServerCommandProvider getInstance() {

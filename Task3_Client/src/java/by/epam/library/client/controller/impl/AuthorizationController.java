@@ -12,6 +12,6 @@ public class AuthorizationController implements ClientController {
         params = request.split("&");
         commandProvider = ClientCommandProvider.getInstance();
 
-        return commandProvider.getCommand(params[0]).execute(request);
+        return commandProvider.getCommand(params[1]).execute(request);
     }
 }
