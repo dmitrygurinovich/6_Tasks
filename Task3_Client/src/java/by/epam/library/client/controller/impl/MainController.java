@@ -15,7 +15,7 @@ public class MainController implements ClientController {
         params = request.split("&");
 
         authorizationController = ControllerProvider.getInstance().getAUTHORIZATION_CONTROLLER();
-        serviceController = ControllerProvider.instance.getSERVICE_CONTROLLER();
+        serviceController = ControllerProvider.getInstance().getSERVICE_CONTROLLER();
         menuController = ControllerProvider.getInstance().getMENU_CONTROLLER();
 
         switch (params[0]) {

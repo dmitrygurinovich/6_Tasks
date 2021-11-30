@@ -7,16 +7,6 @@ import by.epam.library.client.service.ConsoleDataService;
 import java.util.Scanner;
 
 public class ConsoleDataServiceImpl implements ConsoleDataService {
-    private static ConsoleDataServiceImpl instance;
-
-    private ConsoleDataServiceImpl() {}
-
-    public static ConsoleDataServiceImpl getInstance() {
-        if (instance == null) {
-            instance = new ConsoleDataServiceImpl();
-        }
-        return instance;
-    }
 
     @Override
     public int getNumFromConsole(String message, int min, int max) {

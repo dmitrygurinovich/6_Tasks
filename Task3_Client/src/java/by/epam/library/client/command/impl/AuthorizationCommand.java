@@ -2,7 +2,7 @@ package by.epam.library.client.command.impl;
 
 import by.epam.library.client.command.ClientCommand;
 import by.epam.library.client.service.ConsoleDataService;
-import by.epam.library.client.service.impl.ConsoleDataServiceImpl;
+import by.epam.library.client.service.ServiceProvider;
 
 public class AuthorizationCommand implements ClientCommand {
     @Override
@@ -10,7 +10,7 @@ public class AuthorizationCommand implements ClientCommand {
         ConsoleDataService consoleDataService;
         StringBuilder authorizationRequest;
 
-        consoleDataService = ConsoleDataServiceImpl.getInstance();
+        consoleDataService = ServiceProvider.getInstance().getConsoleDataService();
         authorizationRequest = new StringBuilder("authorization&");
 
         authorizationRequest.append(consoleDataService.getStringFromConsole("|+++ AUTHORIZATION +++|\nEnter user name:")).append("&");

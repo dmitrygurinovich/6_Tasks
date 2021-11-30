@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 
 public final class XMLFilesBaseDAO implements FilesBaseDAO {
     private final String FILES_BASE_PATH = "Task3_Server/resources/files.xml";
-    private final ArrayList<File> files;
+    private ArrayList<File> files;
 
     public XMLFilesBaseDAO() {
         this.files = readFilesFromXml();
@@ -188,5 +188,9 @@ public final class XMLFilesBaseDAO implements FilesBaseDAO {
 
     public ArrayList<File> getFiles() {
         return files;
+    }
+
+    public void setFiles(ArrayList<File> files) {
+        this.files = files;
     }
 }

@@ -11,7 +11,9 @@ public class ServerCommandProvider {
 
     private ServerCommandProvider() {
         commands.put("get_all_files", new GetAllFilesCommand());
+        commands.put("show_all_files", new GetAllFilesCommand());
         commands.put("delete_file", new DeleteFileCommand());
+        commands.put("edit_file", new EditFileCommand());
         commands.put("add_file", new AddFileCommand());
         commands.put("search", new GetFilesBySearchCommand());
         commands.put("authorization", new AuthorizationCommand());

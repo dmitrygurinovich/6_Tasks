@@ -5,7 +5,7 @@
 		<student>
 			<first-name>Ivan</first-name>
 			<second-name>Ivanov</second-name>
-			<age>24</age>>
+			<age>24</age>
 			<group>2</group>
 		</student>
 		<progress>
@@ -21,7 +21,7 @@
 		<student>
 			<first-name>Petr</first-name>
 			<second-name>Petrov</second-name>
-			<age>21</age>>
+			<age>21</age>
 			<group>1</group>
 		</student>
 		<progress>

@@ -39,14 +39,24 @@ public class Client {
             {
                 String request;
 
-                if (!clientUserSession.isAuthorized()) {
-                    request = controller.action("authorization&authorization");
+                if (clientUserSession.getFiles().size() == 0) {
+                    //get all files after client starting
+                    request = ("service&get_all_files");
+
                 } else {
-                    request = controller.action("menu");
+
+                    if (!clientUserSession.isAuthorized()) {
+                        request = controller.action("authorization&authorization");
+                    } else {
+                        request = controller.action("menu");
+                    }
+
                 }
 
                 out.println(request);
+
                 String response = in.readLine();
+
                 controller.action(response);
 
             } catch (IOException exception) {
@@ -56,5 +66,3 @@ public class Client {
         }
     }
 }
-
-

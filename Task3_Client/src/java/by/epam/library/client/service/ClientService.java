@@ -6,4 +6,7 @@ import java.util.ArrayList;
 
 public interface ClientService {
     ArrayList<File> parseXmlToTheListOfFiles(String xmlDocument);
+    String getAllFiles();
+    String getXmlDocument(ArrayList<File> files);
+    StringBuilder getXmlElement(File file);
 }

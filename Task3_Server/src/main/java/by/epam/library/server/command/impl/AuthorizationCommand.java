@@ -27,9 +27,7 @@ public class AuthorizationCommand implements ServerCommand {
                         .append(usersBaseDAO.getUsers().get(params[1]).getRole().toString())
                         .toString();
             }
-
         }
-
         return "authorization&filed";
     }
 }

@@ -1,5 +1,6 @@
 package by.epam.library.client.service.impl;
 
+import by.epam.library.client.bean.ClientUserSession;
 import by.epam.library.client.bean.File;
 import by.epam.library.client.bean.Student;
 import by.epam.library.client.bean.Subject;
@@ -93,4 +94,66 @@ public class ClientServiceImpl implements ClientService {
 
         return files;
     }
+
+    @Override
+    public String getAllFiles() {
+        ClientUserSession userSession;
+
+        userSession = ClientUserSession.getInstance();
+
+        return getXmlDocument(userSession.getFiles())
+                .replaceAll("\n", "")
+                .replaceAll("\t", "");
+    }
+
+    @Override
+    public String getXmlDocument(ArrayList<File> files) {
+        StringBuilder document;
+
+        document = new StringBuilder();
+
+        document.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
+        document.append("<files>\n");
+        for (File file : files) {
+            document.append(getXmlElement(file));
+        }
+        document.append("</files>");
+        return document.toString();
+    }
+
+    @Override
+    public StringBuilder getXmlElement(File file) {
+        StringBuilder element = new StringBuilder();
+        element.append("\t<file>\n");
+        element.append("\t\t<id>").append(file.getId()).append("</id>\n");
+        element.append("\t\t<student>\n");
+        element.append("\t\t\t<first-name>").append(file.getStudent().getFirstName()).append("</first-name>\n");
+        element.append("\t\t\t<second-name>").append(file.getStudent().getSecondName()).append("</second-name>\n");
+        element.append("\t\t\t<age>").append(file.getStudent().getAge()).append("</age>\n");
+        element.append("\t\t\t<group>").append(file.getStudent().getGroupNumber()).append("</group>\n");
+        element.append("\t\t</student>\n");
+        if (!file.getProgress().isEmpty()) {
+            element.append("\t\t<progress>\n");
+            if (file.getProgress().containsKey(Subject.MATH)) {
+                element.append("\t\t\t<math>").append(file.getProgress().get(Subject.MATH)).append("</math>\n");
+            }
+            if (file.getProgress().containsKey(Subject.ENGLISH)) {
+                element.append("\t\t\t<english>").append(file.getProgress().get(Subject.ENGLISH)).append("</english>\n");
+            }
+            if (file.getProgress().containsKey(Subject.GEOGRAPHY)) {
+                element.append("\t\t\t<geography>").append(file.getProgress().get(Subject.GEOGRAPHY)).append("</geography>\n");
+            }
+            if (file.getProgress().containsKey(Subject.PHYSICS)) {
+                element.append("\t\t\t<physics>").append(file.getProgress().get(Subject.PHYSICS)).append("</physics>\n");
+            }
+            if (file.getProgress().containsKey(Subject.LITERATURE)) {
+                element.append("\t\t\t<literature>").append(file.getProgress().get(Subject.LITERATURE)).append("</literature>\n");
+            }
+            element.append("\t\t</progress>\n");
+        }
+        element.append("\t</file>\n");
+
+        return element;
+    }
+
 }

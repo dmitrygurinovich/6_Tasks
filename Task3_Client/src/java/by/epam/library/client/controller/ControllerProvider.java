@@ -5,10 +5,10 @@ import by.epam.library.client.controller.impl.MenuController;
 import by.epam.library.client.controller.impl.ServiceController;
 
 public class ControllerProvider {
-    public static ControllerProvider instance;
-    public final ClientController AUTHORIZATION_CONTROLLER = new AuthorizationController();
-    public final ClientController SERVICE_CONTROLLER = new ServiceController();
-    public final ClientController MENU_CONTROLLER = new MenuController();
+    private static ControllerProvider instance;
+    private final ClientController AUTHORIZATION_CONTROLLER = new AuthorizationController();
+    private final ClientController SERVICE_CONTROLLER = new ServiceController();
+    private final ClientController MENU_CONTROLLER = new MenuController();
 
     private ControllerProvider() {}
 

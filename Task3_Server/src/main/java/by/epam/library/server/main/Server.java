@@ -40,8 +40,8 @@ public class Server {
                      BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                      PrintWriter out= new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true)
                 ) {
-                    String line = in.readLine();
-                    out.println(controller.action(line));
+
+                    out.println(controller.action(in.readLine()));
 
                 } catch (IOException exception) {
                     serverSocket.close();

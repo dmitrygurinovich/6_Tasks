@@ -11,4 +11,5 @@ public interface FilesBaseDAO {
     StringBuilder getXmlElement(File file);
     String getXmlDocument(ArrayList<File> files);
     void writeFilesToXmlFile();
+    void setFiles(ArrayList<File> files);
 }
