@@ -40,17 +40,13 @@ public class Client {
                 String request;
 
                 if (clientUserSession.getFiles().size() == 0) {
-                    //get all files after client starting
-                    request = ("service&get_all_files");
-
+                    request = ("service&get_all_files"); //get all files after client starting
                 } else {
-
                     if (!clientUserSession.isAuthorized()) {
                         request = controller.action("authorization&authorization");
                     } else {
                         request = controller.action("menu");
                     }
-
                 }
 
                 out.println(request);

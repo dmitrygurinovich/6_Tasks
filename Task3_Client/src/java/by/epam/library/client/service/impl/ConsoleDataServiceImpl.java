@@ -48,6 +48,11 @@ public class ConsoleDataServiceImpl implements ConsoleDataService {
             in.next();
         }
         text = in.nextLine();
+
+        if (text.length() == 0) {
+            getStringFromConsole(message);
+        }
+
         return text;
     }
 }

@@ -3,9 +3,9 @@
 	<file>
 		<id>1</id>
 		<student>
-			<first-name>Ivan</first-name>
-			<second-name>Ivanov</second-name>
-			<age>24</age>
+			<first-name>Dmitry</first-name>
+			<second-name>Gurinovich</second-name>
+			<age>32</age>
 			<group>2</group>
 		</student>
 		<progress>
