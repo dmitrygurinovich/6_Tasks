@@ -81,7 +81,8 @@ public class UserInterfaceImpl implements UserInterface {
                 "3. Edit age\n" +
                 "4. Edit group number\n" +
                 "5. Edit progress\n" +
-                "0. Exit to the main menu", 0, 5);
+                "0. Exit to the main menu", 0, 5
+        );
 
         switch (menuItem) {
 
@@ -99,6 +100,7 @@ public class UserInterfaceImpl implements UserInterface {
                 break;
             case 5:
                 editProgress(file);
+                break;
             case 0:
                 request.append(clientService.getAllFiles());
                 return request.toString();
@@ -107,7 +109,7 @@ public class UserInterfaceImpl implements UserInterface {
         return editFile();
     }
 
-    public void editProgress(File file) {
+    public File editProgress(File file) {
         int menuItem;
 
         menuItem = consoleDataService.getNumFromConsole("" +
@@ -137,8 +139,9 @@ public class UserInterfaceImpl implements UserInterface {
                 file.getProgress().put(Subject.LITERATURE, consoleDataService.getNumFromConsole("Literature:", 1, 5));
                 break;
             case 0:
-                editFile();
+                return file;
         }
-        editProgress(file);
+
+        return editProgress(file);
     }
 }

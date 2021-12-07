@@ -6,5 +6,5 @@ public interface UserInterface {
     String adminMenu();
     String userMenu();
     String editFile();
-    void editProgress(File file);
+    File editProgress(File file);
 }
