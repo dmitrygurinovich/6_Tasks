@@ -15,7 +15,7 @@ public class ServerCommandProvider {
         commands.put("delete_file", new DeleteFileCommand());
         commands.put("edit_file", new EditFileCommand());
         commands.put("add_file", new AddFileCommand());
-        commands.put("search", new GetFilesBySearchCommand());
+        commands.put("search_files", new SearchFilesCommand());
         commands.put("authorization", new AuthorizationCommand());
     }
 

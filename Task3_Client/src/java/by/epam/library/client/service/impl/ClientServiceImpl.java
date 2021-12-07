@@ -156,4 +156,9 @@ public class ClientServiceImpl implements ClientService {
         return element;
     }
 
+    @Override
+    public String addFile() {
+        return null;
+    }
+
 }

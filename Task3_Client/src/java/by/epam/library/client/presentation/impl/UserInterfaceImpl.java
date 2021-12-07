@@ -12,6 +12,7 @@ public class UserInterfaceImpl implements UserInterface {
     private static final ConsoleDataService consoleDataService = ServiceProvider.getInstance().getConsoleDataService();
     private static int defaultFileId = -1;
 
+    @Override
     public String adminMenu() {
         int menuItem;
 
@@ -26,7 +27,7 @@ public class UserInterfaceImpl implements UserInterface {
             case 1:
                 return "service&show_all_files";
             case 2:
-                return "service&search_files&Petrov";
+                return searchFiles();
             case 3:
                 return editFile();
             default:
@@ -109,6 +110,7 @@ public class UserInterfaceImpl implements UserInterface {
         return editFile();
     }
 
+    @Override
     public File editProgress(File file) {
         int menuItem;
 
@@ -143,5 +145,15 @@ public class UserInterfaceImpl implements UserInterface {
         }
 
         return editProgress(file);
+    }
+
+    @Override
+    public String searchFiles() {
+        StringBuilder request;
+
+        request = new StringBuilder("service&search_files&");
+        request.append(consoleDataService.getStringFromConsole("Enter a keyword for searching:"));
+
+        return request.toString();
     }
 }

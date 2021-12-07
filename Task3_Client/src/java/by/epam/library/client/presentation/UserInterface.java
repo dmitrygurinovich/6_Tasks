@@ -7,4 +7,5 @@ public interface UserInterface {
     String userMenu();
     String editFile();
     File editProgress(File file);
+    String searchFiles();
 }

@@ -9,4 +9,5 @@ public interface ClientService {
     String getAllFiles();
     String getXmlDocument(ArrayList<File> files);
     StringBuilder getXmlElement(File file);
+    String addFile();
 }

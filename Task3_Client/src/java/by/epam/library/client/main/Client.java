@@ -40,7 +40,7 @@ public class Client {
                 String request;
 
                 if (clientUserSession.getFiles().size() == 0) {
-                    request = ("service&get_all_files"); //get all files after client starting
+                    request = ("service&get_all_files");
                 } else {
                     if (!clientUserSession.isAuthorized()) {
                         request = controller.action("authorization&authorization");
@@ -50,9 +50,7 @@ public class Client {
                 }
 
                 out.println(request);
-
                 String response = in.readLine();
-
                 controller.action(response);
 
             } catch (IOException exception) {
