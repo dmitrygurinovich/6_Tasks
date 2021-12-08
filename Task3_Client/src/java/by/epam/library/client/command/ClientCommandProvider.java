@@ -18,6 +18,7 @@ public class ClientCommandProvider {
         COMMANDS.put("log_in", new LogInCommand());
         COMMANDS.put("menu", new GetMenuCommand());
         COMMANDS.put("filed", new AuthorizationFailedCommand());
+        COMMANDS.put("search_result", new GetSearchResponseCommand());
     }
 
     public static ClientCommandProvider getInstance() {

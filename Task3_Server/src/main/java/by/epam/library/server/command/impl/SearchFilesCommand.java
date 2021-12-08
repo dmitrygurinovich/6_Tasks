@@ -11,7 +11,7 @@ public class SearchFilesCommand implements ServerCommand {
         params = request.split("&");
         response = new StringBuilder();
 
-        response.append(params[1]).append("&").append(params[2]);
+        response.append("search_result").append("&").append(params[2]);
 
         return response.toString();
     }

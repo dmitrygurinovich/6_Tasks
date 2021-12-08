@@ -10,4 +10,7 @@ public interface ClientService {
     String getXmlDocument(ArrayList<File> files);
     StringBuilder getXmlElement(File file);
     String addFile();
+    String editFile();
+    File editProgress(File file);
+    String searchFiles();
 }
