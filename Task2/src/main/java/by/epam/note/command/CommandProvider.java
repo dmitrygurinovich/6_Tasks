@@ -6,19 +6,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CommandProvider {
-    Map<String, Command> commands = new HashMap<>();
+    Map<String, Command> COMMANDS = new HashMap<>();
 
     public CommandProvider() {
-        commands.put("menu", new MenuCommand());
-        commands.put("show_notes", new ShowAllNotesCommand());
-        commands.put("add_note", new AddNoteCommand());
-        commands.put("delete_note", new DeleteNoteCommand());
-        commands.put("edit_note", new EditNoteCommand());
-        commands.put("search_notes", new SearchNotesCommand());
-        commands.put("exit", new ExitCommand());
+        COMMANDS.put("menu", new MenuCommand());
+        COMMANDS.put("show_notes", new ShowAllNotesCommand());
+        COMMANDS.put("add_note", new AddNoteCommand());
+        COMMANDS.put("delete_note", new DeleteNoteCommand());
+        COMMANDS.put("edit_note", new EditNoteCommand());
+        COMMANDS.put("search_notes", new SearchNotesCommand());
+        COMMANDS.put("exit", new ExitCommand());
     }
 
     public Command getCommand(String request) {
-        return commands.get(request);
+        return COMMANDS.get(request);
     }
 }

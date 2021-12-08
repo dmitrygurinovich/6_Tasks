@@ -10,11 +10,9 @@ public class Note {
     private String email;
     private String message;
     private GregorianCalendar date;
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd MMMM yyyy");
 
-    public Note() {
-
-    }
+    public Note() {}
 
     public Note(int id, String theme, String email, String message, GregorianCalendar date) {
         this.id = id;
@@ -84,7 +82,7 @@ public class Note {
     public String toString() {
         return  "№: " + id + "\n" +
                 "Theme: " + theme + "\n" +
-                "Date: " + dateFormat.format(date.getTime()) + "\n" +
+                "Date: " + DATE_FORMAT.format(date.getTime()) + "\n" +
                 "E-mail: " + email + "\n" +
                 "Message: \n" + message + "\n";
     }
