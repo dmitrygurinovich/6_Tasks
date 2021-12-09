@@ -19,6 +19,8 @@ public class ClientCommandProvider {
         COMMANDS.put("menu", new GetMenuCommand());
         COMMANDS.put("filed", new AuthorizationFailedCommand());
         COMMANDS.put("search_result", new GetSearchResponseCommand());
+        COMMANDS.put("add_file", new AddFileCommand());
+        COMMANDS.put("delete_file", new DeleteFileCommand());
     }
 
     public static ClientCommandProvider getInstance() {

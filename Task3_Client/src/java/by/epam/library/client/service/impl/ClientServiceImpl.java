@@ -303,6 +303,82 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public String addFile() {
-        return null;
+        ClientUserSession userSession;
+        Student student;
+        File file;
+        int menuItem;
+        StringBuilder request;
+
+        student = new Student();
+        userSession = ClientUserSession.getInstance();
+        request = new StringBuilder("service&add_file&");
+
+        student.setFirstName(consoleDataService.getStringFromConsole("Enter first name:"));
+        student.setSecondName(consoleDataService.getStringFromConsole("Enter second name:"));
+        student.setAge(consoleDataService.getNumFromConsole("Enter student's age", 17, 30));
+        student.setGroupNumber(consoleDataService.getNumFromConsole("Enter group number:", 1, 3));
+
+        file = new File(student);
+        file.setId(userSession.getFiles().size() + 1);
+
+        menuItem = consoleDataService.getNumFromConsole("" +
+                "Would you like to add student's progress?\n" +
+                "1. Yes\n" +
+                "2. No\n", 1, 2);
+
+        if (menuItem == 1) {
+
+            while (menuItem != 0) {
+                menuItem = consoleDataService.getNumFromConsole("" +
+                        "Add progress:\n" +
+                        "1. Math\n" +
+                        "2. Physics\n" +
+                        "3. English\n" +
+                        "4. Geography\n" +
+                        "5. Literature\n" +
+                        "0. Save and add file to base", 0, 5);
+
+                switch (menuItem) {
+                    case 1:
+                        file.getProgress().put(Subject.MATH, consoleDataService.getNumFromConsole("Math:", 1, 5));
+                        break;
+                    case 2:
+                        file.getProgress().put(Subject.PHYSICS, consoleDataService.getNumFromConsole("Physics:", 1, 5));
+                        break;
+                    case 3:
+                        file.getProgress().put(Subject.ENGLISH, consoleDataService.getNumFromConsole("English", 1, 5));
+                        break;
+                    case 4:
+                        file.getProgress().put(Subject.GEOGRAPHY, consoleDataService.getNumFromConsole("Geography",1 ,5));
+                        break;
+                    case 5:
+                        file.getProgress().put(Subject.LITERATURE, consoleDataService.getNumFromConsole("Literature", 1, 5));
+                        break;
+                }
+            }
+        }
+
+        userSession.getFiles().add(file);
+
+        return request.append(getAllFiles()).toString();
+    }
+
+    @Override
+    public String deleteFile() {
+        int fileId;
+        ClientUserSession userSession;
+        StringBuilder request;
+
+        userSession = ClientUserSession.getInstance();
+        request = new StringBuilder("service&delete_file&");
+        fileId = consoleDataService.getNumFromConsole("Enter file's ID:", 1, userSession.getFiles().size());
+
+        userSession.getFiles().remove(fileId - 1);
+
+        for (int i = 0; i < userSession.getFiles().size(); i++) {
+            userSession.getFiles().get(i).setId(i + 1);
+        }
+
+        return request.append(getAllFiles()).toString();
     }
 }

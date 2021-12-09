@@ -13,4 +13,5 @@ public interface ClientService {
     String editFile();
     File editProgress(File file);
     String searchFiles();
+    String deleteFile();
 }

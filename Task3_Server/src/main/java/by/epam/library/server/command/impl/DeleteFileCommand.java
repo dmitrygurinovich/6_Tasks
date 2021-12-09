@@ -1,25 +1,25 @@
 package by.epam.library.server.command.impl;
 
 import by.epam.library.server.command.ServerCommand;
+import by.epam.library.server.dao.DAOProvider;
+import by.epam.library.server.dao.FilesBaseDAO;
 import by.epam.library.server.service.FileBaseService;
 import by.epam.library.server.service.ServiceProvider;
 
 public class DeleteFileCommand implements ServerCommand {
-    FileBaseService fileBaseService = ServiceProvider.getInstance().getFileBaseService();
-
     @Override
     public String execute(String request) {
-        String response;
+        String[] params;
+        FileBaseService fileBaseService;
+        FilesBaseDAO filesBaseDAO;
 
-        response = "file deleted!";
+        params = request.split("&");
+        fileBaseService = ServiceProvider.getInstance().getFileBaseService();
+        filesBaseDAO = DAOProvider.getInstance().getFilesBaseDAO();
 
-        try {
-            String[] params = request.split("\\s+");
-            fileBaseService.deleteFile(Integer.parseInt(params[2]));
-        } catch (NumberFormatException exception) {
-            exception.printStackTrace();
-        }
+        filesBaseDAO.setFiles(filesBaseDAO.parseXmlToTheListOfFiles(params[2]));
+        filesBaseDAO.writeFilesToXmlFile();
 
-        return response;
+        return params[1].concat("&").concat(fileBaseService.getAllFiles());
     }
 }

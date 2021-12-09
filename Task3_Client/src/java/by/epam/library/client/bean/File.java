@@ -7,7 +7,6 @@ public class File {
     private int id;
     private Student student;
     private HashMap<Subject, Integer> progress;
-    private static int defaultId = 1;
 
     public File() {
         this.progress = new HashMap<>();
@@ -16,7 +15,6 @@ public class File {
     public File(Student student) {
         this.student = student;
         this.progress = new HashMap<>();
-        this.id = defaultId++;
     }
 
     public File(int id, Student student, HashMap<Subject, Integer> progress) {
@@ -26,7 +24,6 @@ public class File {
     }
 
     public File(Student student, HashMap<Subject, Integer> progress) {
-        this.id = defaultId++;
         this.student = student;
         this.progress = progress;
     }

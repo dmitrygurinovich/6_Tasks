@@ -1,21 +1,25 @@
 package by.epam.library.server.command.impl;
 
 import by.epam.library.server.command.ServerCommand;
+import by.epam.library.server.dao.DAOProvider;
+import by.epam.library.server.dao.FilesBaseDAO;
 import by.epam.library.server.service.FileBaseService;
 import by.epam.library.server.service.ServiceProvider;
 
 public class AddFileCommand implements ServerCommand {
-    FileBaseService fileBaseService = ServiceProvider.getInstance().getFileBaseService();
-
     @Override
     public String execute(String request) {
-        String response;
+        FileBaseService fileBaseService;
+        FilesBaseDAO filesBaseDAO;
+        String[] params;
 
-        response = "file added!";
+        fileBaseService = ServiceProvider.getInstance().getFileBaseService();
+        filesBaseDAO = DAOProvider.getInstance().getFilesBaseDAO();
+        params = request.split("&");
 
-        // получаем файл через сокет в виде объекта
-        //fileBaseService.addFile();
+        filesBaseDAO.setFiles(filesBaseDAO.parseXmlToTheListOfFiles(params[2]));
+        filesBaseDAO.writeFilesToXmlFile();
 
-        return response;
+        return params[1].concat("&").concat(fileBaseService.getAllFiles());
     }
 }

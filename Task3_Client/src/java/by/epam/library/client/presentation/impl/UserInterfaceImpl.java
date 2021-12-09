@@ -17,8 +17,10 @@ public class UserInterfaceImpl implements UserInterface {
                         "|+++ ADMIN MENU +++|\n" +
                         "1. Show all files\n" +
                         "2. Search by keyword\n" +
-                        "3. Edit file\n",
-                1, 3);
+                        "3. Edit file\n" +
+                        "4. Add file\n" +
+                        "5. Delete file\n",
+                1, 5);
 
         switch (menuItem) {
             case 1:
@@ -27,6 +29,10 @@ public class UserInterfaceImpl implements UserInterface {
                 return CLIENT_SERVICE.searchFiles();
             case 3:
                 return CLIENT_SERVICE.editFile();
+            case 4:
+                return CLIENT_SERVICE.addFile();
+            case 5:
+                return CLIENT_SERVICE.deleteFile();
             default:
                 return "Invalid command!";
         }

@@ -32,4 +32,18 @@
 			<literature>4</literature>
 		</progress>
 	</file>
+	<file>
+		<id>3</id>
+		<student>
+			<first-name>Oksana</first-name>
+			<second-name>Gurinovich</second-name>
+			<age>17</age>
+			<group>1</group>
+		</student>
+		<progress>
+			<math>3</math>
+			<english>4</english>
+			<literature>3</literature>
+		</progress>
+	</file>
 </files>
