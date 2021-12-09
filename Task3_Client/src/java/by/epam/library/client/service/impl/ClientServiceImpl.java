@@ -103,18 +103,18 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public String getAllFiles() {
+    public String getAllFilesInXml() {
         ClientUserSession userSession;
 
         userSession = ClientUserSession.getInstance();
 
-        return getXmlDocument(userSession.getFiles())
+        return getXmlDocumentFromArrayList(userSession.getFiles())
                 .replaceAll("\n", "")
                 .replaceAll("\t", "");
     }
 
     @Override
-    public String getXmlDocument(ArrayList<File> files) {
+    public String getXmlDocumentFromArrayList(ArrayList<File> files) {
         StringBuilder document;
 
         document = new StringBuilder();
@@ -122,14 +122,14 @@ public class ClientServiceImpl implements ClientService {
         document.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
         document.append("<files>\n");
         for (File file : files) {
-            document.append(getXmlElement(file));
+            document.append(getXmlElementFromFile(file));
         }
         document.append("</files>");
         return document.toString();
     }
 
     @Override
-    public StringBuilder getXmlElement(File file) {
+    public StringBuilder getXmlElementFromFile(File file) {
         StringBuilder element = new StringBuilder();
         element.append("\t<file>\n");
         element.append("\t\t<id>").append(file.getId()).append("</id>\n");
@@ -208,10 +208,10 @@ public class ClientServiceImpl implements ClientService {
                 file.getStudent().setGroupNumber(consoleDataService.getNumFromConsole("Enter new group number:", 1, 5));
                 break;
             case 5:
-                editProgress(file);
+                editFileProgress(file);
                 break;
             case 0:
-                request.append(clientService.getAllFiles());
+                request.append(clientService.getAllFilesInXml());
                 return request.toString();
         }
 
@@ -219,7 +219,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public File editProgress(File file) {
+    public File editFileProgress(File file) {
         int menuItem;
 
         menuItem = consoleDataService.getNumFromConsole("" +
@@ -252,7 +252,7 @@ public class ClientServiceImpl implements ClientService {
                 return file;
         }
 
-        return editProgress(file);
+        return editFileProgress(file);
     }
 
     @Override
@@ -360,7 +360,7 @@ public class ClientServiceImpl implements ClientService {
 
         userSession.getFiles().add(file);
 
-        return request.append(getAllFiles()).toString();
+        return request.append(getAllFilesInXml()).toString();
     }
 
     @Override
@@ -379,6 +379,6 @@ public class ClientServiceImpl implements ClientService {
             userSession.getFiles().get(i).setId(i + 1);
         }
 
-        return request.append(getAllFiles()).toString();
+        return request.append(getAllFilesInXml()).toString();
     }
 }

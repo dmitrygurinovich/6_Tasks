@@ -6,12 +6,12 @@ import java.util.ArrayList;
 
 public interface ClientService {
     ArrayList<File> parseXmlToTheListOfFiles(String xmlDocument);
-    String getAllFiles();
-    String getXmlDocument(ArrayList<File> files);
-    StringBuilder getXmlElement(File file);
+    String getAllFilesInXml();
+    String getXmlDocumentFromArrayList(ArrayList<File> files);
+    StringBuilder getXmlElementFromFile(File file);
     String addFile();
     String editFile();
-    File editProgress(File file);
+    File editFileProgress(File file);
     String searchFiles();
     String deleteFile();
 }
