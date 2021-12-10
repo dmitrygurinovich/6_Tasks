@@ -50,9 +50,9 @@ public class UserInterfaceImpl implements UserInterface {
 
         switch (menuItem) {
             case 1:
-                return "service&get_all_files";
+                return "service&show_all_files";
             case 2:
-                return "service&search_files&Petrov";
+                return CLIENT_SERVICE.searchFiles();
             default:
                 return "Invalid command!";
         }
