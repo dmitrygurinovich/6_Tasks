@@ -38,9 +38,10 @@ public class Client {
                  PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true))
             {
                 String request;
+                String response;
 
                 if (clientUserSession.getFiles().size() == 0) {
-                    request = ("service&get_all_files");
+                    request = ("service&get_all_files&server_req");
                 } else {
                     if (!clientUserSession.isAuthorized()) {
                         request = controller.action("authorization&authorization");
@@ -49,14 +50,31 @@ public class Client {
                     }
                 }
 
-                out.println(request);
-                String response = in.readLine();
-                controller.action(response);
+                if (isToServerRequest(request)) {
+                    out.println(request);
+                    response = in.readLine();
+                    controller.action(response);
+                } else {
+                    out.println("no_req");
+                    controller.action(request);
+                }
 
             } catch (IOException exception) {
                 view.print("Server is not available now!\nPlease, start server!");
                 break;
             }
         }
+    }
+
+    private boolean isToServerRequest(String request) {
+        String[] params;
+        params = request.split("&");
+
+        for(String param : params) {
+            if (param.equals("server_req")) {
+                return true;
+            }
+        }
+        return false;
     }
 }

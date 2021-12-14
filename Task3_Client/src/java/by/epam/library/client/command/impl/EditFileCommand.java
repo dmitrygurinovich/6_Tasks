@@ -10,7 +10,6 @@ public class EditFileCommand implements ClientCommand {
         View view;
 
         view = PresentationProvider.getInstance().getVIEW();
-
         view.print("File has been edited!");
 
         return "edited";

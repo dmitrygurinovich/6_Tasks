@@ -27,6 +27,10 @@ public class MainController implements ServerController {
         authorizationController = ControllerProvider.getInstance().getAuthorizationController();
         serviceController = ControllerProvider.getInstance().getServiceController();
 
+        if (request.equals("no_req")) {
+            return request;
+        }
+
         switch (params[0]) {
             case "authorization":
                 return authorizationController.action(request);

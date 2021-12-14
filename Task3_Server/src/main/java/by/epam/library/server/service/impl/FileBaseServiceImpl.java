@@ -5,11 +5,6 @@ import by.epam.library.server.dao.DAOProvider;
 import by.epam.library.server.dao.FilesBaseDAO;
 import by.epam.library.server.service.FileBaseService;
 
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class FileBaseServiceImpl implements FileBaseService {
 
     public FileBaseServiceImpl() {}
@@ -43,39 +38,6 @@ public class FileBaseServiceImpl implements FileBaseService {
         return filesBaseDAO.getXmlDocument(filesBaseDAO.getFiles())
                 .replaceAll("\n", "")
                 .replaceAll("\t", "");
-    }
-
-    @Override
-    public String searchFilesByKeywords(String request) {
-        String[] params = request.split("\\s+");
-        ArrayList<File> result;
-        FilesBaseDAO filesBaseDAO;
-        Pattern pattern;
-        Matcher matcher;
-
-        filesBaseDAO = DAOProvider.getInstance().getFilesBaseDAO();
-        result = new ArrayList<>();
-        pattern = Pattern.compile(params[2].toLowerCase(Locale.ROOT));
-
-        for(File file : filesBaseDAO.getFiles()) {
-            StringBuilder fileFieldsForSearch;
-
-            fileFieldsForSearch = new StringBuilder();
-            fileFieldsForSearch.append(file.getStudent().getFirstName()).append(file.getStudent().getSecondName());
-            matcher = pattern.matcher(fileFieldsForSearch.toString().toLowerCase(Locale.ROOT));
-
-            if (matcher.find()) {
-                result.add(file);
-            }
-        }
-
-        if (result.size() != 0) {
-            return filesBaseDAO.getXmlDocument(result)
-                    .replaceAll("\n", "")
-                    .replaceAll("\t", "");
-        }
-
-        return "\"" + params[2] + "\" not found!";
     }
 }
 

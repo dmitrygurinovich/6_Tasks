@@ -33,6 +33,8 @@ public class Server {
         try {
             serverSocket = new ServerSocket(PORT);
             view.print(message);
+            String request;
+            String response;
 
             //noinspection InfiniteLoopStatement
             while (true) {
@@ -41,11 +43,15 @@ public class Server {
                      PrintWriter out= new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true)
                 ) {
 
-                    out.println(controller.action(in.readLine()));
+                    request = in.readLine();
+                    response = controller.action(request);
+                    out.println(response);
 
                 } catch (IOException exception) {
+
                     serverSocket.close();
                     this.runServer("\n#Server: client has been disconnected!\nWaiting a new connection.");
+
                 }
             }
         } catch (IOException e) {

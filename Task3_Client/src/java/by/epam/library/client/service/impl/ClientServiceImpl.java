@@ -7,8 +7,6 @@ import by.epam.library.client.bean.Subject;
 import by.epam.library.client.presentation.PresentationProvider;
 import by.epam.library.client.presentation.View;
 import by.epam.library.client.service.ClientService;
-import by.epam.library.client.service.ConsoleDataService;
-import by.epam.library.client.service.ServiceProvider;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -16,8 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ClientServiceImpl implements ClientService {
-    private static final ConsoleDataService consoleDataService = ServiceProvider.getInstance().getConsoleDataService();
-    private static int defaultFileId = -1;
+    private final ClientUserSession userSession = ClientUserSession.getInstance();
 
     @Override
     public ArrayList<File> parseXmlToTheListOfFiles(String xmlDocument) {
@@ -114,7 +111,60 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public String getXmlDocumentFromArrayList(ArrayList<File> files) {
+    public String searchFiles(String request) {
+        String[] params;
+        ArrayList<File> result;
+        Pattern pattern;
+        Matcher matcher;
+        ClientUserSession userSession;
+        View view;
+
+        params = request.split("&");
+        result = new ArrayList<>();
+        pattern = Pattern.compile(params[2].toLowerCase(Locale.ROOT));
+        userSession = ClientUserSession.getInstance();
+        view = PresentationProvider.getInstance().getVIEW();
+
+        for (File file : userSession.getFiles()) {
+            StringBuilder fileFieldsForSearch;
+
+            fileFieldsForSearch = new StringBuilder();
+
+            fileFieldsForSearch.append(file.getStudent().getFirstName()).append(file.getStudent().getSecondName());
+            matcher = pattern.matcher(fileFieldsForSearch.toString().toLowerCase(Locale.ROOT));
+
+            if (matcher.find()) {
+                result.add(file);
+            }
+        }
+
+        if (result.size() != 0) {
+            view.print("Result:");
+            for (File file : result) {
+                view.print(file);
+            }
+            return request;
+        }
+
+        view.print("No result!");
+
+        return request;
+    }
+
+    @Override
+    public void deleteFile(int id) {
+        userSession.getFiles().remove(id);
+
+        editAllFilesIdAfterFileDelete();
+    }
+
+    private void editAllFilesIdAfterFileDelete() {
+        for (int i = 0; i < userSession.getFiles().size(); i++) {
+            userSession.getFiles().get(i).setId(i + 1);
+        }
+    }
+
+    private String getXmlDocumentFromArrayList(ArrayList<File> files) {
         StringBuilder document;
 
         document = new StringBuilder();
@@ -128,8 +178,7 @@ public class ClientServiceImpl implements ClientService {
         return document.toString();
     }
 
-    @Override
-    public StringBuilder getXmlElementFromFile(File file) {
+    private StringBuilder getXmlElementFromFile(File file) {
         StringBuilder element = new StringBuilder();
         element.append("\t<file>\n");
         element.append("\t\t<id>").append(file.getId()).append("</id>\n");
@@ -161,224 +210,5 @@ public class ClientServiceImpl implements ClientService {
         element.append("\t</file>\n");
 
         return element;
-    }
-
-    @Override
-    public String editFile() {
-        StringBuilder request;
-        File file;
-        ClientUserSession userSession;
-        ClientService clientService;
-        int menuItem;
-        int fileId;
-
-        request = new StringBuilder("service&edit_file&");
-        clientService = ServiceProvider.getInstance().getClientService();
-        userSession = ClientUserSession.getInstance();
-
-        if (defaultFileId < 0) {
-            defaultFileId = consoleDataService.getNumFromConsole("Enter file's number:", 1, userSession.getFiles().size()) - 1;
-        }
-
-        fileId = defaultFileId;
-
-        file = userSession.getFiles().get(fileId);
-
-        menuItem = consoleDataService.getNumFromConsole("" +
-                "1. Edit first name\n" +
-                "2. Edit second name\n" +
-                "3. Edit age\n" +
-                "4. Edit group number\n" +
-                "5. Edit progress\n" +
-                "0. Exit to the main menu", 0, 5
-        );
-
-        switch (menuItem) {
-
-            case 1:
-                file.getStudent().setFirstName(consoleDataService.getStringFromConsole("Enter new first name:"));
-                break;
-            case 2:
-                file.getStudent().setSecondName(consoleDataService.getStringFromConsole("Enter new second name:"));
-                break;
-            case 3:
-                file.getStudent().setAge(consoleDataService.getNumFromConsole("Enter new age:", 17, 40));
-                break;
-            case 4:
-                file.getStudent().setGroupNumber(consoleDataService.getNumFromConsole("Enter new group number:", 1, 5));
-                break;
-            case 5:
-                editFileProgress(file);
-                break;
-            case 0:
-                request.append(clientService.getAllFilesInXml());
-                return request.toString();
-        }
-
-        return editFile();
-    }
-
-    @Override
-    public File editFileProgress(File file) {
-        int menuItem;
-
-        menuItem = consoleDataService.getNumFromConsole("" +
-                "Choose subject:\n" +
-                "1. Math\n" +
-                "2. Physics\n" +
-                "3. English\n" +
-                "4. Geography\n" +
-                "5. Literature\n" +
-                "0. To the file's editing menu\n", 0, 5
-        );
-
-        switch (menuItem) {
-            case 1:
-                file.getProgress().put(Subject.MATH, consoleDataService.getNumFromConsole("Math:", 1, 5));
-                break;
-            case 2:
-                file.getProgress().put(Subject.PHYSICS, consoleDataService.getNumFromConsole("Physics:", 1, 5));
-                break;
-            case 3:
-                file.getProgress().put(Subject.ENGLISH, consoleDataService.getNumFromConsole("English:", 1, 5));
-                break;
-            case 4:
-                file.getProgress().put(Subject.GEOGRAPHY, consoleDataService.getNumFromConsole("Geography:", 1, 5));
-                break;
-            case 5:
-                file.getProgress().put(Subject.LITERATURE, consoleDataService.getNumFromConsole("Literature:", 1, 5));
-                break;
-            case 0:
-                return file;
-        }
-
-        return editFileProgress(file);
-    }
-
-    @Override
-    public String searchFiles() {
-        StringBuilder request;
-
-        request = new StringBuilder("service&search_files&");
-        request.append(consoleDataService.getStringFromConsole("Enter a keyword for searching:"));
-
-        String[] params;
-        ArrayList<File> result;
-        Pattern pattern;
-        Matcher matcher;
-        ClientUserSession userSession;
-        View view;
-
-        params = request.toString().split("&");
-        result = new ArrayList<>();
-        pattern = Pattern.compile(params[2].toLowerCase(Locale.ROOT));
-        userSession = ClientUserSession.getInstance();
-        view = PresentationProvider.getInstance().getVIEW();
-
-        for (File file : userSession.getFiles()) {
-            StringBuilder fileFieldsForSearch;
-
-            fileFieldsForSearch = new StringBuilder();
-
-            fileFieldsForSearch.append(file.getStudent().getFirstName()).append(file.getStudent().getSecondName());
-            matcher = pattern.matcher(fileFieldsForSearch.toString().toLowerCase(Locale.ROOT));
-
-            if (matcher.find()) {
-                result.add(file);
-            }
-        }
-
-        if (result.size() != 0) {
-            view.print("Result:");
-            for (File file : result) {
-                view.print(file);
-            }
-            return request.toString();
-        }
-
-        view.print("No result!");
-
-        return request.toString();
-    }
-
-    @Override
-    public String addFile() {
-        ClientUserSession userSession;
-        Student student;
-        File file;
-        int menuItem;
-        StringBuilder request;
-
-        student = new Student();
-        userSession = ClientUserSession.getInstance();
-        request = new StringBuilder("service&add_file&");
-
-        student.setFirstName(consoleDataService.getStringFromConsole("Enter first name:"));
-        student.setSecondName(consoleDataService.getStringFromConsole("Enter second name:"));
-        student.setAge(consoleDataService.getNumFromConsole("Enter student's age", 17, 30));
-        student.setGroupNumber(consoleDataService.getNumFromConsole("Enter group number:", 1, 3));
-
-        file = new File(student);
-        file.setId(userSession.getFiles().size() + 1);
-
-        menuItem = consoleDataService.getNumFromConsole("" +
-                "Would you like to add student's progress?\n" +
-                "1. Yes\n" +
-                "2. No\n", 1, 2);
-
-        if (menuItem == 1) {
-
-            while (menuItem != 0) {
-                menuItem = consoleDataService.getNumFromConsole("" +
-                        "Add progress:\n" +
-                        "1. Math\n" +
-                        "2. Physics\n" +
-                        "3. English\n" +
-                        "4. Geography\n" +
-                        "5. Literature\n" +
-                        "0. Save and add file to base", 0, 5);
-
-                switch (menuItem) {
-                    case 1:
-                        file.getProgress().put(Subject.MATH, consoleDataService.getNumFromConsole("Math:", 1, 5));
-                        break;
-                    case 2:
-                        file.getProgress().put(Subject.PHYSICS, consoleDataService.getNumFromConsole("Physics:", 1, 5));
-                        break;
-                    case 3:
-                        file.getProgress().put(Subject.ENGLISH, consoleDataService.getNumFromConsole("English", 1, 5));
-                        break;
-                    case 4:
-                        file.getProgress().put(Subject.GEOGRAPHY, consoleDataService.getNumFromConsole("Geography",1 ,5));
-                        break;
-                    case 5:
-                        file.getProgress().put(Subject.LITERATURE, consoleDataService.getNumFromConsole("Literature", 1, 5));
-                        break;
-                }
-            }
-        }
-
-        userSession.getFiles().add(file);
-
-        return request.append(getAllFilesInXml()).toString();
-    }
-
-    @Override
-    public String deleteFile() {
-        int fileId;
-        ClientUserSession userSession;
-        StringBuilder request;
-
-        userSession = ClientUserSession.getInstance();
-        request = new StringBuilder("service&delete_file&");
-        fileId = consoleDataService.getNumFromConsole("Enter file's ID:", 1, userSession.getFiles().size());
-
-        userSession.getFiles().remove(fileId - 1);
-
-        for (int i = 0; i < userSession.getFiles().size(); i++) {
-            userSession.getFiles().get(i).setId(i + 1);
-        }
-
-        return request.append(getAllFilesInXml()).toString();
     }
 }

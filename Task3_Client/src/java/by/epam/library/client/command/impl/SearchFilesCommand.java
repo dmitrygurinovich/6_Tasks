@@ -13,6 +13,6 @@ public class SearchFilesCommand implements ClientCommand {
 
         clientService = ServiceProvider.getInstance().getClientService();
 
-        return clientService.searchFiles();
+        return clientService.searchFiles(request);
     }
 }

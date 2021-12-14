@@ -7,7 +7,7 @@ import by.epam.library.server.service.FileBaseService;
 import by.epam.library.server.service.ServiceProvider;
 
 public class AddFileCommand implements ServerCommand {
-    @Override
+    @Override //TODO перенести логику в сервисы, а в командах только вызывать
     public String execute(String request) {
         FileBaseService fileBaseService;
         FilesBaseDAO filesBaseDAO;

@@ -5,7 +5,7 @@ import by.epam.library.client.command.ClientCommand;
 import by.epam.library.client.service.ClientService;
 import by.epam.library.client.service.impl.ClientServiceImpl;
 
-public class GetAllFilesCommand implements ClientCommand {
+public class GetFilesFromServerCommand implements ClientCommand {
     @Override
     public String execute(String request) {
         ClientService clientService;

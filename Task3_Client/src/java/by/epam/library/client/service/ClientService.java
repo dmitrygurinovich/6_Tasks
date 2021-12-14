@@ -7,11 +7,6 @@ import java.util.ArrayList;
 public interface ClientService {
     ArrayList<File> parseXmlToTheListOfFiles(String xmlDocument);
     String getAllFilesInXml();
-    String getXmlDocumentFromArrayList(ArrayList<File> files);
-    StringBuilder getXmlElementFromFile(File file);
-    String addFile();
-    String editFile();
-    File editFileProgress(File file);
-    String searchFiles();
-    String deleteFile();
+    String searchFiles(String request);
+    void deleteFile(int id);
 }
