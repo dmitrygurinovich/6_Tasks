@@ -5,7 +5,7 @@ import by.epam.archive.client.command.ClientCommand;
 import by.epam.archive.client.presentation.PresentationProvider;
 import by.epam.archive.client.presentation.View;
 
-public class ServerHasNotFilesCommand implements ClientCommand {
+public class SessionHasNotFilesCommand implements ClientCommand {
     private final ClientUserSession userSession = ClientUserSession.getInstance();
     private final View view = PresentationProvider.getInstance().getVIEW();
 

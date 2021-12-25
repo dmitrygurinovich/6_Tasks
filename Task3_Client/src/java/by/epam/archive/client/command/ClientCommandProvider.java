@@ -21,7 +21,7 @@ public class ClientCommandProvider {
         COMMANDS.put("add_file", new AddFileCommand());
         COMMANDS.put("delete_file", new DeleteFileCommand());
         COMMANDS.put("log_out", new LogOutCommand());
-        COMMANDS.put("no_files", new ServerHasNotFilesCommand());
+        COMMANDS.put("no_files", new SessionHasNotFilesCommand());
     }
 
     public static ClientCommandProvider getInstance() {
