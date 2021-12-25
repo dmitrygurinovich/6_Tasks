@@ -1,6 +1,7 @@
 package by.epam.archive.client.controller;
 
 import by.epam.archive.client.controller.impl.AuthorizationController;
+import by.epam.archive.client.controller.impl.ErrorController;
 import by.epam.archive.client.controller.impl.MenuController;
 import by.epam.archive.client.controller.impl.ServiceController;
 
@@ -9,6 +10,7 @@ public class ControllerProvider {
     private final ClientController AUTHORIZATION_CONTROLLER = new AuthorizationController();
     private final ClientController SERVICE_CONTROLLER = new ServiceController();
     private final ClientController MENU_CONTROLLER = new MenuController();
+    private final ClientController ERROR_CONTROLLER = new ErrorController();
 
     private ControllerProvider() {}
 
@@ -29,5 +31,9 @@ public class ControllerProvider {
 
     public ClientController getMENU_CONTROLLER() {
         return MENU_CONTROLLER;
+    }
+
+    public ClientController getERROR_CONTROLLER() {
+        return ERROR_CONTROLLER;
     }
 }

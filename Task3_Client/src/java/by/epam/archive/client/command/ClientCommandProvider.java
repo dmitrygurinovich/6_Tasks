@@ -17,10 +17,11 @@ public class ClientCommandProvider {
         COMMANDS.put("authorization", new AuthorizationCommand());
         COMMANDS.put("log_in", new LogInCommand());
         COMMANDS.put("menu", new GetMenuCommand());
-        COMMANDS.put("filed", new AuthorizationFailedCommand());
+        COMMANDS.put("authorization_error", new AuthorizationFailedCommand());
         COMMANDS.put("add_file", new AddFileCommand());
         COMMANDS.put("delete_file", new DeleteFileCommand());
         COMMANDS.put("log_out", new LogOutCommand());
+        COMMANDS.put("no_files", new ServerHasNotFilesCommand());
     }
 
     public static ClientCommandProvider getInstance() {

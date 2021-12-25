@@ -12,6 +12,7 @@ import by.epam.archive.client.service.ServiceProvider;
 public class UserInterfaceImpl implements UserInterface {
     private static final ConsoleDataService CONSOLE_DATA = ServiceProvider.getInstance().getConsoleDataService();
     private final ClientService CLIENT_SERVICE = ServiceProvider.getInstance().getClientService();
+    private final ClientUserSession userSession = ClientUserSession.getInstance();
     private static int defaultFileId = -1;
 
     @Override
@@ -81,6 +82,9 @@ public class UserInterfaceImpl implements UserInterface {
     }
 
     private String getSearchFilesRequest() {
+        if (userSession.getFiles().isEmpty()) {
+            return "error&no_files";
+        }
         StringBuilder request;
 
         request = new StringBuilder("service&search_files&");
@@ -151,6 +155,10 @@ public class UserInterfaceImpl implements UserInterface {
     }
 
     private String getEditFileRequest() {
+        if (userSession.getFiles().isEmpty()) {
+            return "error&no_files";
+        }
+
         StringBuilder request;
         File file;
         ClientUserSession userSession;

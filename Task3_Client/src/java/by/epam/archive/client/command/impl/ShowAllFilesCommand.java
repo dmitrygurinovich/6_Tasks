@@ -15,8 +15,12 @@ public class ShowAllFilesCommand implements ClientCommand {
         clientUserSession = ClientUserSession.getInstance();
         view = PresentationProvider.getInstance().getVIEW();
 
-        for (File file : clientUserSession.getFiles()) {
-            view.print(file);
+        if (clientUserSession.getFiles().isEmpty()) {
+            view.print("\nNo files!\n");
+        } else {
+            for (File file : clientUserSession.getFiles()) {
+                view.print(file);
+            }
         }
 
         return "get_all_files";

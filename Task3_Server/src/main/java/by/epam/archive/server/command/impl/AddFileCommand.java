@@ -12,14 +12,16 @@ public class AddFileCommand implements ServerCommand {
         FileBaseService fileBaseService;
         FilesBaseDAO filesBaseDAO;
         String[] params;
+        StringBuilder response;
 
         fileBaseService = ServiceProvider.getInstance().getFileBaseService();
         filesBaseDAO = DAOProvider.getInstance().getFilesBaseDAO();
         params = request.split("&");
+        response = new StringBuilder(params[0].concat("&").concat(params[1]).concat("&"));
 
         filesBaseDAO.setFiles(filesBaseDAO.parseXmlToTheListOfFiles(params[2]));
         filesBaseDAO.writeFilesToXmlFile();
 
-        return params[1].concat("&").concat(fileBaseService.getAllFiles());
+        return response.append(fileBaseService.getAllFiles()).toString();
     }
 }

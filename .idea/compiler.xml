@@ -10,6 +10,7 @@
         <module name="Task1" />
         <module name="Task3_Server" />
         <module name="Task3_Client" />
+        <module name="Task4" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -20,6 +21,7 @@
       <module name="Task3_Client" target="8" />
       <module name="Task3_Server" target="8" />
       <module name="Task3_server" target="15" />
+      <module name="Task4" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

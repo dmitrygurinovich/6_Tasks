@@ -11,6 +11,7 @@
         <module>Task2</module>
         <module>Task3_Client</module>
         <module>Task3_Server</module>
+        <module>Task4</module>
     </modules>
     <dependencies>
         <dependency>

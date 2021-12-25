@@ -40,7 +40,7 @@ public class Client {
                 String request;
                 String response;
 
-                if (clientUserSession.getFiles().size() == 0) {
+                if (!clientUserSession.isFilesReceived()) {
                     request = ("service&get_all_files&server_req");
                 } else {
                     if (!clientUserSession.isAuthorized()) {

@@ -11,12 +11,13 @@ public class MainController implements ClientController {
         ClientController authorizationController;
         ClientController serviceController;
         ClientController menuController;
+        ClientController errorController;
 
         params = request.split("&");
-
         authorizationController = ControllerProvider.getInstance().getAUTHORIZATION_CONTROLLER();
         serviceController = ControllerProvider.getInstance().getSERVICE_CONTROLLER();
         menuController = ControllerProvider.getInstance().getMENU_CONTROLLER();
+        errorController = ControllerProvider.getInstance().getERROR_CONTROLLER();
 
         switch (params[0]) {
             case "authorization":
@@ -25,6 +26,8 @@ public class MainController implements ClientController {
                 return menuController.action(request);
             case "service":
                 return serviceController.action(request);
+            case "error":
+                return errorController.action(request);
             default:
                 return "Invalid command!";
         }

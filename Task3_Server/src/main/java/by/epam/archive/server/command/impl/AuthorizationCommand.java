@@ -33,6 +33,6 @@ public class AuthorizationCommand implements ServerCommand {
                         .toString();
             }
         }
-        return "authorization&filed";
+        return "error&authorization_error";
     }
 }

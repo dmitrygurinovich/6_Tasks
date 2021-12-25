@@ -4,6 +4,8 @@ import by.epam.archive.server.bean.File;
 import by.epam.archive.server.bean.Student;
 import by.epam.archive.server.bean.Subject;
 import by.epam.archive.server.dao.FilesBaseDAO;
+import by.epam.archive.server.view.View;
+import by.epam.archive.server.view.impl.ViewImpl;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,6 +19,7 @@ import java.util.regex.Pattern;
 
 public final class XMLFilesBaseDAO implements FilesBaseDAO {
     private final String FILES_BASE_PATH = "Task3_Server/resources/files.xml";
+    private final View VIEW = ViewImpl.getInstance();
     private ArrayList<File> files;
 
     public XMLFilesBaseDAO() {
@@ -35,11 +38,11 @@ public final class XMLFilesBaseDAO implements FilesBaseDAO {
             for (String line : lines) {
                 xmlDocument.append(line);
             }
-            files = parseXmlToTheListOfFiles(xmlDocument.toString());
 
-            return files;
+            return parseXmlToTheListOfFiles(xmlDocument.toString());
+
         } catch (IOException exception) {
-            exception.printStackTrace();
+            VIEW.print("#Server: file not found " + exception.getMessage());
         }
         return files;
     }

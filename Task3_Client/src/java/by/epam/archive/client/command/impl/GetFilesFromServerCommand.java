@@ -14,6 +14,7 @@ public class GetFilesFromServerCommand implements ClientCommand {
         clientService = new ClientServiceImpl();
         clientUserSession = ClientUserSession.getInstance();
 
+        clientUserSession.setFilesReceived(true);
         clientUserSession.setFiles(clientService.parseXmlToTheListOfFiles(request));
 
         return "get_all_files";

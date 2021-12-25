@@ -12,14 +12,16 @@ public class DeleteFileCommand implements ServerCommand {
         String[] params;
         FileBaseService fileBaseService;
         FilesBaseDAO filesBaseDAO;
+        StringBuilder response;
 
         params = request.split("&");
         fileBaseService = ServiceProvider.getInstance().getFileBaseService();
         filesBaseDAO = DAOProvider.getInstance().getFilesBaseDAO();
+        response = new StringBuilder(params[0].concat("&").concat(params[1].concat("&")));
 
         filesBaseDAO.setFiles(filesBaseDAO.parseXmlToTheListOfFiles(params[2]));
         filesBaseDAO.writeFilesToXmlFile();
 
-        return params[1].concat("&").concat(fileBaseService.getAllFiles());
+        return response.append(fileBaseService.getAllFiles()).toString();
     }
 }

@@ -10,8 +10,8 @@ public class AuthorizationFailedCommand implements ClientCommand {
         View view;
 
         view = PresentationProvider.getInstance().getVIEW();
+        view.print("\nWrong username or password!\n");
 
-        view.print("Wrong username or password!");
         return request;
     }
 }

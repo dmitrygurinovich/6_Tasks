@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class ClientUserSession {
     private boolean authorized;
     private User user;
+    private boolean isFilesReceived;
     private ArrayList<File> files;
     private static ClientUserSession instance;
 
@@ -12,6 +13,7 @@ public class ClientUserSession {
         this.user = new User();
         this.files = new ArrayList<>();
         this.authorized = false;
+        this.isFilesReceived = false;
     }
 
     public static ClientUserSession getInstance() {
@@ -43,5 +45,13 @@ public class ClientUserSession {
 
     public void setFiles(ArrayList<File> files) {
         this.files = files;
+    }
+
+    public boolean isFilesReceived() {
+        return isFilesReceived;
+    }
+
+    public void setFilesReceived(boolean filesReceived) {
+        isFilesReceived = filesReceived;
     }
 }
