@@ -5,40 +5,15 @@
 		<student>
 			<first-name>Dmitry</first-name>
 			<second-name>Gurinovich</second-name>
-			<age>32</age>
-			<group>2</group>
+			<age>18</age>
+			<group>1</group>
 		</student>
 		<progress>
 			<math>5</math>
 			<english>5</english>
 			<geography>5</geography>
 			<physics>4</physics>
-			<literature>4</literature>
+			<literature>5</literature>
 		</progress>
-	</file>
-	<file>
-		<id>2</id>
-		<student>
-			<first-name>Petr</first-name>
-			<second-name>Petrov</second-name>
-			<age>21</age>
-			<group>1</group>
-		</student>
-		<progress>
-			<math>5</math>
-			<english>4</english>
-			<geography>4</geography>
-			<physics>5</physics>
-			<literature>4</literature>
-		</progress>
-	</file>
-	<file>
-		<id>3</id>
-		<student>
-			<first-name>Oksana</first-name>
-			<second-name>Gurinovich</second-name>
-			<age>19</age>
-			<group>2</group>
-		</student>
 	</file>
 </files>

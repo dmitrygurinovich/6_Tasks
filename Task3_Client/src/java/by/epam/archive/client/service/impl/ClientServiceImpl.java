@@ -139,7 +139,7 @@ public class ClientServiceImpl implements ClientService {
         }
 
         if (result.size() != 0) {
-            view.print("Result:");
+            view.print("\nResult:\n");
             for (File file : result) {
                 view.print(file);
             }
