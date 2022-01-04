@@ -1,6 +1,7 @@
 package by.epam.library.service.impl;
 
 import by.epam.library.bean.Book;
+import by.epam.library.bean.Library;
 import by.epam.library.bean.User;
 import by.epam.library.bean.UserRole;
 import by.epam.library.presentation.PresentationProvider;
@@ -25,21 +26,18 @@ public final class EmailSenderServiceImpl implements EmailSenderService {
 
     @Override
     public void notifyUsersAboutAddingBookDescription(String subject, Book book) {
-        View view;
-        final String SSL_FACTORY;
-        Properties props;
+        View view = viewProvider.getView();
+        Properties props = System.getProperties();
         Session session;
         Message message;
 
-        view = viewProvider.getView();
-        SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
-        props = System.getProperties();
-
         props.setProperty("mail.smtp.host", "smtp.gmail.com");
-        props.setProperty("mail.smtp.socketFactory.class", SSL_FACTORY);
+        props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.setProperty("mail.smtp.socketFactory.fallback", "false");
         props.setProperty("mail.smtp.port", "465");
         props.setProperty("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.ssl.protocols", "TLSv1.2");
+        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
         props.put("mail.smtp.auth", "true");
         props.put("mail.debug", "true");
         props.put("mail.store.protocol", "pop3");
@@ -74,22 +72,20 @@ public final class EmailSenderServiceImpl implements EmailSenderService {
     }
 
     @Override
-    public void suggestToAddABookToTheLibrary(User user, Book book) {
-        final String SSL_FACTORY;
-        View view;
-        Properties props;
+    public void suggestToAddABookToTheLibrary(Book book) {
+        View view = viewProvider.getView();
+        Properties props = System.getProperties();
         Session session;
         Message message;
-
-        view = viewProvider.getView();
-        SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
-        props = System.getProperties();
+        User user = Library.getInstance().getAuthorizedUser();
 
         props.setProperty("mail.smtp.host", "smtp.gmail.com");
-        props.setProperty("mail.smtp.socketFactory.class", SSL_FACTORY);
+        props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.setProperty("mail.smtp.socketFactory.fallback", "false");
         props.setProperty("mail.smtp.port", "465");
         props.setProperty("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.ssl.protocols", "TLSv1.2");
+        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
         props.put("mail.smtp.auth", "true");
         props.put("mail.debug", "true");
         props.put("mail.store.protocol", "pop3");

@@ -80,7 +80,7 @@ public final class UserInterfaceImpl implements UserInterface {
                 controller.doAction("service search_books");
                 controller.doAction("presentation user_menu");
             case 3:
-                controller.doAction("service suggest_books");
+                controller.doAction("service suggest_book");
                 controller.doAction("presentation user_menu");
             case 0:
                 controller.doAction("presentation exit");

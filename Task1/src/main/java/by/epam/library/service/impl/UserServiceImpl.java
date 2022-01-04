@@ -30,6 +30,6 @@ public final class UserServiceImpl implements UserService {
         book.setYear(console.getNumFromConsole("Enter book's year:", 1800, 2021));
         book.setType((console.getNumFromConsole("Choose book's type:\n" + "1. Paper book\n" + "2. E-book", 0, 2) == 1 ? BookType.PAPER_BOOK : BookType.ELECTRONIC_BOOK));
 
-        emailSenderService.suggestToAddABookToTheLibrary(user, book);
+        emailSenderService.suggestToAddABookToTheLibrary(book);
     }
 }
