@@ -12,108 +12,83 @@ import by.epam.library.presentation.View;
 import java.util.Scanner;
 
 public final class UserInterfaceImpl implements UserInterface {
-    private static final PresentationProvider presentationProvider = PresentationProvider.getInstance();
-    private static final DataFromConsole dataFromConsole = presentationProvider.getDataFromConsole();
-    private static final Controller controller = new MainController();
+    private static final PresentationProvider PRESENTATION_PROVIDER = PresentationProvider.getInstance();
+    private static final DataFromConsole DATA_FROM_CONSOLE = PRESENTATION_PROVIDER.getDataFromConsole();
+    private static final Controller MAIN_CONTROLLER = new MainController();
 
-    public UserInterfaceImpl() {}
+    public UserInterfaceImpl() {
+
+    }
 
     @Override
     public void adminMenu() {
-        int minMenuItem;
-        int maxMenuItem;
-        int menuItem;
-
-        minMenuItem = 0;
-        maxMenuItem = 5;
-
-        menuItem = dataFromConsole.getMenuItem(minMenuItem, maxMenuItem, "" +
+        int minMenuItem = 0;
+        int maxMenuItem = 5;
+        int menuItem = DATA_FROM_CONSOLE.getNumFromConsole("" +
                 "+++ ADMIN MENU +++\n" +
                 "1. Show catalog\n" +
                 "2. Search book\n" +
                 "3. Add book\n" +
                 "4. Edit book\n" +
                 "5. Add user\n" +
-                "0. Exit");
+                "0. Exit",
+                minMenuItem, maxMenuItem);
 
         switch (menuItem) {
             case 1:
-                controller.doAction("presentation show_books");
+                MAIN_CONTROLLER.doAction("presentation show_books");
             case 2:
-                controller.doAction("service search_books");
-                controller.doAction("presentation admin_menu");
+                MAIN_CONTROLLER.doAction("service search_books");
+                MAIN_CONTROLLER.doAction("presentation admin_menu");
             case 3:
-                controller.doAction("service add_book");
-                controller.doAction("presentation admin_menu");
+                MAIN_CONTROLLER.doAction("service add_book");
+                MAIN_CONTROLLER.doAction("presentation admin_menu");
             case 4:
-                controller.doAction("service edit_book");
-                controller.doAction("presentation admin_menu");
+                MAIN_CONTROLLER.doAction("service edit_book");
+                MAIN_CONTROLLER.doAction("presentation admin_menu");
             case 5:
-                controller.doAction("service add_user");
-                controller.doAction("presentation admin_menu");
+                MAIN_CONTROLLER.doAction("service add_user");
+                MAIN_CONTROLLER.doAction("presentation admin_menu");
             case 0:
-                controller.doAction("presentation exit");
+                MAIN_CONTROLLER.doAction("presentation exit");
         }
     }
 
     @Override
     public void userMenu() {
-        int minMenuItem;
-        int maxMenuItem;
-        int menuItem;
-
-        minMenuItem = 0;
-        maxMenuItem = 4;
-
-        menuItem = dataFromConsole.getMenuItem(minMenuItem, maxMenuItem, "" +
+        int minMenuItem = 0;
+        int maxMenuItem = 4;
+        int menuItem = DATA_FROM_CONSOLE.getNumFromConsole( "" +
                 "+++ USER MENU +++\n" +
                 "1. Show catalog\n" +
                 "2. Search book\n" +
                 "3. Suggest new book\n" +
-                "0. Exit");
+                "0. Exit",
+                minMenuItem, maxMenuItem);
 
         switch (menuItem) {
             case 1:
-                controller.doAction("presentation show_books");
-                controller.doAction("presentation user_menu");
+                MAIN_CONTROLLER.doAction("presentation show_books");
+                MAIN_CONTROLLER.doAction("presentation user_menu");
             case 2:
-                controller.doAction("service search_books");
-                controller.doAction("presentation user_menu");
+                MAIN_CONTROLLER.doAction("service search_books");
+                MAIN_CONTROLLER.doAction("presentation user_menu");
             case 3:
-                controller.doAction("service suggest_book");
-                controller.doAction("presentation user_menu");
+                MAIN_CONTROLLER.doAction("service suggest_book");
+                MAIN_CONTROLLER.doAction("presentation user_menu");
             case 0:
-                controller.doAction("presentation exit");
+                MAIN_CONTROLLER.doAction("presentation exit");
         }
     }
 
     @Override
     public void authorization() {
-        Library library;
-        View view;
-        Scanner in;
-        String login;
-        String password;
-        boolean authorized;
+        Library library= Library.getInstance();
+        View view = PRESENTATION_PROVIDER.getView();
+        boolean authorized = false;
 
-        authorized = false;
-        library= Library.getInstance();
-        view = presentationProvider.getView();
-        in = new Scanner(System.in);
-
-        view.print("Enter login: ");
-        while (!in.hasNextLine()) {
-            in.next();
-            view.print("Enter login: ");
-        }
-        login = in.nextLine();
-
-        view.print("Enter password: ");
-        while (!in.hasNextLine()) {
-            in.next();
-            view.print("Enter password: ");
-        }
-        password = in.nextLine();
+        String login = DATA_FROM_CONSOLE.getStringFromConsole("Enter login: ");
+        String password = DATA_FROM_CONSOLE.getStringFromConsole("Enter password: ");
 
         for (int i = 0; i < library.getUsers().size(); i++) {
             if (library.getUsers().get(i).getLogin().equals(login)) {
@@ -138,10 +113,7 @@ public final class UserInterfaceImpl implements UserInterface {
 
     @Override
     public void exit() {
-        Scanner in;
-
-        in = new Scanner(System.in);
-
+        Scanner in = new Scanner(System.in);
         in.close();
         System.exit(0);
     }

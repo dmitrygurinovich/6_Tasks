@@ -10,17 +10,16 @@ import by.epam.library.presentation.View;
 import java.util.Scanner;
 
 public final class ViewImpl implements View {
-    private static final PresentationProvider viewProvider = PresentationProvider.getInstance();
+    private static final PresentationProvider VIEW_PROVIDER = PresentationProvider.getInstance();
 
-    public ViewImpl() {}
+    public ViewImpl() {
+
+    }
 
     @Override
     public void showBooks() {
-        int defaultPageNumber;
-        Library library;
-
-        defaultPageNumber = 1;
-        library = Library.getInstance();
+        Library library = Library.getInstance();
+        int defaultPageNumber = 1;
 
         if (library.getBooks().size() == 0) {
             print("There aren't books!");
@@ -36,17 +35,12 @@ public final class ViewImpl implements View {
 
     @Override
     public void showBooksByPages(int defaultPageNumber) {
-        int pagesCount;
-        Scanner in;
-        Library library;
-        UserInterface userInterface;
-
+        Scanner in = new Scanner(System.in);
+        Library library = Library.getInstance();
+        UserInterface userInterface = VIEW_PROVIDER.getUserInterface();
+        int pagesCount = (library.getBooks().size() - (library.getBooks().size() % 10)) / 10;
         int pageNumber = defaultPageNumber;
-        in = new Scanner(System.in);
-        library = Library.getInstance();
-        userInterface = viewProvider.getUserInterface();
 
-        pagesCount = (library.getBooks().size() - (library.getBooks().size() % 10)) / 10;
         if (library.getBooks().size() % 10 != 0) {
             pagesCount++;
         }

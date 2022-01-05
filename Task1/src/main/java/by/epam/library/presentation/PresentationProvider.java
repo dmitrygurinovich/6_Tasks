@@ -6,10 +6,9 @@ import by.epam.library.presentation.impl.ViewImpl;
 
 public final class PresentationProvider {
     private static PresentationProvider instance;
-
-    private final View view = new ViewImpl();
-    private final UserInterface userInterface = new UserInterfaceImpl();
-    private final DataFromConsole dataFromConsole = new DataFromConsoleImpl();
+    private final View VIEW = new ViewImpl();
+    private final UserInterface USER_INTERFACE = new UserInterfaceImpl();
+    private final DataFromConsole DATA_FROM_CONSOLE = new DataFromConsoleImpl();
 
     private PresentationProvider() {}
 
@@ -21,14 +20,14 @@ public final class PresentationProvider {
     }
 
     public View getView() {
-        return view;
+        return VIEW;
     }
 
     public UserInterface getUserInterface() {
-        return userInterface;
+        return USER_INTERFACE;
     }
 
     public DataFromConsole getDataFromConsole() {
-        return dataFromConsole;
+        return DATA_FROM_CONSOLE;
     }
 }

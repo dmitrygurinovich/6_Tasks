@@ -8,6 +8,7 @@ import by.epam.library.presentation.PresentationProvider;
 import by.epam.library.presentation.View;
 import by.epam.library.service.EmailSenderService;
 import by.epam.library.service.ServiceProvider;
+import by.epam.library.service.UserBaseService;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -19,17 +20,18 @@ public final class EmailSenderServiceImpl implements EmailSenderService {
     private final String USERNAME = "gurinovich.notify@gmail.com";
     private final String PASSWORD = "4531689925qWe";
 
-    private final static ServiceProvider serviceProvider = ServiceProvider.getInstance();
-    private static final PresentationProvider viewProvider = PresentationProvider.getInstance();
+    private final static PresentationProvider PRESENTATION_PROVIDER = PresentationProvider.getInstance();
 
-    public EmailSenderServiceImpl() {}
+    public EmailSenderServiceImpl() {
+    }
 
     @Override
     public void notifyUsersAboutAddingBookDescription(String subject, Book book) {
-        View view = viewProvider.getView();
+        View view = PRESENTATION_PROVIDER.getView();
         Properties props = System.getProperties();
-        Session session;
-        Message message;
+        ServiceProvider serviceProvider = ServiceProvider.getInstance();
+        UserBaseService userBaseService = serviceProvider.getUserBaseService();
+        Address[] usersEmails = userBaseService.getUsersEmails(UserRole.USER);
 
         props.setProperty("mail.smtp.host", "smtp.gmail.com");
         props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
@@ -44,18 +46,18 @@ public final class EmailSenderServiceImpl implements EmailSenderService {
         props.put("mail.transport.protocol", "smtp");
 
         try {
-            session = Session.getDefaultInstance(props,
+            Session session = Session.getDefaultInstance(props,
                     new Authenticator() {
                         protected PasswordAuthentication getPasswordAuthentication() {
                             return new PasswordAuthentication(USERNAME, PASSWORD);
                         }
                     });
 
-            message = new MimeMessage(session);
+            Message message = new MimeMessage(session);
 
-            message.setFrom(new InternetAddress("gurinovich.notify@gmail.com")); // field "from"
+            message.setFrom(new InternetAddress("gurinovich.notify@gmail.com"));
             message.setRecipients(
-                    Message.RecipientType.TO, serviceProvider.getUserBaseService().getUsersEmails(UserRole.USER));
+                    Message.RecipientType.TO, usersEmails);
             message.setSubject(subject);
             message.setText("Description has been added for book: \n" +
                     "№: " + book.getId() + "\n" +
@@ -73,11 +75,10 @@ public final class EmailSenderServiceImpl implements EmailSenderService {
 
     @Override
     public void suggestToAddABookToTheLibrary(Book book) {
-        View view = viewProvider.getView();
+        View view = PRESENTATION_PROVIDER.getView();
+        Library library = Library.getInstance();
+        User user = library.getAuthorizedUser();
         Properties props = System.getProperties();
-        Session session;
-        Message message;
-        User user = Library.getInstance().getAuthorizedUser();
 
         props.setProperty("mail.smtp.host", "smtp.gmail.com");
         props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
@@ -92,14 +93,14 @@ public final class EmailSenderServiceImpl implements EmailSenderService {
         props.put("mail.transport.protocol", "smtp");
 
         try {
-            session = Session.getDefaultInstance(props,
+            Session session = Session.getDefaultInstance(props,
                     new Authenticator() {
                         protected PasswordAuthentication getPasswordAuthentication() {
                             return new PasswordAuthentication(USERNAME, PASSWORD);
                         }
                     });
 
-            message = new MimeMessage(session);
+            Message message = new MimeMessage(session);
 
             message.setFrom(new InternetAddress("dmitry.gurinovic1989@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,

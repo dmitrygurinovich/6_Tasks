@@ -19,33 +19,25 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class LibraryServiceImpl implements LibraryService {
-    private static final DAOProvider daoProvider = DAOProvider.getInstance();
-    private static final ServiceProvider serviceProvider = ServiceProvider.getInstance();
-    private static final PresentationProvider viewProvider = PresentationProvider.getInstance();
+    private static final DAOProvider DAO_PROVIDER = DAOProvider.getInstance();
+    private static final ServiceProvider SERVICE_PROVIDER = ServiceProvider.getInstance();
+    private static final PresentationProvider PRESENTATION_PROVIDER = PresentationProvider.getInstance();
+    private static final DataFromConsole DATA_FROM_CONSOLE = PRESENTATION_PROVIDER.getDataFromConsole();
 
     public LibraryServiceImpl() {
+
     }
 
     @Override
     public void searchBooksByKeyword() {
-        String keyword;
-        StringBuilder concatenateBookFields;
-        Pattern pattern;
-        Matcher matcher;
-        ArrayList<Book> books;
-        View view;
-        DataFromConsole console;
-        Library library;
-
-        view = viewProvider.getView();
-        console = viewProvider.getDataFromConsole();
-        keyword = console.getStringFromConsole("Enter keyword for search: ");
-        pattern = Pattern.compile(keyword.toLowerCase(Locale.ROOT));
-        books = new ArrayList<>();
-        library = Library.getInstance();
+        ArrayList<Book> books = new ArrayList<>();
+        View view = PRESENTATION_PROVIDER.getView();
+        Library library = Library.getInstance();
+        String keyword = DATA_FROM_CONSOLE.getStringFromConsole("Enter keyword for search: ");
+        Pattern pattern = Pattern.compile(keyword.toLowerCase(Locale.ROOT));
 
         for (int i = 0; i < library.getBooks().size(); i++) {
-            concatenateBookFields = new StringBuilder();
+            StringBuilder concatenateBookFields = new StringBuilder();
             concatenateBookFields
                     .append(library.getBooks().get(i).getName())
                     .append(library.getBooks().get(i).getAuthor())
@@ -55,7 +47,7 @@ public final class LibraryServiceImpl implements LibraryService {
                 concatenateBookFields.append(library.getBooks().get(i).getDescription());
             }
 
-            matcher = pattern.matcher(concatenateBookFields.toString().toLowerCase(Locale.ROOT));
+            Matcher matcher = pattern.matcher(concatenateBookFields.toString().toLowerCase(Locale.ROOT));
 
             if (matcher.find()) {
                 books.add(library.getBooks().get(i));
@@ -81,8 +73,8 @@ public final class LibraryServiceImpl implements LibraryService {
 
         book = new Book();
         library = Library.getInstance();
-        view = viewProvider.getView();
-        console = viewProvider.getDataFromConsole();
+        view = PRESENTATION_PROVIDER.getView();
+        console = PRESENTATION_PROVIDER.getDataFromConsole();
         libraryDAO = DAOProvider.getInstance().getLibraryDAO();
 
         book.setName(console.getStringFromConsole("Enter book's name: "));
@@ -106,8 +98,8 @@ public final class LibraryServiceImpl implements LibraryService {
         DataFromConsole console;
 
         library = Library.getInstance();
-        userInterface = viewProvider.getUserInterface();
-        console = viewProvider.getDataFromConsole();
+        userInterface = PRESENTATION_PROVIDER.getUserInterface();
+        console = PRESENTATION_PROVIDER.getDataFromConsole();
 
         bookNumber = console.getNumFromConsole("" +
                 "Enter book's number or \"0\" for exit to the main menu: ", 0, library.getBooks().size());
@@ -133,11 +125,11 @@ public final class LibraryServiceImpl implements LibraryService {
         LibraryDAO libraryService;
 
         library = Library.getInstance();
-        view = viewProvider.getView();
-        dataFromConsole = viewProvider.getDataFromConsole();
-        userInterface = viewProvider.getUserInterface();
-        emailSenderService = serviceProvider.getEmailSenderService();
-        libraryService = daoProvider.getLibraryDAO();
+        view = PRESENTATION_PROVIDER.getView();
+        dataFromConsole = PRESENTATION_PROVIDER.getDataFromConsole();
+        userInterface = PRESENTATION_PROVIDER.getUserInterface();
+        emailSenderService = SERVICE_PROVIDER.getEmailSenderService();
+        libraryService = DAO_PROVIDER.getLibraryDAO();
 
         view.print("" +
                 "You're editing book:\n" +

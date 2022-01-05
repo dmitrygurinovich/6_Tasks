@@ -353,4 +353,4 @@ Name: Philosophy of Java
 Author: Bruce Eccel
 Year: 2020
 Type: Paper book
-Description: The best book for Java developers!!!
+Description: 

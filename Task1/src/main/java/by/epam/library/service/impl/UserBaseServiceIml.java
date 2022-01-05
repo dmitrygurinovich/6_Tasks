@@ -17,8 +17,8 @@ import javax.mail.internet.InternetAddress;
 import java.util.ArrayList;
 
 public final class UserBaseServiceIml implements UserBaseService {
-    private final DAOProvider provider = DAOProvider.getInstance();
-    private static PresentationProvider viewProvider = PresentationProvider.getInstance();
+    private final static DAOProvider provider = DAOProvider.getInstance();
+    private final static PresentationProvider viewProvider = PresentationProvider.getInstance();
 
     public UserBaseServiceIml() {
     }

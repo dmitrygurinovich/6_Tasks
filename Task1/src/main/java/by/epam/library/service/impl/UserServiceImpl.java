@@ -11,9 +11,10 @@ import by.epam.library.service.UserService;
 
 public final class UserServiceImpl implements UserService {
     private final static ServiceProvider serviceProvider = ServiceProvider.getInstance();
-    private static final PresentationProvider viewProvider = PresentationProvider.getInstance();
+    private final static PresentationProvider viewProvider = PresentationProvider.getInstance();
 
-    public UserServiceImpl() {}
+    public UserServiceImpl() {
+    }
 
     @Override
     public void suggestNewBook(User user) {

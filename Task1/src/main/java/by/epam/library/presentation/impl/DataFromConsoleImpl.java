@@ -9,47 +9,21 @@ import java.util.Scanner;
 public final class DataFromConsoleImpl implements DataFromConsole {
     private static final PresentationProvider viewProvider = PresentationProvider.getInstance();
 
-    public DataFromConsoleImpl() {}
+    public DataFromConsoleImpl() {
 
-    @Override
-    public int getMenuItem(int min, int max, String message) {
-        Scanner in;
-        View view;
-        int number;
-
-        in = new Scanner(System.in);
-        view = viewProvider.getView();
-
-        view.print(message);
-        while (!in.hasNextInt()) {
-            view.print(message);
-            in.next();
-        }
-        number = in.nextInt();
-        in.nextLine();
-        if (number >= min && number <= max) {
-            return number;
-        } else {
-            return getMenuItem(min, max, message);
-        }
     }
 
     @Override
     public int getNumFromConsole(String message, int min, int max) {
-        Scanner in;
-        View view;
-        int number;
-
-        in = new Scanner(System.in);
-        view = viewProvider.getView();
+        Scanner in = new Scanner(System.in);
+        View view = viewProvider.getView();
 
         view.print(message);
-
         while (!in.hasNextInt()) {
             view.print(message);
             in.next();
         }
-        number = in.nextInt();
+        int number = in.nextInt();
         in.nextLine();
 
         if (number >= min && number <= max) {
@@ -61,19 +35,15 @@ public final class DataFromConsoleImpl implements DataFromConsole {
 
     @Override
     public String getStringFromConsole(String message) {
-        Scanner in;
-        View view;
-        String text;
-
-        in = new Scanner(System.in);
-        view = viewProvider.getView();
+        Scanner in = new Scanner(System.in);
+        View view = viewProvider.getView();
 
         view.print(message);
         while (!in.hasNextLine()) {
             view.print(message);
             in.next();
         }
-        text = in.nextLine();
-        return text;
+
+        return in.nextLine();
     }
 }

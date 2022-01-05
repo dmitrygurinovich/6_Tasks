@@ -39,3 +39,10 @@ Login: 2222
 Password: [-4, -45, 75, -38, -71, -68, -27, 22, 97, -98, 58, -36, -18, 31, 56, 0]
 Role: User
 E-mail: 222@tut.by
+---
+Id: 7
+Name: admin
+Login: admin
+Password: [114, -67, -43, -10, 5, 99, 70, 67, 54, 56, -37, 89, -61, -64, 53, -109]
+Role: Administrator
+E-mail: admin@admin.asasas
