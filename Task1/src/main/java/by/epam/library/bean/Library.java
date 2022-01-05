@@ -1,20 +1,24 @@
 package by.epam.library.bean;
 
 import by.epam.library.dao.DAOProvider;
+import by.epam.library.dao.LibraryDAO;
+import by.epam.library.dao.UserBaseDAO;
 
 import java.util.ArrayList;
 
 public final class Library {
-    private ArrayList<Book> books;
-    private ArrayList<User> users;
     private User authorizedUser;
     private static Library instance;
 
-    private static final DAOProvider provider = DAOProvider.getInstance();
+    private final DAOProvider DAO_PROVIDER = DAOProvider.getInstance();
+    private final LibraryDAO LIBRARY_DAO = DAO_PROVIDER.getLibraryDAO();
+    private final UserBaseDAO USER_BASE_DAO = DAO_PROVIDER.getUserBaseDAO();
+
+    private ArrayList<Book> books = LIBRARY_DAO.readBooksFromFile();
+    private ArrayList<User> users = USER_BASE_DAO.readUsersFromFile();
 
     private Library() {
-        this.books = provider.getLibraryDAO().readBooksFromFile();
-        this.users = provider.getUserBaseDAO().readUsersFromFile();
+
     }
 
     public static Library getInstance() {

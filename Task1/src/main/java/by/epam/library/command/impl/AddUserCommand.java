@@ -5,10 +5,11 @@ import by.epam.library.service.ServiceProvider;
 import by.epam.library.service.UserBaseService;
 
 public class AddUserCommand implements Command {
-    private final UserBaseService userBaseService = ServiceProvider.getInstance().getUserBaseService();
+    private final ServiceProvider SERVICE_PROVIDER = ServiceProvider.getInstance();
+    private final UserBaseService USER_BASE_SERVICE = SERVICE_PROVIDER.getUserBaseService();
 
     @Override
     public void execute() {
-        userBaseService.addUser();
+        USER_BASE_SERVICE.addUser();
     }
 }

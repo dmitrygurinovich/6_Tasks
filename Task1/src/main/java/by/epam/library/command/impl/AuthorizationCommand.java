@@ -5,10 +5,11 @@ import by.epam.library.presentation.PresentationProvider;
 import by.epam.library.presentation.UserInterface;
 
 public class AuthorizationCommand implements Command {
-    private final UserInterface userInterface = PresentationProvider.getInstance().getUserInterface();
+    private final PresentationProvider PRESENTATION_PROVIDER = PresentationProvider.getInstance();
+    private final UserInterface USER_INTERFACE = PRESENTATION_PROVIDER.getUserInterface();
 
     @Override
     public void execute() {
-        userInterface.authorization();
+        USER_INTERFACE.authorization();
     }
 }

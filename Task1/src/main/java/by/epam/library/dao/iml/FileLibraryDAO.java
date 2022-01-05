@@ -14,9 +14,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class FileLibraryDAO implements LibraryDAO {
-    private static final File BOOKS_BASE_PATH = new File("Task1/src/main/resources/booksbase.txt");
+    private static final File BOOKS_BASE_PATH = new File("Task1/src/main/resources/booksbase.txt"); //TODO сделать относительный путь
 
-    public FileLibraryDAO() {}
+    public FileLibraryDAO() {
+
+    }
 
     @Override
     public void writeOneBookToFile(Book book) {

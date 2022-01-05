@@ -5,10 +5,11 @@ import by.epam.library.presentation.PresentationProvider;
 import by.epam.library.presentation.View;
 
 public class ShowBooksCommand implements Command {
-    private final View view = PresentationProvider.getInstance().getView();
+    private final PresentationProvider PRESENTATION_PROVIDER = PresentationProvider.getInstance();
+    private final View VIEW = PRESENTATION_PROVIDER.getView();
 
     @Override
     public void execute() {
-        view.showBooks();
+        VIEW.showBooks();
     }
 }

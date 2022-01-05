@@ -5,8 +5,8 @@ import by.epam.library.controller.impl.ServiceController;
 
 public class ControllerProvider {
     private static ControllerProvider instance;
-    private final Controller presentationController = new PresentationController();
-    private final Controller serviceController = new ServiceController();
+    private final Controller PRESENTATION_CONTROLLER = new PresentationController();
+    private final Controller SERVICE_CONTROLLER = new ServiceController();
 
     private ControllerProvider() {}
 
@@ -18,10 +18,10 @@ public class ControllerProvider {
     }
 
     public Controller getPresentationController() {
-        return presentationController;
+        return PRESENTATION_CONTROLLER;
     }
 
     public Controller getServiceController() {
-        return serviceController;
+        return SERVICE_CONTROLLER;
     }
 }

@@ -5,10 +5,12 @@ import by.epam.library.dao.iml.FileUserBaseDAO;
 
 public final class DAOProvider {
     private static DAOProvider instance;
-    private final UserBaseDAO userBaseDAO = new FileUserBaseDAO();
-    private final LibraryDAO libraryDAO = new FileLibraryDAO();
+    private final UserBaseDAO USER_BASE_DAO = new FileUserBaseDAO();
+    private final LibraryDAO LIBRARY_DAO = new FileLibraryDAO();
 
-    private DAOProvider() {}
+    private DAOProvider() {
+
+    }
 
     public static DAOProvider getInstance() {
         if (instance == null) {
@@ -18,10 +20,10 @@ public final class DAOProvider {
     }
 
     public UserBaseDAO getUserBaseDAO() {
-        return userBaseDAO;
+        return USER_BASE_DAO;
     }
 
     public LibraryDAO getLibraryDAO() {
-        return libraryDAO;
+        return LIBRARY_DAO;
     }
 }

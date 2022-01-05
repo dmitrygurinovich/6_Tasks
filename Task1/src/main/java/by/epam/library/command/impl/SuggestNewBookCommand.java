@@ -7,11 +7,13 @@ import by.epam.library.service.ServiceProvider;
 import by.epam.library.service.UserService;
 
 public class SuggestNewBookCommand implements Command {
-    private final UserService userService = ServiceProvider.getInstance().getUserService();
-    private final User authorizedUser = Library.getInstance().getAuthorizedUser();
+    private final ServiceProvider SERVICE_PROVIDER = ServiceProvider.getInstance();
+    private final UserService USER_SERVICE = SERVICE_PROVIDER.getUserService();
+    private final Library LIBRARY = Library.getInstance();
+    private final User AUTHORIZED_USER = LIBRARY.getAuthorizedUser();
 
     @Override
     public void execute() {
-        userService.suggestNewBook(authorizedUser);
+        USER_SERVICE.suggestNewBook(AUTHORIZED_USER);
     }
 }
