@@ -20,14 +20,14 @@ public final class EmailSenderServiceImpl implements EmailSenderService {
     private final String USERNAME = "gurinovich.notify@gmail.com";
     private final String PASSWORD = "4531689925qWe";
 
-    private final static PresentationProvider PRESENTATION_PROVIDER = PresentationProvider.getInstance();
-
     public EmailSenderServiceImpl() {
+
     }
 
     @Override
     public void notifyUsersAboutAddingBookDescription(String subject, Book book) {
-        View view = PRESENTATION_PROVIDER.getView();
+        PresentationProvider presentationProvider = PresentationProvider.getInstance();
+        View view = presentationProvider.getView();
         Properties props = System.getProperties();
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
         UserBaseService userBaseService = serviceProvider.getUserBaseService();
@@ -75,8 +75,9 @@ public final class EmailSenderServiceImpl implements EmailSenderService {
 
     @Override
     public void suggestToAddABookToTheLibrary(Book book) {
-        View view = PRESENTATION_PROVIDER.getView();
         Library library = Library.getInstance();
+        PresentationProvider presentationProvider = PresentationProvider.getInstance();
+        View view = presentationProvider.getView();
         User user = library.getAuthorizedUser();
         Properties props = System.getProperties();
 

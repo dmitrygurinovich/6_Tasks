@@ -7,7 +7,6 @@ import by.epam.library.presentation.View;
 import java.util.Scanner;
 
 public final class DataFromConsoleImpl implements DataFromConsole {
-    private static final PresentationProvider viewProvider = PresentationProvider.getInstance();
 
     public DataFromConsoleImpl() {
 
@@ -16,7 +15,8 @@ public final class DataFromConsoleImpl implements DataFromConsole {
     @Override
     public int getNumFromConsole(String message, int min, int max) {
         Scanner in = new Scanner(System.in);
-        View view = viewProvider.getView();
+        PresentationProvider presentationProvider = PresentationProvider.getInstance();
+        View view = presentationProvider.getView();
 
         view.print(message);
         while (!in.hasNextInt()) {
@@ -36,7 +36,8 @@ public final class DataFromConsoleImpl implements DataFromConsole {
     @Override
     public String getStringFromConsole(String message) {
         Scanner in = new Scanner(System.in);
-        View view = viewProvider.getView();
+        PresentationProvider presentationProvider = PresentationProvider.getInstance();
+        View view = presentationProvider.getView();
 
         view.print(message);
         while (!in.hasNextLine()) {

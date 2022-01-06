@@ -10,7 +10,6 @@ import by.epam.library.presentation.View;
 import java.util.Scanner;
 
 public final class ViewImpl implements View {
-    private static final PresentationProvider VIEW_PROVIDER = PresentationProvider.getInstance();
 
     public ViewImpl() {
 
@@ -37,7 +36,8 @@ public final class ViewImpl implements View {
     public void showBooksByPages(int defaultPageNumber) {
         Scanner in = new Scanner(System.in);
         Library library = Library.getInstance();
-        UserInterface userInterface = VIEW_PROVIDER.getUserInterface();
+        PresentationProvider presentationProvider = PresentationProvider.getInstance();
+        UserInterface userInterface = presentationProvider.getUserInterface();
         int pagesCount = (library.getBooks().size() - (library.getBooks().size() % 10)) / 10;
         int pageNumber = defaultPageNumber;
 

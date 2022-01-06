@@ -19,8 +19,6 @@ import java.util.regex.Pattern;
 
 public final class FileUserBaseDAO implements UserBaseDAO {
     private final static File USERS_BASE_PATH = new File("Task1/src/main/resources/usersbase.txt");
-    private final static ServiceProvider SERVICE_PROVIDER = ServiceProvider.getInstance();
-    private final static UserPasswordService USER_PASSWORD_SERVICE = SERVICE_PROVIDER.getUserPasswordService();
 
     public FileUserBaseDAO() {
 
@@ -28,7 +26,9 @@ public final class FileUserBaseDAO implements UserBaseDAO {
 
     @Override
     public void writeUserToFile(User user) {
-        byte[] passwordBytesArray = USER_PASSWORD_SERVICE.encryptUserPassword(user.getPassword());
+        ServiceProvider serviceProvider = ServiceProvider.getInstance();
+        UserPasswordService userPasswordService = serviceProvider.getUserPasswordService();
+        byte[] passwordBytesArray = userPasswordService.encryptUserPassword(user.getPassword());
         String password = Arrays.toString(passwordBytesArray);
 
         try (FileWriter writer = new FileWriter(USERS_BASE_PATH, true)) {
@@ -47,6 +47,8 @@ public final class FileUserBaseDAO implements UserBaseDAO {
 
     @Override
     public ArrayList<User> readUsersFromFile() {
+        ServiceProvider serviceProvider = ServiceProvider.getInstance();
+        UserPasswordService userPasswordService = serviceProvider.getUserPasswordService();
         ArrayList<User> users = new ArrayList<>();
         StringBuilder usersListFromFile = new StringBuilder();
         Pattern patternForParsingUserField = Pattern
@@ -70,8 +72,8 @@ public final class FileUserBaseDAO implements UserBaseDAO {
                     userFieldsList.add(matcher.group(1));
                 }
 
-                byte[] passwordBytesArray = USER_PASSWORD_SERVICE.getBytesArrayFromString(userFieldsList.get(3));
-                String password = USER_PASSWORD_SERVICE.decryptUserPassword(passwordBytesArray);
+                byte[] passwordBytesArray = userPasswordService.getBytesArrayFromString(userFieldsList.get(3));
+                String password = userPasswordService.decryptUserPassword(passwordBytesArray);
 
                 users.add(new User(
                         Integer.parseInt(userFieldsList.get(0)),

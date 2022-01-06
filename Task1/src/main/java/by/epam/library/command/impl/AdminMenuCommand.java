@@ -5,11 +5,11 @@ import by.epam.library.presentation.PresentationProvider;
 import by.epam.library.presentation.UserInterface;
 
 public class AdminMenuCommand implements Command {
-    private final PresentationProvider PRESENTATION_PROVIDER = PresentationProvider.getInstance();
-    private final UserInterface USER_INTERFACE = PRESENTATION_PROVIDER.getUserInterface();
-
     @Override
     public void execute() {
-        USER_INTERFACE.adminMenu();
+        PresentationProvider presentationProvider = PresentationProvider.getInstance();
+        UserInterface userInterface = presentationProvider.getUserInterface();
+
+        userInterface.adminMenu();
     }
 }

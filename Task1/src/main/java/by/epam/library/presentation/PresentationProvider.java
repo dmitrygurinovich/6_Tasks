@@ -10,7 +10,9 @@ public final class PresentationProvider {
     private final UserInterface USER_INTERFACE = new UserInterfaceImpl();
     private final DataFromConsole DATA_FROM_CONSOLE = new DataFromConsoleImpl();
 
-    private PresentationProvider() {}
+    private PresentationProvider() {
+
+    }
 
     public static PresentationProvider getInstance(){
         if (instance == null) {

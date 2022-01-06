@@ -5,9 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CommandProvider {
+    public static CommandProvider instance;
     private final Map<String, Command> COMMANDS = new HashMap<>();
 
-    public CommandProvider() {
+    private CommandProvider() {
         COMMANDS.put("authorization", new AuthorizationCommand());
         COMMANDS.put("admin_menu", new AdminMenuCommand());
         COMMANDS.put("add_book", new AddBookCommand());
@@ -18,6 +19,13 @@ public class CommandProvider {
         COMMANDS.put("show_books", new ShowBooksCommand());
         COMMANDS.put("search_books", new SearchBooksByKeywordCommand());
         COMMANDS.put("exit", new ExitCommand());
+    }
+
+    public static CommandProvider getInstance() {
+        if (instance == null) {
+            instance = new CommandProvider();
+        }
+        return instance;
     }
 
     public Command getCommand(String commandName) {

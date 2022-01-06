@@ -5,11 +5,11 @@ import by.epam.library.service.LibraryService;
 import by.epam.library.service.ServiceProvider;
 
 public class SearchBooksByKeywordCommand implements Command {
-    private final ServiceProvider SERVICE_PROVIDER = ServiceProvider.getInstance();
-    private final LibraryService LIBRARY_SERVICE = SERVICE_PROVIDER.getLibraryService();
-
     @Override
     public void execute() {
-        LIBRARY_SERVICE.searchBooksByKeyword();
+        ServiceProvider serviceProvider = ServiceProvider.getInstance();
+        LibraryService libraryService = serviceProvider.getLibraryService();
+
+        libraryService.searchBooksByKeyword();
     }
 }
