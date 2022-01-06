@@ -13,15 +13,14 @@ import java.security.NoSuchAlgorithmException;
 public final class UserPasswordServiceImpl implements UserPasswordService {
     private final SecretKeySpec KEY = new SecretKeySpec("Hdy4rl1dh64MwPfn".getBytes(), "AES");
 
-    public UserPasswordServiceImpl() {}
+    public UserPasswordServiceImpl() {
+
+    }
 
     @Override
     public byte[] getBytesArrayFromString(String password) {
-        String[] passwordParsedToStringsArray;
-        byte[] passwordParsedToBytesArray;
-
-        passwordParsedToStringsArray = password.substring(1, password.length() - 1).split(", ");
-        passwordParsedToBytesArray = new byte[passwordParsedToStringsArray.length];
+        String[] passwordParsedToStringsArray = password.substring(1, password.length() - 1).split(", ");
+        byte[] passwordParsedToBytesArray = new byte[passwordParsedToStringsArray.length];
 
         for (int i = 0; i < passwordParsedToStringsArray.length; i++) {
             passwordParsedToBytesArray[i] = Byte.parseByte(passwordParsedToStringsArray[i]);
@@ -32,9 +31,7 @@ public final class UserPasswordServiceImpl implements UserPasswordService {
 
     @Override
     public String decryptUserPassword(byte[] bytes) {
-        StringBuilder password;
-
-        password = new StringBuilder();
+        StringBuilder password = new StringBuilder();
 
         try {
             Cipher cipher = Cipher.getInstance("AES");
@@ -54,9 +51,7 @@ public final class UserPasswordServiceImpl implements UserPasswordService {
 
     @Override
     public byte[] encryptUserPassword(String password) {
-        byte[] passwordsBytes;
-
-        passwordsBytes = new byte[0];
+        byte[] passwordsBytes = new byte[0];
 
         try {
             Cipher cipher = Cipher.getInstance("AES");

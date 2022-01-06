@@ -18,7 +18,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class FileUserBaseDAO implements UserBaseDAO {
-    private final static File USERS_BASE_PATH = new File("Task1/src/main/resources/usersbase.txt");
+    private final static File USERS_BASE_PATH = new File("Task1/src/main/resources/usersbase.txt"); //TODO сделать относительный путь
 
     public FileUserBaseDAO() {
 

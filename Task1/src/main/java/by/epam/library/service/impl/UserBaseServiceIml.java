@@ -17,18 +17,14 @@ import javax.mail.internet.InternetAddress;
 import java.util.ArrayList;
 
 public final class UserBaseServiceIml implements UserBaseService {
-    private final static DAOProvider provider = DAOProvider.getInstance();
-    private final static PresentationProvider viewProvider = PresentationProvider.getInstance();
 
     public UserBaseServiceIml() {
+
     }
 
     @Override
     public Address[] getUsersEmails(UserRole role) {
-        ArrayList<String> emails;
-        Address[] addresses;
-
-        emails = new ArrayList<>();
+        ArrayList<String> emails = new ArrayList<>();
 
         for (User user : Library.getInstance().getUsers()) {
             if (user.getRole().equals(role)) {
@@ -36,7 +32,7 @@ public final class UserBaseServiceIml implements UserBaseService {
             }
         }
 
-        addresses = new Address[emails.size()];
+        Address[] addresses = new Address[emails.size()];
 
         try {
             addresses = InternetAddress.parse(emails.toString().substring(1, emails.toString().length() - 1));
@@ -49,26 +45,21 @@ public final class UserBaseServiceIml implements UserBaseService {
 
     @Override
     public void addUser() {
-        User user;
-        String email;
-        String login;
-        View view;
-        Library library;
-        DataFromConsole dataFromConsole;
-        UserBaseDAO userBaseDAO;
-        ValidatorImpl validator;
-
-        user = new User();
-        view = viewProvider.getView();
-        library = Library.getInstance();
-        dataFromConsole = viewProvider.getDataFromConsole();
-        userBaseDAO = provider.getUserBaseDAO();
-        validator = ValidatorImpl.getInstance();
+        DAOProvider daoProvider = DAOProvider.getInstance();
+        UserBaseDAO userBaseDAO = daoProvider.getUserBaseDAO();
+        PresentationProvider viewProvider = PresentationProvider.getInstance();
+        DataFromConsole dataFromConsole = viewProvider.getDataFromConsole();
+        View view = viewProvider.getView();
+        ValidatorImpl  validator = ValidatorImpl.getInstance();
+        Library library = Library.getInstance();
+        ArrayList<User> users = library.getUsers();
+        User user = new User();
 
         user.setId(library.getUsers().size() + 1);
         user.setName(dataFromConsole.getStringFromConsole("Enter user's name: "));
 
-        login = dataFromConsole.getStringFromConsole("Enter user's login: ");
+        String login = dataFromConsole.getStringFromConsole("Enter user's login: ");
+
         while (userBaseDAO.isLoginExist(login)) {
             view.print("Login is exist! Enter new login!");
             login = dataFromConsole.getStringFromConsole("Enter user's login: ");
@@ -82,15 +73,14 @@ public final class UserBaseServiceIml implements UserBaseService {
                         "2. User",
                 0, 2) == 1 ? UserRole.ADMINISTRATOR : UserRole.USER));
 
-        email = dataFromConsole.getStringFromConsole("Enter user's email: ");
+        String email = dataFromConsole.getStringFromConsole("Enter user's email: ");
+
         while (!validator.isEmail(email)) {
             email = dataFromConsole.getStringFromConsole("Wrong e-mail format!\nEnter user's email: ");
         }
         user.setEmail(email);
-
-        view.print("User added!");
-
-        library.getUsers().add(user);
+        view.print("User has been added!");
+        users.add(user);
         userBaseDAO.writeUserToFile(user);
     }
 

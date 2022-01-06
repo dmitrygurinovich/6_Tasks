@@ -5,11 +5,11 @@ import by.epam.library.service.impl.*;
 public final class ServiceProvider {
     private static ServiceProvider instance;
 
-    private final EmailSenderService emailSenderService = new EmailSenderServiceImpl();
-    private final LibraryService libraryService = new LibraryServiceImpl();
-    private final UserBaseService userBaseService = new UserBaseServiceIml();
-    private final UserPasswordService userPasswordService = new UserPasswordServiceImpl();
-    private final UserService userService = new UserServiceImpl();
+    private final EmailSenderService EMAIL_SEND_SERVICE = new EmailSenderServiceImpl();
+    private final LibraryService LIBRARY_SERVICE = new LibraryServiceImpl();
+    private final UserBaseService USER_BASE_SERVICE = new UserBaseServiceIml();
+    private final UserPasswordService USER_PASSWORD_SERVICE = new UserPasswordServiceImpl();
+    private final UserService USER_SERVICE = new UserServiceImpl();
 
     private ServiceProvider() {
 
@@ -23,22 +23,22 @@ public final class ServiceProvider {
     }
 
     public EmailSenderService getEmailSenderService() {
-        return emailSenderService;
+        return EMAIL_SEND_SERVICE;
     }
 
     public LibraryService getLibraryService() {
-        return libraryService;
+        return LIBRARY_SERVICE;
     }
 
     public UserBaseService getUserBaseService() {
-        return userBaseService;
+        return USER_BASE_SERVICE;
     }
 
     public UserPasswordService getUserPasswordService() {
-        return userPasswordService;
+        return USER_PASSWORD_SERVICE;
     }
 
     public UserService getUserService() {
-        return userService;
+        return USER_SERVICE;
     }
 }
