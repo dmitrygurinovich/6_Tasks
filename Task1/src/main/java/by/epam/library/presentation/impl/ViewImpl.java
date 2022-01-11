@@ -11,10 +11,6 @@ import java.util.Scanner;
 
 public final class ViewImpl implements View {
 
-    public ViewImpl() {
-
-    }
-
     @Override
     public void showBooks() {
         Library library = Library.getInstance();

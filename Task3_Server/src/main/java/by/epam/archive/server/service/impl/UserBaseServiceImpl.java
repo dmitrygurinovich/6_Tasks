@@ -1,6 +1,5 @@
 package by.epam.archive.server.service.impl;
 
-import by.epam.archive.server.bean.User;
 import by.epam.archive.server.dao.DAOProvider;
 import by.epam.archive.server.dao.UsersBaseDAO;
 import by.epam.archive.server.service.UserBaseService;
@@ -8,15 +7,6 @@ import by.epam.archive.server.view.View;
 import by.epam.archive.server.view.impl.ViewImpl;
 
 public class UserBaseServiceImpl implements UserBaseService {
-
-    @Override
-    public void addUser(User user) {
-        UsersBaseDAO usersBaseDAO;
-
-        usersBaseDAO = DAOProvider.getInstance().getUsersBaseDAO();
-        usersBaseDAO.getUsers().put(user.getUsername(), user);
-        usersBaseDAO.writeUsersToXml();
-    }
 
     @Override
     public String authorization(String request) {

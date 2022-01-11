@@ -20,10 +20,6 @@ public final class EmailSenderServiceImpl implements EmailSenderService {
     private final String USERNAME = "gurinovich.notify@gmail.com";
     private final String PASSWORD = "4531689925qWe";
 
-    public EmailSenderServiceImpl() {
-
-    }
-
     @Override
     public void notifyUsersAboutAddingBookDescription(String subject, Book book) {
         PresentationProvider presentationProvider = PresentationProvider.getInstance();

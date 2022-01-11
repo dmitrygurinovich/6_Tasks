@@ -13,10 +13,6 @@ import java.util.Scanner;
 
 public final class UserInterfaceImpl implements UserInterface {
 
-    public UserInterfaceImpl() {
-
-    }
-
     @Override
     public void adminMenu() {
         PresentationProvider presentationProvider = PresentationProvider.getInstance();

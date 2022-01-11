@@ -11,7 +11,9 @@ public class User {
 	private UserRole role;
 	private String email;
 	
-	public User() {}
+	public User() {
+
+	}
 
 	public User(int id, String name, String login, String password, UserRole role, String email) {
 		this.id = id;

@@ -5,6 +5,7 @@ import by.epam.note.service.NoteBaseService;
 import by.epam.note.service.ServiceProvider;
 
 public class ShowAllNotesCommand implements Command {
+
     @Override
     public void execute() {
         ServiceProvider serviceProvider = ServiceProvider.getInstance();

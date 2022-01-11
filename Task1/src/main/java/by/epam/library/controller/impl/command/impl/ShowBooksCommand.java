@@ -1,6 +1,6 @@
-package by.epam.library.command.impl;
+package by.epam.library.controller.impl.command.impl;
 
-import by.epam.library.command.Command;
+import by.epam.library.controller.impl.command.Command;
 import by.epam.library.presentation.PresentationProvider;
 import by.epam.library.presentation.View;
 

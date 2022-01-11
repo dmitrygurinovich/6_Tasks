@@ -13,10 +13,6 @@ import java.security.NoSuchAlgorithmException;
 public final class UserPasswordServiceImpl implements UserPasswordService {
     private final SecretKeySpec KEY = new SecretKeySpec("Hdy4rl1dh64MwPfn".getBytes(), "AES");
 
-    public UserPasswordServiceImpl() {
-
-    }
-
     @Override
     public byte[] getBytesArrayFromString(String password) {
         String[] passwordParsedToStringsArray = password.substring(1, password.length() - 1).split(", ");

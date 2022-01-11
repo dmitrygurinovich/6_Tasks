@@ -18,10 +18,6 @@ import java.util.ArrayList;
 
 public final class UserBaseServiceIml implements UserBaseService {
 
-    public UserBaseServiceIml() {
-
-    }
-
     @Override
     public Address[] getUsersEmails(UserRole role) {
         ArrayList<String> emails = new ArrayList<>();

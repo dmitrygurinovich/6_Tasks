@@ -20,10 +20,6 @@ import java.util.regex.Pattern;
 
 public final class LibraryServiceImpl implements LibraryService {
 
-    public LibraryServiceImpl() {
-
-    }
-
     @Override
     public void searchBooksByKeyword() {
         ArrayList<Book> books = new ArrayList<>();

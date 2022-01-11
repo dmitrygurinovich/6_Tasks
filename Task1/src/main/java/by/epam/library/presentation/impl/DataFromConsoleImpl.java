@@ -8,10 +8,6 @@ import java.util.Scanner;
 
 public final class DataFromConsoleImpl implements DataFromConsole {
 
-    public DataFromConsoleImpl() {
-
-    }
-
     @Override
     public int getNumFromConsole(String message, int min, int max) {
         Scanner in = new Scanner(System.in);

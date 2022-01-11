@@ -11,10 +11,6 @@ import by.epam.library.service.UserService;
 
 public final class UserServiceImpl implements UserService {
 
-    public UserServiceImpl() {
-
-    }
-
     @Override
     public void suggestNewBook(User user) {
         Book book = new Book();

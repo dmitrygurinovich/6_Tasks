@@ -1,6 +1,6 @@
-package by.epam.library.command;
+package by.epam.library.controller.impl.command;
 
-import by.epam.library.command.impl.*;
+import by.epam.library.controller.impl.command.impl.*;
 import java.util.HashMap;
 import java.util.Map;
 

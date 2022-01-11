@@ -15,7 +15,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class JSONNotesBaseDAO implements NotesBaseDAO {
-    private static final File NOTES_BASE_PATH = new File("Task2/src/main/resources/notesbase.json"); //TODO сделать путь относительным!
+    private static final File NOTES_BASE_PATH = new File("Task2/resources/notesbase.json"); //TODO сделать путь относительным!
     private static JSONNotesBaseDAO instance;
 
     private JSONNotesBaseDAO() {
