@@ -4,16 +4,14 @@ import java.util.ArrayList;
 
 public class ClientUserSession {
     private boolean authorized;
-    private User user;
     private boolean isFilesReceived;
+    private User user;
     private ArrayList<File> files;
     private static ClientUserSession instance;
 
     private ClientUserSession() {
         this.user = new User();
         this.files = new ArrayList<>();
-        this.authorized = false;
-        this.isFilesReceived = false;
     }
 
     public static ClientUserSession getInstance() {
