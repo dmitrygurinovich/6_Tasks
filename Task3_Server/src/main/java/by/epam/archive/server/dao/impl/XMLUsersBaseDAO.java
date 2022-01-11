@@ -25,7 +25,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class XMLUsersBaseDAO implements UsersBaseDAO {
-    private static final String USERS_BASE_PATH = "Task3_Server/resources/users.xml";
+    private static final String USERS_BASE_PATH = "Task3_Server/resources/users.xml"; //TODO сделать путь относительным!
     private static final SecretKeySpec KEY = new SecretKeySpec("Hdy2rl1ds64MePhn".getBytes(), "AES");
     private final HashMap<String, User> users;
 

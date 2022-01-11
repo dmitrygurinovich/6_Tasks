@@ -18,7 +18,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class XMLFilesBaseDAO implements FilesBaseDAO {
-    private final String FILES_BASE_PATH = "Task3_Server/resources/files.xml";
+    private final String FILES_BASE_PATH = "Task3_Server/resources/files.xml"; //TODO сделать путь относительным!
     private final View VIEW = ViewImpl.getInstance();
     private ArrayList<File> files;
 
