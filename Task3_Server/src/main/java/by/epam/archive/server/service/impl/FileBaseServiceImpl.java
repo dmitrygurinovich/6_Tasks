@@ -1,43 +1,80 @@
 package by.epam.archive.server.service.impl;
 
-import by.epam.archive.server.bean.File;
 import by.epam.archive.server.dao.DAOProvider;
 import by.epam.archive.server.dao.FilesBaseDAO;
 import by.epam.archive.server.service.FileBaseService;
+import by.epam.archive.server.service.ServiceProvider;
 
 public class FileBaseServiceImpl implements FileBaseService {
 
-    public FileBaseServiceImpl() {}
-
     @Override
-    public void addFile(File file) {
-        FilesBaseDAO filesBaseDAO;
+    public String addFile(String request) {
+        ServiceProvider serviceProvider = ServiceProvider.getInstance();
+        FileBaseService fileBaseService = serviceProvider.getFileBaseService();
+        DAOProvider daoProvider = DAOProvider.getInstance();
+        FilesBaseDAO filesBaseDAO = daoProvider.getFilesBaseDAO();
 
-        filesBaseDAO = DAOProvider.getInstance().getFilesBaseDAO();
+        String[]  params = request.split("&");
+        StringBuilder response = new StringBuilder(params[0].concat("&").concat(params[1]).concat("&"));
 
-        filesBaseDAO.getFiles().add(file);
+        filesBaseDAO.setFiles(filesBaseDAO.parseXmlToTheListOfFiles(params[2]));
         filesBaseDAO.writeFilesToXmlFile();
+
+        return response.append(fileBaseService.filesXmlToString()).toString();
     }
 
     @Override
-    public void deleteFile(int fileId) {
-        FilesBaseDAO filesBaseDAO;
+    public String editFile(String request) {
+        String[] params = request.split("&");
+        ServiceProvider serviceProvider = ServiceProvider.getInstance();
+        FileBaseService fileBaseService = serviceProvider.getFileBaseService();
+        DAOProvider daoProvider = DAOProvider.getInstance();
 
-        filesBaseDAO = DAOProvider.getInstance().getFilesBaseDAO();
+        FilesBaseDAO filesBaseDAO = daoProvider.getFilesBaseDAO();
+        StringBuilder response = new StringBuilder(params[1].concat("&").concat(params[1].concat("&")));
 
-        filesBaseDAO.getFiles().remove(fileId - 1);
-        for (int i = 0; i < filesBaseDAO.getFiles().size(); i++) {
-            filesBaseDAO.getFiles().get(i).setId(i + 1);
-        }
+        filesBaseDAO.setFiles(filesBaseDAO.parseXmlToTheListOfFiles(params[2]));
         filesBaseDAO.writeFilesToXmlFile();
+
+        return response.append(fileBaseService.filesXmlToString()).toString();
     }
 
     @Override
-    public String getAllFiles() {
+    public String filesXmlToString() {
         FilesBaseDAO filesBaseDAO = DAOProvider.getInstance().getFilesBaseDAO();
         return filesBaseDAO.getXmlDocument(filesBaseDAO.getFiles())
                 .replaceAll("\n", "")
                 .replaceAll("\t", "");
+    }
+
+    @Override
+    public String deleteFile(String request) {
+        String[] params = request.split("&");
+        ServiceProvider serviceProvider = ServiceProvider.getInstance();
+        FileBaseService fileBaseService = serviceProvider.getFileBaseService();
+        DAOProvider daoProvider = DAOProvider.getInstance();
+
+        FilesBaseDAO filesBaseDAO = daoProvider.getFilesBaseDAO();
+        StringBuilder response = new StringBuilder(params[0].concat("&").concat(params[1].concat("&")));
+
+        filesBaseDAO.setFiles(filesBaseDAO.parseXmlToTheListOfFiles(params[2]));
+        filesBaseDAO.writeFilesToXmlFile();
+
+        return response.append(fileBaseService.filesXmlToString()).toString();
+    }
+
+    @Override
+    public String getAllFiles(String request) {
+        String[] params = request.split("&");
+        DAOProvider daoProvider = DAOProvider.getInstance();
+        FilesBaseDAO filesBaseDAO = daoProvider.getFilesBaseDAO();
+        StringBuilder response = new StringBuilder(params[0].concat("&").concat(params[1]).concat("&"));
+
+        if (!filesBaseDAO.getFiles().isEmpty()) {
+            return response.append(filesXmlToString()).toString();
+        } else {
+            return "error&no_files";
+        }
     }
 }
 
