@@ -5,10 +5,11 @@ import by.epam.note.presentation.PresentationProvider;
 import by.epam.note.presentation.UserInterface;
 
 public class MenuCommand implements Command {
-    private final UserInterface userInterface = PresentationProvider.getInstance().getUserInterface();
-
     @Override
     public void execute() {
+        PresentationProvider presentationProvider = PresentationProvider.getInstance();
+        UserInterface userInterface = presentationProvider.getUserInterface();
+
         userInterface.menu();
     }
 }

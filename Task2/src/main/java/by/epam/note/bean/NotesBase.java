@@ -5,11 +5,12 @@ import by.epam.note.dao.impl.JSONNotesBaseDAO;
 import java.util.ArrayList;
 
 public class NotesBase {
-    private ArrayList<Note> notes;
+    private final JSONNotesBaseDAO JSON_NOTES_BASE_DAO = JSONNotesBaseDAO.getInstance();
+    private final ArrayList<Note> notes = JSON_NOTES_BASE_DAO.readNotesFromFile();
     private static NotesBase instance;
 
     private NotesBase() {
-        this.notes = JSONNotesBaseDAO.getInstance().readNotesFromFile();
+
     }
 
     public static NotesBase getInstance() {

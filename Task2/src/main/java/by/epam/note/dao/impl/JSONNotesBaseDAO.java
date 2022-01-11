@@ -15,10 +15,12 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class JSONNotesBaseDAO implements NotesBaseDAO {
-    private static final File NOTES_BASE_PATH = new File("Task2/src/main/resources/notesbase.json");
+    private static final File NOTES_BASE_PATH = new File("Task2/src/main/resources/notesbase.json"); //TODO сделать путь относительным!
     private static JSONNotesBaseDAO instance;
 
-    private JSONNotesBaseDAO() {}
+    private JSONNotesBaseDAO() {
+
+    }
 
     public static JSONNotesBaseDAO getInstance() {
         if (instance == null) {
@@ -29,9 +31,7 @@ public class JSONNotesBaseDAO implements NotesBaseDAO {
 
     @Override
     public ArrayList<Note> readNotesFromFile() {
-        ArrayList<Note> notes;
-
-        notes = new ArrayList<>();
+        ArrayList<Note> notes = new ArrayList<>();
 
         try (FileReader reader = new FileReader(NOTES_BASE_PATH)) {
             Gson gson = new Gson();
@@ -47,9 +47,8 @@ public class JSONNotesBaseDAO implements NotesBaseDAO {
 
     @Override
     public void writeNotesToFile(ArrayList<Note> notes) {
-        JsonService jsonService;
-
-        jsonService = ServiceProvider.getInstance().getJsonService();
+        ServiceProvider serviceProvider = ServiceProvider.getInstance();
+        JsonService jsonService = serviceProvider.getJsonService();
 
         try (FileWriter writer = new FileWriter(NOTES_BASE_PATH)) {
             writer.write(jsonService.objectToJsonObject(notes));

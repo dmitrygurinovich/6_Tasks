@@ -5,10 +5,12 @@ import by.epam.note.presentation.impl.ViewImpl;
 
 public class PresentationProvider {
     private static PresentationProvider instance;
-    private final View view = new ViewImpl();
-    private final UserInterface userInterface = new UserInterfaceImpl();
+    private final View VIEW = new ViewImpl();
+    private final UserInterface USER_INTERFACE = new UserInterfaceImpl();
 
-    private PresentationProvider() {}
+    private PresentationProvider() {
+
+    }
 
     public static PresentationProvider getInstance() {
         if (instance == null) {
@@ -18,10 +20,10 @@ public class PresentationProvider {
     }
 
     public View getView() {
-        return view;
+        return VIEW;
     }
 
     public UserInterface getUserInterface() {
-        return userInterface;
+        return USER_INTERFACE;
     }
 }

@@ -5,10 +5,11 @@ import by.epam.note.service.NoteBaseService;
 import by.epam.note.service.ServiceProvider;
 
 public class ShowAllNotesCommand implements Command {
-    private final NoteBaseService noteBaseService = ServiceProvider.getInstance().getNoteBaseService();
-
     @Override
     public void execute() {
+        ServiceProvider serviceProvider = ServiceProvider.getInstance();
+        NoteBaseService noteBaseService = serviceProvider.getNoteBaseService();
+
         noteBaseService.showAllNotes();
     }
 }

@@ -18,21 +18,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class NotesBaseServiceImpl implements NoteBaseService {
-    private final NotesBase notesBase = NotesBase.getInstance();
-    private final View view = PresentationProvider.getInstance().getView();
-    private final UserInterface userInterface = PresentationProvider.getInstance().getUserInterface();
-    private final NotesBaseDAO notesBaseDAO = JSONNotesBaseDAO.getInstance();
 
     @Override
     public void showAllNotes() {
-        int menuItem;
-        ConsoleDataService consoleDataService;
-
-        consoleDataService = ServiceProvider.getInstance().getConsoleDataService();
+        PresentationProvider presentationProvider = PresentationProvider.getInstance();
+        UserInterface userInterface = presentationProvider.getUserInterface();
+        ServiceProvider serviceProvider = ServiceProvider.getInstance();
+        ConsoleDataService consoleDataService = serviceProvider.getConsoleDataService();
+        NotesBase notesBase = NotesBase.getInstance();
+        View view = presentationProvider.getView();
 
         showNotesThemes();
 
-        menuItem = consoleDataService.getNumFromConsole("Enter note's number or \"0\" " +
+        int menuItem = consoleDataService.getNumFromConsole("Enter note's number or \"0\" " +
                 "for entering to the main menu", 0, notesBase.getNotes().size());
 
         if (menuItem == 0) {
@@ -45,26 +43,29 @@ public class NotesBaseServiceImpl implements NoteBaseService {
 
     @Override
     public void showNotesThemes() {
-        for (Note note : notesBase.getNotes()) {
+        NotesBase notesBase = NotesBase.getInstance();
+        ArrayList<Note> notes = notesBase.getNotes();
+        PresentationProvider presentationProvider = PresentationProvider.getInstance();
+        View view = presentationProvider.getView();
+
+        for (Note note : notes) {
             view.print(note.getId() + ". " + note.getTheme());
         }
     }
 
     @Override
     public void addNote() {
-        Note note;
-        String email;
-        Validation validation;
-        ConsoleDataService consoleDataService;
-
-        note = new Note();
-        validation = new ValidationImpl();
-        consoleDataService = ServiceProvider.getInstance().getConsoleDataService();
+        Note note = new Note();
+        Validation validation = new ValidationImpl();
+        ServiceProvider serviceProvider = ServiceProvider.getInstance();
+        ConsoleDataService consoleDataService = serviceProvider.getConsoleDataService();
+        NotesBase notesBase = NotesBase.getInstance();
+        NotesBaseDAO notesBaseDAO = JSONNotesBaseDAO.getInstance();
 
         note.setId(notesBase.getNotes().size() + 1);
         note.setTheme(consoleDataService.getStringFromConsole("Enter note's theme:"));
 
-        email = consoleDataService.getStringFromConsole("Enter your e-mail:");
+        String email = consoleDataService.getStringFromConsole("Enter your e-mail:");
         while (validation.itIsNotEmail(email)) {
             email = consoleDataService.getStringFromConsole("Wrong e-mail format!\nEnter user's email:");
         }
@@ -78,11 +79,13 @@ public class NotesBaseServiceImpl implements NoteBaseService {
 
     @Override
     public void editNote() {
-        int menuItem;
-        ConsoleDataService consoleDataService;
+        ServiceProvider serviceProvider = ServiceProvider.getInstance();
+        ConsoleDataService consoleDataService = serviceProvider.getConsoleDataService();
+        PresentationProvider presentationProvider = PresentationProvider.getInstance();
+        UserInterface userInterface = presentationProvider.getUserInterface();
+        NotesBase notesBase = NotesBase.getInstance();
 
-        consoleDataService = ServiceProvider.getInstance().getConsoleDataService();
-        menuItem = consoleDataService.getNumFromConsole("Choose note for editing. " +
+        int menuItem = consoleDataService.getNumFromConsole("Choose note for editing. " +
                 "Enter note's number or \"0\" for enter to the main menu: ", 0, notesBase.getNotes().size());
 
         if (menuItem == 0) {
@@ -94,19 +97,22 @@ public class NotesBaseServiceImpl implements NoteBaseService {
 
     @Override
     public void deleteNote() {
-        int menuItem;
-        int confirmation;
-        ConsoleDataService consoleDataService;
+        ServiceProvider serviceProvider = ServiceProvider.getInstance();
+        ConsoleDataService consoleDataService = serviceProvider.getConsoleDataService();
+        PresentationProvider presentationProvider = PresentationProvider.getInstance();
+        UserInterface userInterface = presentationProvider.getUserInterface();
+        NotesBase notesBase = NotesBase.getInstance();
+        View view = presentationProvider.getView();
+        NotesBaseDAO notesBaseDAO = JSONNotesBaseDAO.getInstance();
 
-        consoleDataService = ServiceProvider.getInstance().getConsoleDataService();
-        menuItem = consoleDataService.getNumFromConsole("Enter note's number which you want to delete or \"0\" " +
+        int menuItem = consoleDataService.getNumFromConsole("Enter note's number which you want to delete or \"0\" " +
                 "for entering to the main menu", 0, notesBase.getNotes().size());
 
         if (menuItem == 0) {
             userInterface.menu();
         } else {
             view.print(notesBase.getNotes().get(menuItem - 1).getTheme() + " will be delete!");
-            confirmation = consoleDataService.getNumFromConsole("1. Confirm\n0. Cancel ang go to the main " +
+            int confirmation = consoleDataService.getNumFromConsole("1. Confirm\n0. Cancel ang go to the main " +
                     "menu", 0, 1);
 
             if (confirmation == 0) {
@@ -121,19 +127,18 @@ public class NotesBaseServiceImpl implements NoteBaseService {
 
     @Override
     public void searchNotes() {
-        ArrayList<Note> searchResult;
-        String keyword;
-        String concatenateNoteFields;
-        Pattern pattern;
-        Matcher matcher;
-        int menuItem;
-        ConsoleDataService consoleDataService;
+        ArrayList<Note> searchResult = new ArrayList<>();
+        ServiceProvider serviceProvider = ServiceProvider.getInstance();
+        ConsoleDataService consoleDataService = serviceProvider.getConsoleDataService();
+        PresentationProvider presentationProvider = PresentationProvider.getInstance();
+        UserInterface userInterface = presentationProvider.getUserInterface();
+        NotesBase notesBase = NotesBase.getInstance();
+        View view = presentationProvider.getView();
 
-        consoleDataService = ServiceProvider.getInstance().getConsoleDataService();
-        keyword = consoleDataService.getStringFromConsole("Enter keyword for searching: ");
-        pattern = Pattern.compile(keyword.toLowerCase(Locale.ROOT));
-        searchResult = new ArrayList<>();
-        menuItem = consoleDataService.getNumFromConsole("" +
+        String keyword = consoleDataService.getStringFromConsole("Enter keyword for searching: ");
+        Pattern pattern = Pattern.compile(keyword.toLowerCase(Locale.ROOT));
+
+        int menuItem = consoleDataService.getNumFromConsole("" +
                 "1. Search in themes\n" +
                 "2. Search in text\n" +
                 "3. Search in themes and texts\n" +
@@ -145,7 +150,7 @@ public class NotesBaseServiceImpl implements NoteBaseService {
 
         if (menuItem == 1) {
             for (Note note : notesBase.getNotes()) {
-                matcher = pattern.matcher(note.getTheme());
+                Matcher matcher = pattern.matcher(note.getTheme());
                 if (matcher.find()) {
                     searchResult.add(note);
                 }
@@ -154,7 +159,7 @@ public class NotesBaseServiceImpl implements NoteBaseService {
         }
         if (menuItem == 2) {
             for (Note note : notesBase.getNotes()) {
-                matcher = pattern.matcher(note.getMessage());
+                Matcher matcher = pattern.matcher(note.getMessage());
                 if (matcher.find()) {
                     searchResult.add(note);
                 }
@@ -163,8 +168,8 @@ public class NotesBaseServiceImpl implements NoteBaseService {
         }
         if (menuItem == 3) {
             for (Note note : notesBase.getNotes()) {
-                concatenateNoteFields = (note.getTheme() + " " + note.getMessage()).toLowerCase(Locale.ROOT);
-                matcher = pattern.matcher(concatenateNoteFields);
+                String concatenateNoteFields = (note.getTheme() + " " + note.getMessage()).toLowerCase(Locale.ROOT);
+                Matcher matcher = pattern.matcher(concatenateNoteFields);
                 if (matcher.find()) {
                     searchResult.add(note);
                 }
@@ -204,13 +209,14 @@ public class NotesBaseServiceImpl implements NoteBaseService {
 
     @Override
     public void editNotesFields(int noteNumber) {
-        int menuItem;
-        String email;
-        Validation validation;
-        ConsoleDataService consoleDataService;
-
-        validation = new ValidationImpl();
-        consoleDataService = ServiceProvider.getInstance().getConsoleDataService();
+        Validation validation = new ValidationImpl();
+        ServiceProvider serviceProvider = ServiceProvider.getInstance();
+        ConsoleDataService consoleDataService = serviceProvider.getConsoleDataService();
+        PresentationProvider presentationProvider = PresentationProvider.getInstance();
+        UserInterface userInterface = presentationProvider.getUserInterface();
+        NotesBase notesBase = NotesBase.getInstance();
+        NotesBaseDAO notesBaseDAO = JSONNotesBaseDAO.getInstance();
+        View view = presentationProvider.getView();
 
         view.print("## You're editing note: ##");
         view.print(notesBase.getNotes().get(noteNumber - 1));
@@ -220,7 +226,7 @@ public class NotesBaseServiceImpl implements NoteBaseService {
                 "3. Edit  note's text\n" +
                 "0. Save and go to the main menu\n");
 
-        menuItem = consoleDataService.getNumFromConsole("Enter number 0-4:", 0, 4);
+        int menuItem = consoleDataService.getNumFromConsole("Enter number 0-4:", 0, 4);
 
         if (menuItem == 0) {
             notesBaseDAO.writeNotesToFile(notesBase.getNotes());
@@ -233,7 +239,7 @@ public class NotesBaseServiceImpl implements NoteBaseService {
                 notesBase.getNotes().get(noteNumber - 1).setDate(new GregorianCalendar());
                 editNotesFields(noteNumber);
             case 2:
-                email = consoleDataService.getStringFromConsole("Enter new e-mail:");
+                String email = consoleDataService.getStringFromConsole("Enter new e-mail:");
                 if (validation.itIsNotEmail(email)) {
                     email = consoleDataService.getStringFromConsole("Wrong format! Enter new e-mail:");
                 }
@@ -249,9 +255,10 @@ public class NotesBaseServiceImpl implements NoteBaseService {
 
     @Override
     public void changeNotesId(NotesBase notesBase) {
-        for (int i = 0; i < notesBase.getNotes().size(); i++) {
+        ArrayList<Note> notes = notesBase.getNotes();
+
+        for (int i = 0; i < notes.size(); i++) {
             notesBase.getNotes().get(i).setId(i + 1);
         }
     }
 }
-

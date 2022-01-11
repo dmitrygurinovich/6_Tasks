@@ -1,6 +1,6 @@
 package by.epam.note.main;
 
-import by.epam.note.controller.impl.Controller;
+import by.epam.note.controller.impl.ControllerImpl;
 
 /*
  Задание 2. Блокнот. Разработать консольное приложение, работающее с Заметками в Блокноте. Каждая Заметка это:
@@ -17,7 +17,7 @@ import by.epam.note.controller.impl.Controller;
  */
 public class Main {
     public static void main(String[] args) {
-        Controller controller = Controller.getInstance();
+        ControllerImpl controller = ControllerImpl.getInstance();
         controller.doAction("menu");
     }
 }

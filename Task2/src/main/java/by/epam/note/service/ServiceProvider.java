@@ -6,11 +6,13 @@ import by.epam.note.service.impl.NotesBaseServiceImpl;
 
 public class ServiceProvider {
     private static ServiceProvider instance;
-    private final ConsoleDataService consoleDataService = new ConsoleDataServiceImpl();
-    private final NoteBaseService noteBaseService = new NotesBaseServiceImpl();
-    private final JsonService jsonService = new JsonServiceImpl();
+    private final ConsoleDataService CONSOLE_DATA_SERVICE = new ConsoleDataServiceImpl();
+    private final NoteBaseService NOTES_BASE_SERVICE = new NotesBaseServiceImpl();
+    private final JsonService JSON_SERVICE = new JsonServiceImpl();
 
-    private ServiceProvider() {}
+    private ServiceProvider() {
+
+    }
 
     public static ServiceProvider getInstance() {
         if(instance == null) {
@@ -20,14 +22,14 @@ public class ServiceProvider {
     }
 
     public ConsoleDataService getConsoleDataService() {
-        return consoleDataService;
+        return CONSOLE_DATA_SERVICE;
     }
 
     public NoteBaseService getNoteBaseService() {
-        return noteBaseService;
+        return NOTES_BASE_SERVICE;
     }
 
     public JsonService getJsonService() {
-        return jsonService;
+        return JSON_SERVICE;
     }
 }

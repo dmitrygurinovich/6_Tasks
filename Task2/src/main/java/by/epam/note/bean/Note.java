@@ -5,21 +5,15 @@ import java.util.GregorianCalendar;
 import java.util.Objects;
 
 public class Note {
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd MMMM yyyy");
     private int id;
     private String theme;
     private String email;
     private String message;
     private GregorianCalendar date;
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd MMMM yyyy");
 
-    public Note() {}
+    public Note() {
 
-    public Note(int id, String theme, String email, String message, GregorianCalendar date) {
-        this.id = id;
-        this.theme = theme;
-        this.email = email;
-        this.message = message;
-        this.date = date;
     }
 
     public int getId() {

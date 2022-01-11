@@ -4,7 +4,6 @@ import by.epam.note.bean.Note;
 import by.epam.note.presentation.View;
 
 public class ViewImpl implements View {
-    public ViewImpl() {}
 
     @Override
     public void print(Note note) {

@@ -1,6 +1,7 @@
 package by.epam.note.presentation.impl;
 
 import by.epam.note.controller.Controller;
+import by.epam.note.controller.impl.ControllerImpl;
 import by.epam.note.presentation.PresentationProvider;
 import by.epam.note.presentation.UserInterface;
 import by.epam.note.presentation.View;
@@ -8,18 +9,14 @@ import by.epam.note.service.ConsoleDataService;
 import by.epam.note.service.ServiceProvider;
 
 public class UserInterfaceImpl implements UserInterface {
-    public UserInterfaceImpl() {}
 
     @Override
     public void menu() {
-        int menuItem;
-        View view;
-        ConsoleDataService consoleDataService;
-        Controller controller;
-
-        view = PresentationProvider.getInstance().getView();
-        consoleDataService = ServiceProvider.getInstance().getConsoleDataService();
-        controller = by.epam.note.controller.impl.Controller.getInstance();
+        PresentationProvider presentationProvider = PresentationProvider.getInstance();
+        ServiceProvider serviceProvider = ServiceProvider.getInstance();
+        View view = presentationProvider.getView();
+        ConsoleDataService consoleDataService = serviceProvider.getConsoleDataService();
+        Controller controller = ControllerImpl.getInstance();
 
         view.print("" +
                 "#### MENU ####\n" +
@@ -30,7 +27,7 @@ public class UserInterfaceImpl implements UserInterface {
                 "5. Delete note\n" +
                 "0. Exit\n");
 
-        menuItem = consoleDataService.getNumFromConsole("Enter number 0 - 5:", 0, 5);
+        int menuItem = consoleDataService.getNumFromConsole("Enter number 0 - 5:", 0, 5);
 
         switch (menuItem) {
             case 0:

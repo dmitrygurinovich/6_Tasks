@@ -8,16 +8,11 @@ import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 
 public class JsonServiceImpl implements JsonService {
-    public JsonServiceImpl() {}
 
     @Override
     public String objectToJsonObject(ArrayList<Note> notes) {
-        GsonBuilder builder;
-        Gson gson;
-
-        builder = new GsonBuilder();
-
-        gson = builder
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder
                 .setPrettyPrinting()
                 .create();
 
