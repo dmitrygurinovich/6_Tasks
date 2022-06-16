@@ -3,6 +3,10 @@ package by.epam.port.bean;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * Очередь из кораблей в порт, размер не ограничен.
+ * Отсюда {@link by.epam.port.bean.Ship корабли} попадают в {@link by.epam.port.bean.Port порт}
+ */
 public class WaterArea {
     private static WaterArea instance;
     private final Queue<Ship> queueToThePort = new LinkedList<>();

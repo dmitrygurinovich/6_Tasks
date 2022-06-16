@@ -2,6 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -16,12 +17,12 @@
     <bytecodeTargetLevel>
       <module name="6_Tasks" target="1.5" />
       <module name="Server" target="1.7" />
-      <module name="Task1" target="1.7" />
+      <module name="Task1" target="1.8" />
       <module name="Task2" target="1.7" />
-      <module name="Task3_Client" target="1.7" />
-      <module name="Task3_Server" target="1.7" />
+      <module name="Task3_Client" target="1.8" />
+      <module name="Task3_Server" target="1.8" />
       <module name="Task3_server" target="15" />
-      <module name="Task4" target="8" />
+      <module name="Task4" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

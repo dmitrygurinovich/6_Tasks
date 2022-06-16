@@ -4,7 +4,6 @@ import by.epam.port.bean.Action;
 import by.epam.port.bean.Ship;
 import by.epam.port.bean.Size;
 import by.epam.port.bean.WaterArea;
-
 import java.util.Random;
 
 public class ShipGenerator implements Runnable {
