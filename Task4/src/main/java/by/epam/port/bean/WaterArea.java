@@ -1,7 +1,6 @@
 package by.epam.port.bean;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
 
 /**
  * Очередь из кораблей в порт, размер не ограничен.
@@ -9,10 +8,10 @@ import java.util.Queue;
  */
 public class WaterArea {
     private static WaterArea instance;
-    private final Queue<Ship> queueToThePort = new LinkedList<>();
+    private final ArrayList<Ship> queueToThePort;
 
     private WaterArea() {
-
+        queueToThePort = new ArrayList<>();
     }
 
     public static WaterArea getInstance() {
@@ -22,7 +21,7 @@ public class WaterArea {
         return instance;
     }
 
-    public Queue<Ship> getQueueToThePort() {
+    public ArrayList<Ship> getQueueToThePort() {
         return queueToThePort;
     }
 }

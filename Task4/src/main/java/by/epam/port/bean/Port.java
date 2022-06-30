@@ -6,13 +6,29 @@ package by.epam.port.bean;
  */
 public class Port {
     private final int CAPACITY = 120;
+    private static Port instance;
     private int loaded;
 
-    public Port() {
+    private Port() {
 
+    }
+
+    public static Port getInstance() {
+        if (instance == null) {
+            instance = new Port();
+        }
+        return instance;
     }
 
     public int getCapacity() {
         return CAPACITY;
+    }
+
+    public int getLoaded() {
+        return loaded;
+    }
+
+    public void setLoaded(int loaded) {
+        this.loaded = loaded;
     }
 }
